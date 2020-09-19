@@ -1,23 +1,20 @@
-'use strict';
+const path = require('path');
+const express = require('express')
+const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const controller = require('./api/controllers/hello_world.js');
 
-var SwaggerExpress = require('swagger-express-mw');
-var app = require('express')();
+const swaggerDocument = require('./api/swagger/swagger.json');
+
+const port = process.env.PORT || 8080;
+const publicRoot = path.resolve(path.join(__dirname, '/'), '');
+const app = express();
+
 module.exports = app; // for testing
 
-var config = {
-  appRoot: __dirname // required config
-};
 
-SwaggerExpress.create(config, function(err, swaggerExpress) {
-  if (err) { throw err; }
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-  // install middleware
-  swaggerExpress.register(app);
+app.get('/hello',controller.hello)
 
-  var port = process.env.PORT || 10010;
-  app.listen(port);
-
-  if (swaggerExpress.runner.swagger.paths['/hello']) {
-    console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
-  }
-});
+app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
