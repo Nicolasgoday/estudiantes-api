@@ -59,6 +59,42 @@ paths:
         default:
           description: Error
           schema:
+            $ref: "#/definitions/ErrorResponse"     
+  /baja:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: estudiante
+    get:
+      description: Returns 'Hello' to the caller
+      # used as the method name of the controller
+      operationId: baja
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+  /modificar:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: estudiante
+    get:
+      description: Returns 'Hello' to the caller
+      # used as the method name of the controller
+      operationId: modificar
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
             $ref: "#/definitions/ErrorResponse"           
   /swagger:
     x-swagger-pipe: swagger_raw

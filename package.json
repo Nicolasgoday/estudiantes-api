@@ -9,6 +9,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "mysql": "^2.18.1",
     "odbc": "^2.3.5",
     "swagger-express-mw": "^0.1.0"
   },

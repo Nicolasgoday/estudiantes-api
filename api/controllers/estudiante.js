@@ -5,29 +5,117 @@
 */
 
 var util = require('util');
-const odbc = require('odbc');
+var mysql = require('mysql');
+
 const datasource = process.env.DATASOURCE || 'DSN=test2';
 
 module.exports = {
   alta: (req, res) => {
     console.log( Date() + ": /alta" );  
     try {
-        console.log(JSON.stringify(req.body, null, 0))
-        console.log(datasource)
-        const cursor = odbc.connect('DSN=test2',(error, cursor)=>{              
-          cursor.query('SELECT * FROM estudiante.estudiante',
-          (error, result)=>{
-            if(error){
-              return res.send("<strong>Cliente creado exitosamente!</strong>")
-            }else{
-              return res.send(result)
-            }  
+        var con = mysql.createConnection({
+          host: "localhost",
+          database : 'estudiante',
+          user: "root",
+          password: "password",
+          insecureAuth : true
+        });
+        con.connect(function(err) {
+          if (err) throw err;
+          console.log("Connected!");
+          con.query('INSERT INTO `estudiante`.`estudiante` (`nombre`,`apellido`,`dni`,`mail`) VALUES ("nombre","apellido","32222222","mail@mail.com");'
+          , function (err, result) {        
+            if (err) throw err;
+            console.log("Result: " + result);
+            return res.send(result)
           });
         });
-    } catch (e) {
+    }
+    catch (e) {
         console.error( e )
         res.status( 500 )
         res.send( e )
+    }
+  },
+  baja: (req, res) => {
+    console.log( Date() + ": /baja" );  
+    try {
+      var con = mysql.createConnection({
+        host: "localhost",
+        database : 'estudiante',
+        user: "root",
+        password: "password",
+        insecureAuth : true
+      });
+      con.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        con.query('DELETE FROM `estudiante`.`estudiante` WHERE idEstudiante=4;'
+        , function (err, result) {        
+          if (err) throw err;
+          console.log("Result: " + result);
+          return res.send(result)
+        });
+      });
+  }
+  catch (e) {
+      console.error( e )
+      res.status( 500 )
+      res.send( e )
+  }
+},
+  modificar: (req, res) => {
+    console.log( Date() + ": /modificar" );  
+    try {
+      var con = mysql.createConnection({
+        host: "localhost",
+        database : 'estudiante',
+        user: "root",
+        password: "password",
+        insecureAuth : true
+      });
+      con.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        con.query('UPDATE `estudiante`.`estudiante` SET `nombre` = "nombrediferente", `apellido` = "apediferente", `dni` = "123456",`mail` = "otromail@mail.com" WHERE `idEstudiante` = 4;'
+        , function (err, result) {        
+          if (err) throw err;
+          console.log("Result: " + result);
+          return res.send(result)
+        });
+      });
+  }
+  catch (e) {
+      console.error( e )
+      res.status( 500 )
+      res.send( e )
+    }
+  },
+  traerAnalitico: (req, res) => {
+    console.log( Date() + ": /traerAnalitico" );  
+    try {
+      var con = mysql.createConnection({
+        host: "localhost",
+        database : 'estudiante',
+        user: "root",
+        password: "password",
+        insecureAuth : true
+      });
+      con.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        con.query('select * from examenes WHERE `idEstudiante` = 4 and rendido=1;' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
+        , function (err, result) {        
+          if (err) throw err;
+          console.log("Result: " + result);
+          return res.send(result)
+        });
+      });
+  }
+  catch (e) {
+      console.error( e )
+      res.status( 500 )
+      res.send( e )
     }
   }
 };
