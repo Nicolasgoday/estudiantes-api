@@ -1,23 +1,22 @@
-'use strict';
+const path = require('path');
+const express = require('express')
+const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const estudiante = require('./api/controllers/estudiante.js');
 
-var SwaggerExpress = require('swagger-express-mw');
-var app = require('express')();
-module.exports = app; // for testing
+const swaggerDocument = require('./api/swagger/swagger.json');
 
-var config = {
-  appRoot: __dirname // required config
-};
+const port = process.env.PORT || 8080;
+const host = process.env.HOST || '0.0.0.0';
 
-SwaggerExpress.create(config, function(err, swaggerExpress) {
-  if (err) { throw err; }
+const publicRoot = path.resolve(path.join(__dirname, '/'), '');
+const app = express();
 
-  // install middleware
-  swaggerExpress.register(app);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-  var port = process.env.PORT || 10010;
-  app.listen(port);
+app.get('/traerAnalitico',estudiante.traerAnalitico)
+app.get('/traerEstudiante',estudiante.traerEstudiante)
+app.get('/inscribirEstudianteCursada',estudiante.inscribirEstudianteCursada)
 
-  if (swaggerExpress.runner.swagger.paths['/hello']) {
-    console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
-  }
-});
+app.listen(port, host);
+console.log(`Running on http://${host}:${port}/api-docs`);
