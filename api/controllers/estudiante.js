@@ -7,8 +7,12 @@
 var util = require('util');
 var mysql = require('mysql');
 var http = require('http');
-
-const datasource = process.env.DATASOURCE || 'DSN=test2';
+const connectionString = {host: "localhost",
+                          database : 'inscripciones',
+                          user: "root",
+                          password: "password",
+                          insecureAuth : true
+                          };
 
 module.exports = {
   alta: (req, res) => {
@@ -149,22 +153,16 @@ module.exports = {
   inscribirEstudianteCursada: (req, res) => {
     console.log( Date() + ": /inscribirEstudianteCursada" );  
      try {
-        var con = mysql.createConnection({
-          host: "localhost",
-          database : 'inscripciones',
-          user: "root",
-          password: "password",
-          insecureAuth : true
-        });
+        const coneccionDB = mysql.createConnection(connectionString);
         var request = require('request');
         request('https://administrador-unla.herokuapp.com/api/estudiantes/1', function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log(body) // Print the google web page.
                 var responseJson = JSON.stringify(body);
-                con.connect(function(err) {
+                coneccionDB.connect(function(err) {
                   if (err) throw err;
                   console.log("Connected a web!");
-                  con.query('INSERT INTO `inscripciones`.`alumnoscursada`(`datosAlumno`,`Materias_idMaterias`,`Materias_Carreras_idCarreras`)' +
+                  coneccionDB.query('INSERT INTO `inscripciones`.`alumnoscursada`(`datosAlumno`,`Materias_idMaterias`,`Materias_Carreras_idCarreras`)' +
                   'VALUES('+ responseJson +',1,1);' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
                   , function (err, result) {        
                       if (err) throw err;
@@ -178,6 +176,52 @@ module.exports = {
              }
         })
        
+  }
+  catch (e) {
+      console.error( e )
+      res.status( 500 )
+      res.send( e )
+    }
+  },
+  traerMateriasParaInscripcion: (req, res) => {
+    console.log( Date() + ": /traerMateriasParaInscripcion" );  
+     try {
+          const coneccionDB = mysql.createConnection(connectionString);
+          coneccionDB.connect(function(err) {
+          if (err) throw err;
+          console.log("Connected a web!");
+          coneccionDB.query('select materias.nombre as materia, curso.idCurso as curso, horario.dia , horario.horarioInicio, JSON_UNQUOTE(datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE(datosDocente->"$.apellido") as apellidoProfesor from inscripciones.materias inner join curso on materias.idMaterias = curso.Materias_idMaterias  inner join horario on inscripciones.horario.Curso_idCurso = curso.idCurso;'       
+            , function (err, result) {        
+              if (err) throw err;
+              console.log("Result: " + result);
+              
+              return res.send(result)
+          });
+      });      
+  }
+  catch (e) {
+      console.error( e )
+      res.status( 500 )
+      res.send( e )
+    }
+  },
+  traerExamenesParaInscripcion: (req, res) => {
+    /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
+    mostrar los días, horarios y docentes asignados*/
+    console.log( Date() + ": /traerExamenesParaInscripcion" );  
+     try {
+        const coneccionDB = mysql.createConnection(connectionString);
+        coneccionDB.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected a web!");
+        coneccionDB.query('select materias.nombre as materia, curso.idCurso as curso, examenes.fecha , examenes.horarioInicio, JSON_UNQUOTE(examenes.docenteAsignado->"$.nombre") as nombreProfesor, JSON_UNQUOTE(examenes.docenteAsignado->"$.apellido") as apellidoProfesor from examenes inner join Materias on examenes.Materias_idMaterias = Materias.idMaterias inner join curso on materias.idMaterias = curso.Materias_idMaterias  ;'       
+          , function (err, result) {        
+            if (err) throw err;
+            console.log("Result: " + result);
+            
+            return res.send(result)
+        });
+      });      
   }
   catch (e) {
       console.error( e )
