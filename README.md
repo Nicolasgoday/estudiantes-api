@@ -4,7 +4,7 @@
 1. Descargar dependencias:
 
          npm install
-
+         npm install request
 2. Correr servicio:
 
          node app.js

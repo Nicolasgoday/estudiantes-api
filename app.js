@@ -17,6 +17,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get('/traerAnalitico',estudiante.traerAnalitico)
 app.get('/traerEstudiante',estudiante.traerEstudiante)
 app.get('/inscribirEstudianteCursada',estudiante.inscribirEstudianteCursada)
+app.get('/traerExamenesParaInscripcion',estudiante.traerExamenesParaInscripcion)
+app.get('/traerMateriasParaInscripcion',estudiante.traerMateriasParaInscripcion)
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/api-docs`);
