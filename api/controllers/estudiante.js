@@ -68,7 +68,7 @@ module.exports = {
       res.status( 500 )
       res.send( e )
   }
-},
+  },
   modificar: (req, res) => {
     console.log( Date() + ": /modificar" );  
     try {
@@ -99,17 +99,12 @@ module.exports = {
   traerAnalitico: (req, res) => {
     console.log( Date() + ": /traerAnalitico" );  
      try {
-        var con = mysql.createConnection({
-          host: "mysql://kv4l0861ryo46pmj:jz5iyomcy0gw8fo5@durvbryvdw2sjcm5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/zubjgw8k5txg3o9x",
-          database : 'zubjgw8k5txg3o9x',
-          user: "kv4l0861ryo46pmj",
-          password: "jz5iyomcy0gw8fo5",
-          insecureAuth : true
-        });
-      con.connect(function(err) {
+        var idEstudiante = req.query.idEstudiante
+        const coneccionDB = mysql.createConnection(connectionString);
+        coneccionDB.connect(function(err) {
         if (err) throw err;
         console.log("Connected!");
-        con.query('select * from examenes WHERE `idEstudiante` = 4 and rendido=1;' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
+        coneccionDB.query('SELECT * FROM inscripciones.alumnosexamenfinal where asistencia=1 and  JSON_UNQUOTE(inscripciones.alumnosexamenfinal.datosAlumno->"$.id") = ' +  idEstudiante + ';' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
         , function (err, result) {        
           if (err) throw err;
           console.log("Result: " + result);
@@ -126,17 +121,11 @@ module.exports = {
   traerEstudiante: (req, res) => {
     console.log( Date() + ": /traerEstudiante" );  
      try {
-        var con = mysql.createConnection({
-          host: "durvbryvdw2sjcm5.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-          database : 'zubjgw8k5txg3o9x',
-          user: "kv4l0861ryo46pmj",
-          password: "jz5iyomcy0gw8fo5",
-          insecureAuth : true
-        });
+      const coneccionDB = mysql.createConnection(connectionString);
       con.connect(function(err) {
         if (err) throw err;
         console.log("Connected a web!");
-        con.query('select * from estudiantes;' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
+        coneccionDB.query('select * from estudiantes where ;' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
         , function (err, result) {        
           if (err) throw err;
           console.log("Result: " + result);
@@ -228,5 +217,83 @@ module.exports = {
       res.status( 500 )
       res.send( e )
     }
+  },
+bajaInscripcionMateria: (req, res) => {
+  console.log( Date() + ": /bajaInscripcionMateria" );  
+   try {
+      var idInscripcion = req.query.idInscripcion
+      const coneccionDB = mysql.createConnection(connectionString);
+      coneccionDB.connect(function(err) {
+      if (err) throw err;
+      coneccionDB.query('DELETE FROM `inscripciones`.`alumnoscursada` WHERE idalumnosCursada = ' + idInscripcion + ';'
+        , function (err, result) {        
+          if (err) throw err;
+          console.log("Result: " + result);
+          
+          return res.send(result)
+      });
+    });      
+}
+catch (e) {
+    console.error( e )
+    res.status( 500 )
+    res.send( e )
   }
+},
+bajaInscripcionExamen: (req, res) => {
+  console.log( Date() + ": /bajaInscripcionExamen" );  
+   try {
+      var idInscripcion = req.query.idInscripcion
+      const coneccionDB = mysql.createConnection(connectionString);
+      coneccionDB.connect(function(err) {
+      if (err) throw err;
+      coneccionDB.query('DELETE FROM `inscripciones`.`alumnosexamenfinal` WHERE idInscriptosExamen = ' + idInscripcion + ';'
+        , function (err, result) {        
+          if (err) throw err;
+          console.log("Result: " + result);
+          
+          return res.send(result)
+      });
+    });      
+}
+catch (e) {
+    console.error( e )
+    res.status( 500 )
+    res.send( e )
+  }
+},
+crearAnaliticoPDF: (req, res) => {
+  console.log( Date() + ": /crearAnaliticoPDF" );  
+   try {
+      var idEstudiante = req.query.idEstudiante
+      const coneccionDB = mysql.createConnection(connectionString);
+      coneccionDB.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+      coneccionDB.query('SELECT * FROM inscripciones.alumnosexamenfinal where asistencia=1 and  JSON_UNQUOTE(inscripciones.alumnosexamenfinal.datosAlumno->"$.id") = ' +  idEstudiante + ';' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
+      , function (err, result) {        
+        if (err) throw err;
+        const pdf = require('html-pdf');
+        console.log("Result: " + result);
+        const content = `<h1>Título en el PDF creado con el paquete html-pdf</h1><p>Generando un PDF con un HTML sencillo ` + result + '</p>';
+        pdf.create(content).toFile('./html-pdf.pdf', function(err, res) {
+          if (err){
+              console.log(err);
+          } else {
+              console.log(res);
+          }  
+        });
+      });
+    });
+  }
+  catch (e) {
+    console.error( e )
+    res.status( 500 )
+    res.send( e )
+  }
+}
 };
+
+
+
+

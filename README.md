@@ -5,6 +5,8 @@
 
          npm install
          npm install request
+         npm install html-pdf
+
 2. Correr servicio:
 
          node app.js

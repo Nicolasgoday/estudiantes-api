@@ -19,6 +19,9 @@ app.get('/traerEstudiante',estudiante.traerEstudiante)
 app.get('/inscribirEstudianteCursada',estudiante.inscribirEstudianteCursada)
 app.get('/traerExamenesParaInscripcion',estudiante.traerExamenesParaInscripcion)
 app.get('/traerMateriasParaInscripcion',estudiante.traerMateriasParaInscripcion)
+app.get('/bajaInscripcionMateria',estudiante.bajaInscripcionMateria)
+app.get('/bajaInscripcionExamen',estudiante.bajaInscripcionExamen)
+app.get('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/api-docs`);
