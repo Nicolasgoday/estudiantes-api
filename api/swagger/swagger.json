@@ -59,6 +59,153 @@
         }
       }
     },
+    "/traerAnalitico": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "traerAnalitico",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/inscribirEstudianteCursada": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "inscribirEstudianteCursada",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },    
+    "/traerMateriasParaInscripcion": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "traerMateriasParaInscripcion",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/traerExamenesParaInscripcion": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "traerExamenesParaInscripcion",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/bajaInscripcionMateria": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "bajaInscripcionMateria",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/bajaInscripcionExamen": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "bajaInscripcionExamen",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/crearAnaliticoPDF": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "crearAnaliticoPDF",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
     "/swagger": {
       "x-swagger-pipe": "swagger_raw"
     }
