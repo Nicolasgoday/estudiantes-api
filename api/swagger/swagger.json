@@ -7,7 +7,6 @@
   "host": "estudiante-app.herokuapp.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "consumes": [
