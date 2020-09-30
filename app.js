@@ -13,9 +13,10 @@ const host = process.env.HOST || '0.0.0.0';
 const publicRoot = path.resolve(path.join(__dirname, '/'), '');
 const app = express();
 
-if(!process.env.NODE_ESTUDIANTE=="dev"){
+if(process.env.NODE_ESTUDIANTE=="dev"){
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));
-}else{
+}
+if(process.env.NODE_ESTUDIANTE=="prod"){
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));    
 }
 
