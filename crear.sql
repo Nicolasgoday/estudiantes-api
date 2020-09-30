@@ -1,4 +1,3 @@
-USE `pod3i2eblsvv0rz1`;
 -- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
 --
 -- Host: localhost    Database: inscripciones
