@@ -8,15 +8,14 @@ var util = require('util');
 var mysql = require('mysql2');
 var http = require('http');
 var hostWeb = '18.213.84.48';
-var  databaseWeb = process.env['NODE_ESTUDIANTE_DB'];
-var userWeb = process.env['NODE_ESTUDIANTE_USER'];
-var passwordWeb = process.env['NODE_ESTUDIANTE_PASSWORD'];
+const host = process.env['NODE_ESTUDIANTE_HOST'];
+const database = process.env['NODE_ESTUDIANTE_DB'];
+const user = process.env['NODE_ESTUDIANTE_USER'];
+const password = process.env['NODE_ESTUDIANTE_PASSWORD'];
+const port =process.env['NODE_ESTUDIANTE_DBPORT'];
 
-const connectionString = {host: hostWeb,
-                          database: databaseWeb,
-                          user: userWeb,
-                          password: passwordWeb,
-                          };
+const connectionString = {host:host,port:port, user:user, password:password, database:database};
+
 module.exports = {
   alta: (req, res) => {
     console.log( Date() + ": /alta" );  
@@ -154,7 +153,7 @@ module.exports = {
                 coneccionDB.connect(function(err) {
                   if (err) throw err;
                   console.log("Connected a web!");
-                  coneccionDB.query('INSERT INTO '+ databaseWeb +'.`alumnoscursada`('+ databaseWeb +'.alumnoscursada.`datosAlumno`,'+ databaseWeb +'.alumnoscursada.`Materias_idMaterias`,'+ databaseWeb +'.alumnoscursada.`Materias_Carreras_idCarreras`)' +
+                  coneccionDB.query('INSERT INTO '+ database +'.`alumnoscursada`('+ database +'.alumnoscursada.`datosAlumno`,'+ database +'.alumnoscursada.`Materias_idMaterias`,'+ database +'.alumnoscursada.`Materias_Carreras_idCarreras`)' +
                   'VALUES('+ responseJson +',1,1);' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
                   , function (err, result) {        
                       if (err) throw err;
@@ -183,7 +182,7 @@ module.exports = {
           coneccionDB.connect(function(err) {
           if (err) throw err;
           console.log("Connected a web!");        
-          coneccionDB.query('select ' + databaseWeb + '.materias.nombre as materia, '+databaseWeb + '.curso.idCurso as curso, '+databaseWeb + '.horario.dia , '+databaseWeb + '.horario.horarioInicio, JSON_UNQUOTE('+databaseWeb + '.curso.datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE('+databaseWeb + '.curso.datosDocente->"$.apellido") as apellidoProfesor from '+databaseWeb + '.materias inner join curso on '+databaseWeb + '.materias.idMaterias = '+databaseWeb + '.curso.Materias_idMaterias  inner join '+databaseWeb + '.horario on '+databaseWeb + '.horario.Curso_idCurso = '+databaseWeb + '.curso.idCurso;'       
+          coneccionDB.query('select ' + database + '.materias.nombre as materia, '+database + '.curso.idCurso as curso, '+database + '.horario.dia , '+database + '.horario.horarioInicio, JSON_UNQUOTE('+database + '.curso.datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE('+database + '.curso.datosDocente->"$.apellido") as apellidoProfesor from '+database + '.materias inner join curso on '+database + '.materias.idMaterias = '+database + '.curso.Materias_idMaterias  inner join '+database + '.horario on '+database + '.horario.Curso_idCurso = '+database + '.curso.idCurso;'       
             , function (err, result) {        
               if (err) throw err;
               console.log("Result: " + result);
@@ -207,7 +206,7 @@ module.exports = {
         coneccionDB.connect(function(err) {
         if (err) throw err;
         console.log("Connected a web!");
-        coneccionDB.query('select '+ databaseWeb +'.materias.nombre as materia, '+ databaseWeb +'.curso.idCurso as curso, '+ databaseWeb +'.examenes.fecha , '+ databaseWeb +'.examenes.horarioInicio, JSON_UNQUOTE('+ databaseWeb +'.examenes.docenteAsignado->"$.nombre") as nombreProfesor, JSON_UNQUOTE('+ databaseWeb +'.examenes.docenteAsignado->"$.apellido") as apellidoProfesor from '+ databaseWeb +'.examenes inner join '+ databaseWeb +'.materias on '+ databaseWeb +'.examenes.Materias_idMaterias = '+ databaseWeb +'.materias.idMaterias inner join '+ databaseWeb +'.curso on '+ databaseWeb +'.materias.idMaterias = '+ databaseWeb +'.curso.Materias_idMaterias  ;'       
+        coneccionDB.query('select '+ database +'.materias.nombre as materia, '+ database +'.curso.idCurso as curso, '+ database +'.examenes.fecha , '+ database +'.examenes.horarioInicio, JSON_UNQUOTE('+ database +'.examenes.docenteAsignado->"$.nombre") as nombreProfesor, JSON_UNQUOTE('+ database +'.examenes.docenteAsignado->"$.apellido") as apellidoProfesor from '+ database +'.examenes inner join '+ database +'.materias on '+ database +'.examenes.Materias_idMaterias = '+ database +'.materias.idMaterias inner join '+ database +'.curso on '+ database +'.materias.idMaterias = '+ database +'.curso.Materias_idMaterias  ;'       
           , function (err, result) {        
             if (err) throw err;
             console.log("Result: " + result);
@@ -229,7 +228,7 @@ bajaInscripcionMateria: (req, res) => {
       const coneccionDB = mysql.createConnection(connectionString);
       coneccionDB.connect(function(err) {
       if (err) throw err;
-      coneccionDB.query('DELETE FROM '+ databaseWeb +'.`alumnoscursada` WHERE '+ databaseWeb +'idalumnosCursada = ' + idInscripcion + ';'
+      coneccionDB.query('DELETE FROM '+ database +'.`alumnoscursada` WHERE '+ database +'idalumnosCursada = ' + idInscripcion + ';'
         , function (err, result) {        
           if (err) throw err;
           console.log("Result: " + result);
@@ -251,7 +250,7 @@ bajaInscripcionExamen: (req, res) => {
       const coneccionDB = mysql.createConnection(connectionString);
       coneccionDB.connect(function(err) {
       if (err) throw err;
-      coneccionDB.query('DELETE FROM '+ databaseWeb +'.`alumnosexamenfinal` WHERE '+ databaseWeb +'idInscriptosExamen = ' + idInscripcion + ';'
+      coneccionDB.query('DELETE FROM '+ database +'.`alumnosexamenfinal` WHERE '+ database +'idInscriptosExamen = ' + idInscripcion + ';'
         , function (err, result) {        
           if (err) throw err;
           console.log("Result: " + result);
@@ -274,7 +273,7 @@ crearAnaliticoPDF: (req, res) => {
       coneccionDB.connect(function(err) {
       if (err) throw err;
       console.log("Connected!");
-      coneccionDB.query('SELECT * FROM ' + databaseWeb + '.alumnosexamenfinal where ' + databaseWeb + '.alumnosexamenfinal.asistencia=1 and  JSON_UNQUOTE(' + databaseWeb + '.alumnosexamenfinal.datosAlumno->"$.id") = ' +  idEstudiante + ';' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
+      coneccionDB.query('SELECT * FROM ' + database + '.alumnosexamenfinal where ' + database + '.alumnosexamenfinal.asistencia=1 and  JSON_UNQUOTE(' + database + '.alumnosexamenfinal.datosAlumno->"$.id") = ' +  idEstudiante + ';' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
       , function (err, result) {        
         if (err) throw err;
         const pdf = require('html-pdf');
