@@ -4,6 +4,7 @@ services:
         build: .
         image: estudiantes-api
         environment:
+            - NODE_ESTUDIANTE=dev
             - NODE_ESTUDIANTE_HOST=estudiantes-mysql
             - NODE_ESTUDIANTE_DB=inscripciones
             - NODE_ESTUDIANTE_USER=plataforma
