@@ -11,10 +11,15 @@
     "express": "^4.17.1",
     "html-pdf": "^2.2.0",
     "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "node-mysql-import": "^1.1.0",
     "request": "^2.88.2",
     "swagger-ui-express": "4.1.4"
   },
   "scripts": {
     "start": "node app.js"
+  },
+  "devDependencies": {
+    "mysql-import": "^4.0.24"
   }
 }
