@@ -1,0 +1,12 @@
+version: '2'
+services:
+  estudiantes-mysql:
+    image: mysql:8.0.20
+    environment:
+      - MYSQL_DATABASE=inscripciones
+      - MYSQL_USER=plataforma
+      - MYSQL_PASSWORD=plataforma
+      - MYSQL_ROOT_PASSWORD=plataforma
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password

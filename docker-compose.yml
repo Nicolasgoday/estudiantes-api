@@ -1,6 +1,17 @@
 version: '2'
 services:
-    web:
+    estudiantes-api:
         build: .
+        image: estudiantes-api
+        environment:
+            - NODE_ESTUDIANTE_HOST=estudiantes-mysql
+            - NODE_ESTUDIANTE_DB=inscripciones
+            - NODE_ESTUDIANTE_USER=plataforma
+            - NODE_ESTUDIANTE_PASSWORD=plataforma
+            - NODE_ESTUDIANTE_DBPORT=3306
         ports:
             - "8080:8080"        
+    estudiantes-mysql:
+     extends:
+        file: mysql.yml
+        service: estudiantes-mysql

@@ -13,11 +13,13 @@
 
 ## Docker local:
 
-1. Compilar:
+1. Api y MySQL:
 
-         docker-compose build
+         docker-compose up -d
 
-2. Correr:
+2. Solo MySQL:
 
-         docker-compose up
+         docker-compose -f mysql.yml up -d
+
+
 

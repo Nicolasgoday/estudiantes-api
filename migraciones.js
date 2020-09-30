@@ -6,8 +6,8 @@ const host = process.env['NODE_ESTUDIANTE_HOST'];
 const database = process.env['NODE_ESTUDIANTE_DB'];
 const user = process.env['NODE_ESTUDIANTE_USER'];
 const password = process.env['NODE_ESTUDIANTE_PASSWORD'];
-const port ="3306";
-const importer =  new Importer({host,port, user, password, database});
+const port =process.env['NODE_ESTUDIANTE_DBPORT'];
+const importer =  new Importer({host:host,port:port, user:user, password:password, database:database});
 
 
 importer.import('crear.sql').then(()=>{
