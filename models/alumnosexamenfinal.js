@@ -1,15 +1,15 @@
 /* jshint indent: 1 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	return sequelize.define('alumnosexamenfinal', {
 		idInscriptosExamen: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			field: 'idInscriptosExamen'
 		},
 		examenesIdExamenes: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			references: {
 				model: 'examenes',
@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'Examenes_idExamenes'
 		},
 		examenesMateriasIdMaterias: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			references: {
 				model: 'examenes',
@@ -27,7 +27,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'Examenes_Materias_idMaterias'
 		},
 		examenesMateriasCarrerasIdCarreras: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			references: {
 				model: 'examenes',
@@ -36,22 +36,22 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'Examenes_Materias_Carreras_idCarreras'
 		},
 		datosAlumno: {
-			type: DataTypes.JSON,
+			type: Sequelize.JSON,
 			allowNull: true,
 			field: 'datosAlumno'
 		},
 		nota: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: true,
 			field: 'nota'
 		},
 		asistencia: {
-			type: DataTypes.BOOLEAN,
+			type: Sequelize.BOOLEAN,
 			allowNull: true,
 			field: 'asistencia'
 		},
 		recordatorio: {
-			type: DataTypes.BOOLEAN,
+			type: Sequelize.BOOLEAN,
 			allowNull: true,
 			defaultValue: '0',
 			field: 'recordatorio'

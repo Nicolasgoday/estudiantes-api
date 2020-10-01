@@ -34,6 +34,16 @@ module.exports = {
           key: 'idCurso'
         },
         field: 'Curso_idCurso'
+      },
+      createdAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'createdAt'
+      },
+      updatedAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'updatedAt'
       }
     }); 
 
@@ -91,6 +101,16 @@ module.exports = {
         allowNull: true,
         defaultValue: '0',
         field: 'recordatorio'
+      },
+      createdAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'createdAt'
+      },
+      updatedAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'updatedAt'
       }
     });
     

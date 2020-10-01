@@ -24,7 +24,17 @@ module.exports = {
 				key: 'idMaterias'
 			},
 			field: 'Materias_idMaterias'
-		}
+		},
+    createdAt: {
+      type: Sequelize.DATEONLY,
+      allowNull: true,
+      field: 'createdAt'
+    },
+    updatedAt: {
+      type: Sequelize.DATEONLY,
+      allowNull: true,
+      field: 'updatedAt'
+    }
 	});
 
   },

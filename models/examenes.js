@@ -1,45 +1,45 @@
 /* jshint indent: 1 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	return sequelize.define('examenes', {
 		idExamenes: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			field: 'idExamenes'
 		},
 		fecha: {
-			type: DataTypes.DATEONLY,
+			type: Sequelize.DATEONLY,
 			allowNull: true,
 			field: 'fecha'
 		},
 		horarioInicio: {
-			type: DataTypes.TIME,
+			type: Sequelize.TIME,
 			allowNull: true,
 			field: 'horarioInicio'
 		},
 		horarioFin: {
-			type: DataTypes.TIME,
+			type: Sequelize.TIME,
 			allowNull: true,
 			field: 'horarioFin'
 		},
 		docenteAsignado: {
-			type: DataTypes.JSON,
+			type: Sequelize.JSON,
 			allowNull: true,
 			field: 'docenteAsignado'
 		},
 		inicioInscripcion: {
-			type: DataTypes.DATEONLY,
+			type: Sequelize.DATEONLY,
 			allowNull: true,
 			field: 'inicioInscripcion'
 		},
 		finInscripcion: {
-			type: DataTypes.STRING(45),
+			type: Sequelize.STRING(45),
 			allowNull: true,
 			field: 'finInscripcion'
 		},
 		materiasIdMaterias: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			references: {
@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'Materias_idMaterias'
 		},
 		materiasCarrerasIdCarreras: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			references: {

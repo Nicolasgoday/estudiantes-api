@@ -32,4 +32,4 @@
 
          sequelize db:migrate
 
-         
+https://bezkoder.com/node-js-express-sequelize-mysql/         

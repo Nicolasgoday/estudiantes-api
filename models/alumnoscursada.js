@@ -1,25 +1,25 @@
 /* jshint indent: 1 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	return sequelize.define('alumnoscursada', {
 		idalumnosCursada: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			field: 'idalumnosCursada'
 		},
 		datosAlumno: {
-			type: DataTypes.JSON,
+			type: Sequelize.JSON,
 			allowNull: true,
 			field: 'datosAlumno'
 		},
 		notaCursada: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: true,
 			field: 'notaCursada'
 		},
 		materiasIdMaterias: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			references: {
@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'Materias_idMaterias'
 		},
 		materiasCarrerasIdCarreras: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			references: {
@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
 			field: 'Materias_Carreras_idCarreras'
 		},
 		recordatorio: {
-			type: DataTypes.BOOLEAN,
+			type: Sequelize.BOOLEAN,
 			allowNull: true,
 			defaultValue: '0',
 			field: 'recordatorio'

@@ -1,20 +1,20 @@
 /* jshint indent: 1 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	return sequelize.define('curso', {
 		idCurso: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			field: 'idCurso'
 		},
 		datosDocente: {
-			type: DataTypes.JSON,
+			type: Sequelize.JSON,
 			allowNull: true,
 			field: 'datosDocente'
 		},
 		materiasIdMaterias: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			references: {

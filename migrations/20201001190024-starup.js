@@ -18,6 +18,16 @@ module.exports = {
         type: Sequelize.STRING(45),
         allowNull: true,
         field: 'departamento'
+      },
+      createdAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'createdAt'
+      },
+      updatedAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'updatedAt'
       }
     })
 
@@ -63,6 +73,16 @@ module.exports = {
           key: 'idCarreras'
         },
         field: 'Carreras_idCarreras'
+      },
+      createdAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'createdAt'
+      },
+      updatedAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'updatedAt'
       }
     })
 
@@ -108,6 +128,16 @@ module.exports = {
         allowNull: true,
         defaultValue: '0',
         field: 'recordatorio'
+      },
+      createdAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'createdAt'
+      },
+      updatedAt: {
+        type: Sequelize.DATEONLY,
+        allowNull: true,
+        field: 'updatedAt'
       }
     });
   },

@@ -1,20 +1,20 @@
 /* jshint indent: 1 */
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
 	return sequelize.define('carreras', {
 		idCarreras: {
-			type: DataTypes.INTEGER,
+			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			field: 'idCarreras'
 		},
 		nombre: {
-			type: DataTypes.STRING(45),
+			type: Sequelize.STRING(45),
 			allowNull: true,
 			field: 'nombre'
 		},
 		departamento: {
-			type: DataTypes.STRING(45),
+			type: Sequelize.STRING(45),
 			allowNull: true,
 			field: 'departamento'
 		}
