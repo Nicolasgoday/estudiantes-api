@@ -22,4 +22,14 @@
          docker-compose -f mysql.yml up -d
 
 
+## Migraciones 
 
+1. Con MySQL Import:
+
+         node migracopmes.js
+
+1. Con Sequilize:
+
+         sequelize db:migrate
+
+         
