@@ -8,18 +8,19 @@ const carrera = require('./controller/carreraController.js');
 const swaggerDocument = require('./swagger/swagger.json');
 const swaggerDocumentDev = require('./swagger/swagger-dev.json');
 
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/config/config.js')[env];
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || '0.0.0.0';
 
 const publicRoot = path.resolve(path.join(__dirname, '/'), '');
 const app = express();
 
-//Equivalente a ejecutar migraciones
-//const db = require("./models");
-//db.sequelize.sync();
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));
-
+if (config.use_env_variable) {
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+}else{
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));    
+}
 
 
 app.get('/traerAnalitico',estudiante.traerAnalitico)
@@ -35,7 +36,7 @@ app.post('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
 // Create a new Carrera
 app.post("/carrera", carrera.create);
 // Lista carreras
-app.get("/carreras", carrera.findAll);
+app.get("/carrera", carrera.findAll);
 // Carrera por id
 app.get("/carrera/:id", carrera.findOne);
 // Update carrera por id
