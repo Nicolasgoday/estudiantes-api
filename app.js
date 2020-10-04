@@ -44,5 +44,16 @@ app.put("/carrera/:id", carrera.update);
 // Delete Carrera por id
 app.delete("/carrera/:id", carrera.delete);
 
+// Crear un nuevo horario
+app.post("/horario", carrera.create);
+// Lista horarios
+app.get("/horario", carrera.findAll);
+// horarios por id
+app.get("/horario/:id", carrera.findOne);
+// Update horarios por id
+app.put("/horario/:id", carrera.update);
+// Delete horarios por id
+app.delete("/horario/:id", carrera.delete);
+
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
