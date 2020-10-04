@@ -2,46 +2,49 @@ const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
+const inscripciones = require('./controller/inscripciones.js');
+const examenes = require('./controller/examenes.js');
 const estudiante = require('./controller/estudiante.js');
-const carrera = require('./controller/carreraController.js');
+const carrera = require('./controller/carrera.js');
 
 const swaggerDocument = require('./swagger/swagger.json');
 const swaggerDocumentDev = require('./swagger/swagger-dev.json');
 
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/config/config.js')[env];
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || '0.0.0.0';
 
 const publicRoot = path.resolve(path.join(__dirname, '/'), '');
 const app = express();
 
-if (process.env.NODE_ENV =="production") {
+if (env =="production") {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }else{
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));    
 }
 
 
+//estudiante
+app.get('/traerEstudiante',estudiante.traerEstudiante)
 app.get('/traerAnalitico',estudiante.traerAnalitico)
-app.get('/modificarDatosContactoEstudiante',estudiante.modificarDatosContactoEstudiante)
-app.post('/inscribirEstudianteCursada',estudiante.inscribirEstudianteCursada) 
-app.post('/inscribirEstudianteExamen',estudiante.inscribirEstudianteExamen)
-app.get('/traerExamenesParaInscripcion',estudiante.traerExamenesParaInscripcion)
-app.get('/traerMateriasParaInscripcion',estudiante.traerMateriasParaInscripcion)
-app.delete('/bajaInscripcionMateria',estudiante.bajaInscripcionMateria)
-app.delete('/bajaInscripcionExamen',estudiante.bajaInscripcionExamen)
 app.post('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
+app.get('/modificarDatosContactoEstudiante',estudiante.modificarDatosContactoEstudiante)
 
-// Create a new Carrera
+//inscripciones cursada
+app.post('/inscribirEstudianteCursada',inscripciones.inscribirEstudianteCursada) 
+app.get('/traerMateriasParaInscripcion',inscripciones.traerMateriasParaInscripcion)
+app.delete('/bajaInscripcionMateria',inscripciones.bajaInscripcionMateria)
+//inscripciones examenes
+app.post('/inscribirEstudianteExamen',examenes.inscribirEstudianteExamen)
+app.get('/traerExamenesParaInscripcion',examenes.traerExamenesParaInscripcion)
+app.delete('/bajaInscripcionExamen',examenes.bajaInscripcionExamen)
+
+
+// ABM Carreras
 app.post("/carrera", carrera.create);
-// Lista carreras
 app.get("/carrera", carrera.findAll);
-// Carrera por id
 app.get("/carrera/:id", carrera.findOne);
-// Update carrera por id
 app.put("/carrera/:id", carrera.update);
-// Delete Carrera por id
 app.delete("/carrera/:id", carrera.delete);
 
 app.listen(port, host);

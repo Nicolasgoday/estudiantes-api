@@ -20,13 +20,22 @@
     "/traerEstudiante": {
       "x-swagger-router-controller": "estudiante",
       "get": {
-        "description": "Returns 'Hello' to the caller",
+        "description": "RPC de estudiantes",
         "operationId": "traerEstudiante",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id del estudiante a buscar",
+            "required": true,
+            "type": "integer"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/HelloWorldResponse"
+              "$ref": "#/definitions/Estudiante"
             }
           },
           "default": {
@@ -41,13 +50,13 @@
     "/modificarDatosContactoEstudiante": {
       "x-swagger-router-controller": "estudiante",
       "get": {
-        "description": "Returns 'Hello' to the caller",
+        "description": "modificar datos contacto estudiante",
         "operationId": "inscribirEstudianteCursada",
         "responses": {
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/HelloWorldResponse"
+              "$ref": "#/definitions/Estudiante"
             }
           },
           "default": {
@@ -417,7 +426,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/HelloWorldResponse"
+              "$ref": "#/definitions/Estudiante"
             }
           },
           "default": {
@@ -434,12 +443,36 @@
     }
   },
   "definitions": {
-    "HelloWorldResponse": {
-      "required": [
-        "message"
+    "Estudiante":{
+      "required":[        
+        "id",
+        "nombre",
+        "apellido",
+        "dni",
+        "telefono", 
+        "email",
+        "domicilio"
       ],
-      "properties": {
-        "message": {
+      "properties":{
+        "id":{
+          "type": "integer"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "apellido": {
+          "type": "string"
+        },
+        "dni": {
+          "type": "string"
+        },
+        "domicilio": {
+          "type": "string"
+        },
+        "telefono": {
+          "type": "string"
+        },
+        "email": {
           "type": "string"
         }
       }

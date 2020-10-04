@@ -4,18 +4,18 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Carrera
 exports.create = (req, res) => {
-    /* Validate request
+    /* Validate request*/
     if (!req.body.title) {
         res.status(400).send({
-          message: "Content can not be empty!"
+          message: "El body no puede estar vacio"
         });
         return;
       }
-    */
+    
       // Create a Carrera
       const carrera = {
-        nombre: "Sistemas Distribuidos",
-        departamento: "Desarrollo Productivo y Técnologico",
+        nombre: req.body.nombre,
+        departamento: req.body.departamento,
         createdAt: new Date(),
         updatedAt: new Date()
       };
