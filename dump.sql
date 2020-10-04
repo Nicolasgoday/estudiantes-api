@@ -36,7 +36,7 @@ CREATE TABLE `alumnoscursada` (
   KEY `Materias_Carreras_idCarreras` (`Materias_Carreras_idCarreras`),
   CONSTRAINT `alumnoscursada_ibfk_1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`),
   CONSTRAINT `alumnoscursada_ibfk_2` FOREIGN KEY (`Materias_Carreras_idCarreras`) REFERENCES `materias` (`Carreras_idCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `alumnosexamenfinal` (
   CONSTRAINT `alumnosexamenfinal_ibfk_1` FOREIGN KEY (`Examenes_idExamenes`) REFERENCES `examenes` (`idExamenes`),
   CONSTRAINT `alumnosexamenfinal_ibfk_2` FOREIGN KEY (`Examenes_Materias_idMaterias`) REFERENCES `examenes` (`Materias_idMaterias`),
   CONSTRAINT `alumnosexamenfinal_ibfk_3` FOREIGN KEY (`Examenes_Materias_Carreras_idCarreras`) REFERENCES `examenes` (`Materias_Carreras_idCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `carreras` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idCarreras`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `curso` (
   PRIMARY KEY (`idCurso`,`Materias_idMaterias`),
   KEY `Materias_idMaterias` (`Materias_idMaterias`),
   CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,7 +167,7 @@ CREATE TABLE `examenes` (
   KEY `Materias_Carreras_idCarreras` (`Materias_Carreras_idCarreras`),
   CONSTRAINT `examenes_ibfk_1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`),
   CONSTRAINT `examenes_ibfk_2` FOREIGN KEY (`Materias_Carreras_idCarreras`) REFERENCES `materias` (`Carreras_idCarreras`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +198,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`idHorario`,`Curso_idCurso`),
   KEY `Curso_idCurso` (`Curso_idCurso`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`Curso_idCurso`) REFERENCES `curso` (`idCurso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,7 +231,7 @@ CREATE TABLE `materias` (
   PRIMARY KEY (`idMaterias`,`Carreras_idCarreras`),
   KEY `Carreras_idCarreras` (`Carreras_idCarreras`),
   CONSTRAINT `materias_ibfk_1` FOREIGN KEY (`Carreras_idCarreras`) REFERENCES `carreras` (`idCarreras`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
