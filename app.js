@@ -16,7 +16,7 @@ const host = process.env.HOST || '0.0.0.0';
 const publicRoot = path.resolve(path.join(__dirname, '/'), '');
 const app = express();
 
-if (config.use_env_variable) {
+if (process.env.NODE_ENV =="production") {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }else{
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));    

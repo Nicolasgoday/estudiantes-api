@@ -4,10 +4,9 @@
     "version": "0.0.1",
     "title": "Estudiantes api"
   },
-  "host": "localhost:8080",
+  "host": "estudiante-app.herokuapp.com",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "consumes": [
