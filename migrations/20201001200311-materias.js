@@ -16,6 +16,7 @@ updatedAt datetime
 		idMaterias: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
+			autoIncrement: true, 
 			primaryKey: true,
 			field: 'idMaterias'
 		},

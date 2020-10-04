@@ -5,6 +5,7 @@ module.exports = {
     await queryInterface.createTable('carreras',{
       idCarreras: {
         type: Sequelize.INTEGER,
+        autoIncrement: true, 
         allowNull: false,
         primaryKey: true,
         field: 'idCarreras'
@@ -34,6 +35,7 @@ module.exports = {
      await queryInterface.createTable('examenes',{
      idExamenes: {
        type: Sequelize.INTEGER,
+       autoIncrement: true, 
        allowNull: false,
        primaryKey: true,
        field: 'idExamenes'

@@ -15,9 +15,9 @@ const host = process.env.HOST || '0.0.0.0';
 const publicRoot = path.resolve(path.join(__dirname, '/'), '');
 const app = express();
 
-
-const db = require("./models");
-db.sequelize.sync();
+//Equivalente a ejecutar migraciones
+//const db = require("./models");
+//db.sequelize.sync();
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));
 
@@ -33,7 +33,16 @@ app.delete('/bajaInscripcionMateria',estudiante.bajaInscripcionMateria)
 app.delete('/bajaInscripcionExamen',estudiante.bajaInscripcionExamen)
 app.post('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
 
-app.get('/carrera',carrera.create);
+// Create a new Carrera
+app.post("/carrera", carrera.create);
+// Lista carreras
+app.get("/carreras", carrera.findAll);
+// Carrera por id
+app.get("/carrera/:id", carrera.findOne);
+// Update carrera por id
+app.put("/carrera/:id", carrera.update);
+// Delete Carrera por id
+app.delete("/carrera/:id", carrera.delete);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);

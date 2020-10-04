@@ -6,6 +6,7 @@ module.exports = {
       idCarreras: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         field: 'idCarreras'
       },
@@ -36,6 +37,7 @@ module.exports = {
       idMaterias: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         field: 'idMaterias'
       },

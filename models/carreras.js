@@ -5,6 +5,7 @@ module.exports = function(sequelize, Sequelize) {
 		idCarreras: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
+			autoIncrement: true,
 			primaryKey: true,
 			field: 'idCarreras'
 		},

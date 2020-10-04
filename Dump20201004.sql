@@ -95,7 +95,7 @@ DROP TABLE IF EXISTS `carreras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `carreras` (
-  `idCarreras` int NOT NULL,
+  `idCarreras` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `departamento` varchar(45) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `curso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `curso` (
-  `idCurso` int NOT NULL,
+  `idCurso` int NOT NULL AUTO_INCREMENT,
   `datosDocente` json DEFAULT NULL,
   `Materias_idMaterias` int NOT NULL,
   `createdAt` datetime NOT NULL,
@@ -151,7 +151,7 @@ DROP TABLE IF EXISTS `examenes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `examenes` (
-  `idExamenes` int NOT NULL,
+  `idExamenes` int NOT NULL AUTO_INCREMENT,
   `fecha` date DEFAULT NULL,
   `horarioInicio` time DEFAULT NULL,
   `horarioFin` time DEFAULT NULL,
@@ -188,7 +188,7 @@ DROP TABLE IF EXISTS `horario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `horario` (
-  `idHorario` int NOT NULL,
+  `idHorario` int NOT NULL AUTO_INCREMENT,
   `dia` varchar(10) NOT NULL,
   `horarioInicio` time NOT NULL,
   `horarioFin` time NOT NULL,
@@ -219,7 +219,7 @@ DROP TABLE IF EXISTS `materias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `materias` (
-  `idMaterias` int NOT NULL,
+  `idMaterias` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   `idCarrera` int DEFAULT NULL,
   `Materiascol` varchar(45) DEFAULT NULL,

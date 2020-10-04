@@ -6,6 +6,7 @@ module.exports = {
     await queryInterface.createTable('horario',{
       idHorario: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true,
         field: 'idHorario'

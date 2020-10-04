@@ -6,6 +6,7 @@ module.exports = function(sequelize, Sequelize) {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
+			autoIncrement: true,
 			field: 'idCurso'
 		},
 		datosDocente: {

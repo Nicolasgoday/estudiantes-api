@@ -4,6 +4,7 @@ module.exports = function(sequelize, Sequelize) {
 	return sequelize.define('horario', {
 		idHorario: {
 			type: Sequelize.INTEGER,
+			autoIncrement: true,
 			allowNull: false,
 			primaryKey: true,
 			field: 'idHorario'
