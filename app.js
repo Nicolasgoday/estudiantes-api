@@ -15,7 +15,10 @@ const port = process.env.PORT || 8080;
 const host = process.env.HOST || '0.0.0.0';
 
 const publicRoot = path.resolve(path.join(__dirname, '/'), '');
+const cors = require('cors');
 const app = express();
+app.use(cors());
+
 
 if (env =="production") {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -41,11 +44,11 @@ app.delete('/bajaInscripcionExamen',examenes.bajaInscripcionExamen)
 
 
 // ABM Carreras
-app.post("/carrera", carrera.create);
-app.get("/carrera", carrera.findAll);
-app.get("/carrera/:id", carrera.findOne);
-app.put("/carrera/:id", carrera.update);
-app.delete("/carrera/:id", carrera.delete);
+app.post("/carreras", carrera.create);
+app.get("/carreras", carrera.findAll);
+app.get("/carreras/:id", carrera.findOne);
+app.put("/carreras/:id", carrera.update);
+app.delete("/carreras/:id", carrera.delete);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
