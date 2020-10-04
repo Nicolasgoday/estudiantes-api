@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "plataforma",
-    "password": "plataforma",
+    "username": "root",
+    "password": "password",
     "database": "inscripciones",
     "host": "127.0.0.1",
     "dialect": "mysql"

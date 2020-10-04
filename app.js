@@ -24,13 +24,14 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));
 
 
 app.get('/traerAnalitico',estudiante.traerAnalitico)
-app.get('/traerEstudiante',estudiante.traerEstudiante)
-app.get('/inscribirEstudianteCursada',estudiante.inscribirEstudianteCursada)
+app.get('/modificarDatosContactoEstudiante',estudiante.modificarDatosContactoEstudiante)
+app.post('/inscribirEstudianteCursada',estudiante.inscribirEstudianteCursada) 
+app.post('/inscribirEstudianteExamen',estudiante.inscribirEstudianteExamen)
 app.get('/traerExamenesParaInscripcion',estudiante.traerExamenesParaInscripcion)
 app.get('/traerMateriasParaInscripcion',estudiante.traerMateriasParaInscripcion)
-app.get('/bajaInscripcionMateria',estudiante.bajaInscripcionMateria)
-app.get('/bajaInscripcionExamen',estudiante.bajaInscripcionExamen)
-app.get('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
+app.delete('/bajaInscripcionMateria',estudiante.bajaInscripcionMateria)
+app.delete('/bajaInscripcionExamen',estudiante.bajaInscripcionExamen)
+app.post('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
 
 app.get('/carrera',carrera.create);
 

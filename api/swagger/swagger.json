@@ -37,11 +37,11 @@
         }
       }
     },
-    "/inscribirEstudianteCursada": {
+    "/modificarDatosContactoEstudiante": {
       "x-swagger-router-controller": "estudiante",
       "get": {
         "description": "Returns 'Hello' to the caller",
-        "operationId": "inscribirEstudianteCursada",
+        "operationId": "modificarDatosContactoEstudiante",
         "responses": {
           "200": {
             "description": "Success",
@@ -61,8 +61,17 @@
     "/traerAnalitico": {
       "x-swagger-router-controller": "estudiante",
       "get": {
-        "description": "Returns 'Hello' to the caller",
+        "description": "Devuelve certificado analitico de estudiante solicitadoM",
         "operationId": "traerAnalitico",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "ID of pet that needs to be updated",
+            "required": true,
+            "type": "string"
+          }
+        ],     
         "responses": {
           "200": {
             "description": "Success",
