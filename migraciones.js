@@ -10,7 +10,7 @@ const port =process.env['NODE_ESTUDIANTE_DBPORT'];
 const importer =  new Importer({host:host,port:port, user:user, password:password, database:database});
 
 
-importer.import('Dump20201004.sql').then(()=>{
+importer.import('dump.sql').then(()=>{
   var files_imported = importer.getImported();
   console.log('Esquema Estudiantes API Importado.');
 }).catch(err=>{

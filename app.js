@@ -2,12 +2,11 @@ const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const estudiante = require('./api/controllers/estudiante.js');
+const estudiante = require('./controller/estudiante.js');
+const carrera = require('./controller/carreraController.js');
 
-const carrera = require('./api/carreraController.js');
-
-const swaggerDocument = require('./api/swagger/swagger.json');
-const swaggerDocumentDev = require('./api/swagger/swagger-dev.json');
+const swaggerDocument = require('./swagger/swagger.json');
+const swaggerDocumentDev = require('./swagger/swagger-dev.json');
 
 const port = process.env.PORT || 8080;
 const host = process.env.HOST || '0.0.0.0';

@@ -1,4 +1,4 @@
-{
+module.exports ={
   "development": {
     "username": "plataforma",
     "password": "plataforma",
@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username":  process.env.NODE_ESTUDIANTE_USER,
+    "password": process.env.NODE_ESTUDIANTE_PASSWORD,
+    "database": process.env.NODE_ESTUDIANTE_DB,
+    "host": process.env.NODE_ESTUDIANTE_HOST,
     "dialect": "mysql"
   }
 }

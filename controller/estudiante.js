@@ -7,7 +7,6 @@
 var util = require('util');
 var mysql = require('mysql2');
 var http = require('http');
-var hostWeb = '18.213.84.48';
 const host = process.env['NODE_ESTUDIANTE_HOST'];
 const database = process.env['NODE_ESTUDIANTE_DB'];
 const user = process.env['NODE_ESTUDIANTE_USER'];
