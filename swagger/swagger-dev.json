@@ -1,0 +1,620 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Estudiantes api"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/traerEstudiante": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "traerEstudiante",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/modificarDatosContactoEstudiante": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "inscribirEstudianteCursada",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/traerAnalitico": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Devuelve certificado analitico de estudiante solicitado",
+        "operationId": "traerAnalitico",
+        "parameters": [
+          {
+            "name": "idEstudiante",
+            "in": "query",
+            "description": "Id del estudiante a buscar el analitico",
+            "required": true,
+            "type": "integer"
+          }
+        ],     
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/traerAnalitico"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Unauthorized"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Forbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Not_Found"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/inscribirEstudianteCursada": {
+      "x-swagger-router-controller": "estudiante",
+      "post": {
+        "description": "Inscribe estudiante a materia indicada",
+        "operationId": "inscribirEstudianteCursada",
+        "parameters": [
+          {
+            "name": "idEstudiante",
+            "in": "query",
+            "description": "Id del estudiante a buscar el analitico",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "idMateria",
+            "in": "query",
+            "description": "Id de la materia a insertar",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "idCarrera",
+            "in": "query",
+            "description": "Id de la carrera a insertar",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "recordatorio",
+            "in": "query",
+            "description": "Indicador si requiere aviso recordatorio(1 si / 0 no)",
+            "required": true,
+            "type": "integer"
+          }          
+        ],     
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/inscribirEstudianteCursada"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Unauthorized"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Forbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Not_Found"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/inscribirEstudianteExamen": {
+      "x-swagger-router-controller": "estudiante",
+      "post": {
+        "description": "Inscribe estudiante a examen indicado",
+        "operationId": "inscribirEstudianteExamen",
+        "parameters": [
+          {
+            "name": "idEstudiante",
+            "in": "query",
+            "description": "Id del estudiante a buscar el analitico",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "idMateria",
+            "in": "query",
+            "description": "Id de la materia a insertar",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "idCarrera",
+            "in": "query",
+            "description": "Id de la carrera a insertar",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "idExamen",
+            "in": "query",
+            "description": "Id del examen a anotarse",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "recordatorio",
+            "in": "query",
+            "description": "Indicador si requiere aviso recordatorio(1 si / 0 no)",
+            "required": true,
+            "type": "integer"
+          }          
+        ],     
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/inscribirEstudianteCursada"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Unauthorized"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Forbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Not_Found"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/traerMateriasParaInscripcion": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Retorna las materias disponibles para la inscripcion",
+        "operationId": "traerMateriasParaInscripcion",    
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/traerMateriasParaInscripcion"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Unauthorized"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Forbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Not_Found"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/traerExamenesParaInscripcion": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Retorna examenes para inscripcion disponibles",
+        "operationId": "traerExamenesParaInscripcion",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/traerExamenesParaInscripcion"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/bajaInscripcionMateria": {
+      "x-swagger-router-controller": "estudiante",
+      "delete": {
+        "description": "elimina una inscripcion a una materia",
+        "operationId": "bajaInscripcionMateria",
+        "parameters": [
+          {
+            "name": "idInscripcion",
+            "in": "query",
+            "description": "Id de inscripcion a eliminar",
+            "required": true,
+            "type": "integer"
+          }
+        ],     
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/bajaInscripcionMateria"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Unauthorized"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Forbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Not_Found"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/bajaInscripcionExamen": {
+      "x-swagger-router-controller": "estudiante",
+      "delete": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "bajaInscripcionExamen",
+        "parameters": [
+          {
+            "name": "idInscripcion",
+            "in": "query",
+            "description": "Id de inscripcion a eliminar",
+            "required": true,
+            "type": "integer"
+          }
+        ],     
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/bajaInscripcionExamen"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/Unauthorized"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/Forbidden"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Not_Found"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/crearAnaliticoPDF": {
+      "x-swagger-router-controller": "estudiante",
+      "get": {
+        "description": "Returns 'Hello' to the caller",
+        "operationId": "crearAnaliticoPDF",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/HelloWorldResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
+    }
+  },
+  "definitions": {
+    "HelloWorldResponse": {
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Forbidden": {
+      "required": [
+        "Forbidden"
+      ],
+      "properties": {
+        "Forbidden": {
+          "type": "string"
+        }
+      }
+    },
+    "Unauthorized": {
+      "required": [
+        "Unauthorized"
+      ],
+      "properties": {
+        "Unauthorized": {
+          "type": "string"
+        }
+      }
+    },
+    "Not_Found": {
+      "required": [
+        "Not Found"
+      ],
+      "properties": {
+        "Not_Found": {
+          "type": "string"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "traerAnalitico": {
+      "required":[
+        "idInscriptosExamen",
+        "Examenes_idExamenes",
+        "Examenes_Materias_idMaterias",
+        "Examenes_Materias_Carreras_idCarreras",
+        "datosAlumno", 
+        "nota",
+        "asistencia",
+        "recordatorio"
+      ],
+      "properties": {
+        "idInscriptosExamen": {
+          "type": "string"
+        },
+        "Examenes_idExamenes": {
+          "type": "integer"
+        },
+        "Examenes_Materias_idMaterias": {
+          "type": "integer"
+        },
+        "Examenes_Materias_Carreras_idCarreras": {
+          "type": "integer"
+        },
+        "datosAlumno": {
+          "type": "application/json:"
+        },
+        "nota": {
+          "type": "integer"
+        },
+        "asistencia": {
+          "type": "boolean"
+        },
+        "recordatorio": {
+          "type": "boolean"
+        }
+      }
+    },
+    "traerMateriasParaInscripcion": {
+      "required":[
+        "materia",
+        "curso",
+        "dia",
+        "horarioInicio",
+        "nombreProfesor", 
+        "apellidoProfesor"        
+      ],
+      "properties": {
+        "materia": {
+          "type": "string"
+        },
+        "curso": {
+          "type": "integer"
+        },
+        "dia": {
+          "type": "string"
+        },
+        "horarioInicio": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "nombreProfesor": {
+          "type": "string"
+        },
+        "apellidoProfesor": {
+          "type": "string"
+        }
+      }
+    },
+    "inscribirEstudianteCursada": {
+      "required":[
+        "OK"
+      ],
+      "properties": {
+        "OK": {
+          "type": "string"
+        }
+      }
+    },
+    "traerExamenesParaInscripcion": {
+      "required":[
+        "materia",
+        "curso",
+        "fecha",
+        "horarioInicio",
+        "nombreProfesor", 
+        "apellidoProfesor"        
+      ],
+    "properties": {
+        "materia": {
+          "type": "string"
+        },
+        "curso": {
+          "type": "integer"
+        },
+        "fecha": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "horarioInicio": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "nombreProfesor": {
+          "type": "string"
+        },
+        "apellidoProfesor": {
+          "type": "string"
+        }
+      }
+    },
+    "bajaInscripcionMateria": {
+        "required":[
+          "BAJA OK"        
+        ],
+        "properties": {
+          "BAJA OK": {
+            "type": "string"
+          }
+        }
+      },
+      "bajaInscripcionExamen": {
+        "required":[
+          "BAJA OK"        
+        ],
+        "properties": {
+          "BAJA OK": {
+            "type": "string"
+          }
+        }
+      }
+    }
+}
+

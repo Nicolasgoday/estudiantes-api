@@ -1,10 +1,35 @@
-# Skeleton project for Swagger
+### Api Estudiantes
 
 
-docker build -t estudiantes-api .
+1. Descargar dependencias:
 
-docker run -p 8080:8080 -d estudiantes-api
+         npm install
+         npm install request
+         npm install html-pdf
 
-Mysql
+2. Correr servicio:
 
-docker-compose -f mysql.yml up -d
+         node app.js
+
+## Docker local:
+
+1. Api y MySQL:
+
+         docker-compose up -d
+
+2. Solo MySQL:
+
+         docker-compose -f mysql.yml up -d
+
+
+## Migraciones 
+
+1. Con MySQL Import:
+
+         node migracopmes.js
+
+1. Con Sequilize:
+
+         sequelize db:migrate
+
+https://bezkoder.com/node-js-express-sequelize-mysql/         
