@@ -18,7 +18,7 @@ const publicRoot = path.resolve(path.join(__dirname, '/'), '');
 const cors = require('cors');
 const app = express();
 app.use(cors());
-
+app.use(bodyParser.json());
 
 if (env =="production") {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

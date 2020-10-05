@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Carrera
 exports.create = (req, res) => {
     /* Validate request*/
-    if (!req.body.title) {
+    if (!req.body) {
         res.status(400).send({
           message: "El body no puede estar vacio"
         });
