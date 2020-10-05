@@ -24,7 +24,7 @@ module.exports = function(sequelize, Sequelize) {
 			allowNull: false,
 			field: 'horarioFin'
 		},
-		cursoIdCurso: {
+		Curso_idCurso: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,

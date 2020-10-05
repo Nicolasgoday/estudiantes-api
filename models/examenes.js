@@ -35,11 +35,11 @@ module.exports = function(sequelize, Sequelize) {
 			field: 'inicioInscripcion'
 		},
 		finInscripcion: {
-			type: Sequelize.STRING(45),
+			type: Sequelize.DATEONLY,
 			allowNull: true,
 			field: 'finInscripcion'
 		},
-		materiasIdMaterias: {
+		Materias_idMaterias: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
@@ -49,7 +49,7 @@ module.exports = function(sequelize, Sequelize) {
 			},
 			field: 'Materias_idMaterias'
 		},
-		materiasCarrerasIdCarreras: {
+		Materias_Carreras_idCarreras: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,

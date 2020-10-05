@@ -7,6 +7,8 @@ const examenes = require('./controller/examenes.js');
 const estudiante = require('./controller/estudiante.js');
 const carrera = require('./controller/carrera.js');
 const materia = require('./controller/materia.js');
+const examen = require('./controller/examen.js');
+const horario = require('./controller/horario.js');
 
 const swaggerDocument = require('./swagger/swagger.json');
 const swaggerDocumentDev = require('./swagger/swagger-dev.json');
@@ -57,6 +59,19 @@ app.get("/materia/:id", materia.findOne);
 app.put("/materia/:id", materia.update);
 app.delete("/materia/:id", materia.delete);
 
+// ABM examen
+app.post("/examen", examen.create);
+app.get("/examen", examen.findAll);
+app.get("/examen/:id", examen.findOne);
+app.put("/examen/:id", examen.update);
+app.delete("/examen/:id", examen.delete);
+
+// ABM horario
+app.post("/horario", horario.create);
+app.get("/horario", horario.findAll);
+app.get("/horario/:id", horario.findOne);
+app.put("/horario/:id", horario.update);
+app.delete("/horario/:id", horario.delete);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
