@@ -26,7 +26,7 @@
 
 1. Con MySQL Import:
 
-         node migracopmes.js
+         node migraciones.js
 
 1. Con Sequilize:
 
