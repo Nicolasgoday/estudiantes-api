@@ -6,6 +6,7 @@ const inscripciones = require('./controller/inscripciones.js');
 const examenes = require('./controller/examenes.js');
 const estudiante = require('./controller/estudiante.js');
 const carrera = require('./controller/carrera.js');
+const materia = require('./controller/materia.js');
 
 const swaggerDocument = require('./swagger/swagger.json');
 const swaggerDocumentDev = require('./swagger/swagger-dev.json');
@@ -23,7 +24,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));    
 }
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 //estudiante
 app.get('/traerEstudiante',estudiante.traerEstudiante)
 app.get('/traerAnalitico',estudiante.traerAnalitico)
@@ -46,6 +49,14 @@ app.get("/carrera", carrera.findAll);
 app.get("/carrera/:id", carrera.findOne);
 app.put("/carrera/:id", carrera.update);
 app.delete("/carrera/:id", carrera.delete);
+
+// ABM Materias
+app.post("/materia", materia.create);
+app.get("/materia", materia.findAll);
+app.get("/materia/:id", materia.findOne);
+app.put("/materia/:id", materia.update);
+app.delete("/materia/:id", materia.delete);
+
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);

@@ -13,17 +13,7 @@ module.exports = function(sequelize, Sequelize) {
 			type: Sequelize.STRING(45),
 			allowNull: true,
 			field: 'nombre'
-		},
-		idCarrera: {
-			type: Sequelize.INTEGER,
-			allowNull: true,
-			field: 'idCarrera'
-		},
-		materiascol: {
-			type: Sequelize.STRING(45),
-			allowNull: true,
-			field: 'Materiascol'
-		},
+		},		
 		inicioInscripcion: {
 			type: Sequelize.DATEONLY,
 			allowNull: true,
@@ -34,7 +24,7 @@ module.exports = function(sequelize, Sequelize) {
 			allowNull: true,
 			field: 'finInscripcion'
 		},
-		carrerasIdCarreras: {
+		Carreras_idCarreras: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
