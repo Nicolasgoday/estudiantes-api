@@ -101,7 +101,7 @@ exports.update = (req, res) => {
     });  
 };
 
-// Delete a Materia with the specified id in the request
+// Delete a Materia with the specified id in the reques
 exports.delete = (req, res) => {
   const id = req.params.id;
 
