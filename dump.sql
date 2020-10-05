@@ -36,7 +36,7 @@ CREATE TABLE `alumnoscursada` (
   KEY `Materias_Carreras_idCarreras` (`Materias_Carreras_idCarreras`),
   CONSTRAINT `alumnoscursada_ibfk_1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`),
   CONSTRAINT `alumnoscursada_ibfk_2` FOREIGN KEY (`Materias_Carreras_idCarreras`) REFERENCES `materias` (`Carreras_idCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `alumnosexamenfinal` (
   CONSTRAINT `alumnosexamenfinal_ibfk_1` FOREIGN KEY (`Examenes_idExamenes`) REFERENCES `examenes` (`idExamenes`),
   CONSTRAINT `alumnosexamenfinal_ibfk_2` FOREIGN KEY (`Examenes_Materias_idMaterias`) REFERENCES `examenes` (`Materias_idMaterias`),
   CONSTRAINT `alumnosexamenfinal_ibfk_3` FOREIGN KEY (`Examenes_Materias_Carreras_idCarreras`) REFERENCES `examenes` (`Materias_Carreras_idCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `carreras` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idCarreras`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `curso` (
   PRIMARY KEY (`idCurso`,`Materias_idMaterias`),
   KEY `Materias_idMaterias` (`Materias_idMaterias`),
   CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `examenes` (
   `horarioFin` time DEFAULT NULL,
   `docenteAsignado` json DEFAULT NULL,
   `inicioInscripcion` date DEFAULT NULL,
-  `finInscripcion` varchar(45) DEFAULT NULL,
+  `finInscripcion` date DEFAULT NULL,
   `Materias_idMaterias` int NOT NULL,
   `Materias_Carreras_idCarreras` int NOT NULL,
   `createdAt` datetime NOT NULL,
@@ -167,7 +167,7 @@ CREATE TABLE `examenes` (
   KEY `Materias_Carreras_idCarreras` (`Materias_Carreras_idCarreras`),
   CONSTRAINT `examenes_ibfk_1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`),
   CONSTRAINT `examenes_ibfk_2` FOREIGN KEY (`Materias_Carreras_idCarreras`) REFERENCES `materias` (`Carreras_idCarreras`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `examenes` (
 
 LOCK TABLES `examenes` WRITE;
 /*!40000 ALTER TABLE `examenes` DISABLE KEYS */;
-INSERT INTO `examenes` VALUES (1,'2020-11-09','10:00:00','12:00:00','{}','2011-12-18','2011-12-18',1,1,'2011-12-18 13:17:17','2011-12-18 13:17:17');
+INSERT INTO `examenes` VALUES (1,'2020-10-04','11:00:00','12:00:00','\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04','2020-10-09',1,1,'2020-10-05 00:00:54','2020-10-05 02:11:32'),(2,'2020-10-04','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,1,'2020-10-05 02:10:14','2020-10-05 02:10:14'),(3,'2020-10-04','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,1,'2020-10-05 02:39:25','2020-10-05 02:39:25');
 /*!40000 ALTER TABLE `examenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +198,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`idHorario`,`Curso_idCurso`),
   KEY `Curso_idCurso` (`Curso_idCurso`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`Curso_idCurso`) REFERENCES `curso` (`idCurso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `horario` (
 
 LOCK TABLES `horario` WRITE;
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
-INSERT INTO `horario` VALUES (1,'MARTES','10:00:00','12:20:00',1,'2011-12-18 13:17:17','2011-12-18 13:17:17');
+INSERT INTO `horario` VALUES (2,'Jueves','11:00:00','12:00:00',1,'2020-10-05 02:31:04','2020-10-05 02:31:04');
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,8 +221,6 @@ DROP TABLE IF EXISTS `materias`;
 CREATE TABLE `materias` (
   `idMaterias` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
-  `idCarrera` int DEFAULT NULL,
-  `Materiascol` varchar(45) DEFAULT NULL,
   `inicioInscripcion` date DEFAULT NULL,
   `finInscripcion` date DEFAULT NULL,
   `Carreras_idCarreras` int NOT NULL,
@@ -231,7 +229,7 @@ CREATE TABLE `materias` (
   PRIMARY KEY (`idMaterias`,`Carreras_idCarreras`),
   KEY `Carreras_idCarreras` (`Carreras_idCarreras`),
   CONSTRAINT `materias_ibfk_1` FOREIGN KEY (`Carreras_idCarreras`) REFERENCES `carreras` (`idCarreras`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,7 +238,7 @@ CREATE TABLE `materias` (
 
 LOCK TABLES `materias` WRITE;
 /*!40000 ALTER TABLE `materias` DISABLE KEYS */;
-INSERT INTO `materias` VALUES (1,'Matematica',1,'1','2020-04-10','2020-04-10',1,'2011-12-18 13:17:17','2011-12-18 13:17:17');
+INSERT INTO `materias` VALUES (1,'Aspectos legales','2020-04-10','2020-01-10',1,'2020-10-05 00:00:54','2020-10-05 00:37:21'),(2,'Distribuidos',NULL,'2020-01-10',1,'2020-10-05 00:00:54','2020-10-05 02:57:02'),(4,'Ingles',NULL,'2020-01-10',1,'2020-10-05 02:57:53','2020-10-05 02:57:53'),(5,'Ingles','2020-01-10','2020-01-10',1,'2020-10-05 02:59:10','2020-10-05 02:59:10');
 /*!40000 ALTER TABLE `materias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,4 +259,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-04 13:01:30
+-- Dump completed on 2020-10-05  0:01:10
