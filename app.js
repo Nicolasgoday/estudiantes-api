@@ -28,7 +28,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));
 }
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 //estudiante
 app.get('/traerEstudiante',estudiante.traerEstudiante)
