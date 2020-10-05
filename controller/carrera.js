@@ -70,7 +70,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Carrera.update(req.body, {
-    where: { id: id }
+    where: { idCarreras: id }
   })
     .then(num => {
       if (num == 1) {
@@ -95,7 +95,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Carrera.destroy({
-    where: { id: id }
+    where: { idCarreras: id }
   })
     .then(num => {
       if (num == 1) {
