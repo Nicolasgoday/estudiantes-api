@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const inscripciones = require('./controller/inscripciones.js');
 const examenes = require('./controller/examenes.js');
@@ -28,7 +29,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(cors());
 //estudiante
 app.get('/traerEstudiante',estudiante.traerEstudiante)
 app.get('/traerAnalitico',estudiante.traerAnalitico)
