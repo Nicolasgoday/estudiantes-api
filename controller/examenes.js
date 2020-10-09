@@ -7,11 +7,23 @@
 var util = require('util');
 var mysql = require('mysql2');
 var http = require('http');
+const nodemailer = require('nodemailer');
 const host = process.env['NODE_ESTUDIANTE_HOST'];
 const database = process.env['NODE_ESTUDIANTE_DB'];
 const user = process.env['NODE_ESTUDIANTE_USER'];
 const password = process.env['NODE_ESTUDIANTE_PASSWORD'];
 const port = process.env['NODE_ESTUDIANTE_DBPORT'];
+//VARIABLES MAIL
+const smtp_server = process.env['MAILGUN_SMTP_SERVER'];
+const usuario_mail = process.env['MAILGUN_SMTP_LOGIN'];
+const password_mail = process.env['MAILGUN_SMTP_PASSWORD'];
+const smtp_port = process.env['MAILGUN_SMTP_PORT'];
+const dominio_smtp = process.env['MAILGUN_DOMAIN'];
+const api_key_smtp = process.env['MAILGUN_API_KEY'];
+
+var mg = require('nodemailer-mailgun-transport');
+
+
 
 const connectionString = { host: host, port: port, user: user, password: password, database: database };
 
@@ -109,6 +121,70 @@ exports.bajaInscripcionExamen= (req, res) => {
     }
   }
 
+exports.enviarNotificacionExamen= (req, res) => {
+  console.log(Date() + ": /enviarNotificacionExamen");
+  try {
+    
+    var aPartir = req.query.aPartir
+    const DATE_FORMATER = require( 'dateformat' );
+
+    const coneccionDB = mysql.createConnection(connectionString);
+    //console.log("a partir: " + aPartir);
+    coneccionDB.connect(function (err) {
+      if (err) throw err;
+      var q = 'select JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.nombre") as nombreAlumno, JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.apellido") as apellidoAlumno, JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.email") as email, materias.nombre as nombreMateria, fecha as FechaExamen , horarioInicio as horarioExamen ' +    
+      ' from examenes inner join inscripciones.alumnosexamenfinal on idExamenes = Examenes_idExamenes inner join materias on inscripciones.alumnosexamenfinal.Examenes_Materias_idMaterias = materias.idMaterias ' + 
+      'where fecha >=' + aPartir + ' and recordatorio = 1 and  JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.email") is not null;' 
+      console.log("query: ", q);
+      coneccionDB.query(q,  function (err, rows, fields) {
+          if (err) throw err;
+          if (rows.length) {
+            //console.log('email address is', rows);
+            rows.forEach(function(row) {
+              //console.log('email address is', row.email);
+              //console.log('key is', api_key_smtp);
+              //console.log('doain address is', dominio_smtp);                    
+              const auth = {
+                auth: {
+                  api_key: api_key_smtp,
+                  domain: dominio_smtp
+                },
+              }
+               
+              const nodemailerMailgun = nodemailer.createTransport(mg(auth));
+               
+              nodemailerMailgun.sendMail({
+                from: 'info@unla.com.ar',
+                to: row.email, // An array if you have multiple recipients.
+                
+                subject: 'Proximo examen final',
+
+                html: '<b>Estimado alumno: ' +  row.apellidoAlumno + ' '+  row.nombreAlumno + '</b>' + '<br><br>Registra una inscripcion para final de la materia ' 
+                    + row.nombreMateria + ' el dia '+ DATE_FORMATER( row.FechaExamen, "dd-mm-yyyy" ) + ' a las' + row.horarioExamen
+
+              }, (err, info) => {
+                if (err) {
+                  console.log(`Error: ${err}`);
+                }
+                else {
+                  console.log(`Response: ${info}`);
+                }
+              });
+
+            });
+          } else {
+            console.log('There were no results.');
+          }
+          return res.send(rows)
+        });
+    });
+    }
+    catch (e) {
+      console.error(e)
+      res.status(500)
+      res.send(e)
+    }
+  }
 
 
 

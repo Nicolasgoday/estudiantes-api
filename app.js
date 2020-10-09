@@ -43,6 +43,7 @@ app.delete('/bajaInscripcionMateria',inscripciones.bajaInscripcionMateria)
 app.post('/inscribirEstudianteExamen',examenes.inscribirEstudianteExamen)
 app.get('/traerExamenesParaInscripcion',examenes.traerExamenesParaInscripcion)
 app.delete('/bajaInscripcionExamen',examenes.bajaInscripcionExamen)
+app.get('/enviarNotificacionExamen',examenes.enviarNotificacionExamen)
 
 
 // ABM Carreras
