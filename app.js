@@ -32,7 +32,7 @@ app.use(cors());
 //estudiante
 app.get('/traerEstudiante',estudiante.traerEstudiante)
 app.get('/traerAnalitico',estudiante.traerAnalitico)
-app.post('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
+app.get('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
 app.get('/modificarDatosContactoEstudiante',estudiante.modificarDatosContactoEstudiante)
 
 //inscripciones cursada

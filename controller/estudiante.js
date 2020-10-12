@@ -12,8 +12,11 @@ const database = process.env['NODE_ESTUDIANTE_DB'];
 const user = process.env['NODE_ESTUDIANTE_USER'];
 const password = process.env['NODE_ESTUDIANTE_PASSWORD'];
 const port = process.env['NODE_ESTUDIANTE_DBPORT'];
+const DATE_FORMATER = require( 'dateformat' );
+const fs = require('fs');
 
 const connectionString = { host: host, port: port, user: user, password: password, database: database };
+
 
 //generar analitico
 exports.traerAnalitico= (req, res) => {
@@ -44,34 +47,63 @@ exports.traerAnalitico= (req, res) => {
 exports.crearAnaliticoPDF= (req, res) => {
     console.log(Date() + ": /crearAnaliticoPDF");
     try {
+      var request = require('request'); 
       var idEstudiante = req.query.idEstudiante
-      const coneccionDB = mysql.createConnection(connectionString);
-      coneccionDB.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-        coneccionDB.query('SELECT * FROM ' + database + '.alumnosexamenfinal where ' + database + '.alumnosexamenfinal.asistencia=1 and  JSON_UNQUOTE(' + database + '.alumnosexamenfinal.datosAlumno->"$.id") = ' + idEstudiante + ';' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
-          , function (err, result) {
+      request('https://administrador-unla.herokuapp.com/api/estudiantes/'+ idEstudiante , function (error, response, body) {
+        console.log(response.statusCode + "ERRROR  "+error);
+        if (!error && response.statusCode == 200) { 
+          console.log(body) // Print the google web page.
+          var responseJson = JSON.parse(body);
+          const coneccionDB = mysql.createConnection(connectionString);
+          const query = 'SELECT ' + database + '.materias.nombre, ' + database + '.examenes.fecha, ' + database + '.alumnosexamenfinal.nota, "formaAprobacion" as formaAprobacion, "Acta"  as acta, "plan" as plan FROM ' + database + '.alumnosexamenfinal ' +
+          'inner join ' + database + '.materias on ' + database + '.alumnosexamenfinal.Examenes_Materias_idMaterias = ' + database + '.materias.idMaterias ' +
+          'inner join ' + database + '.examenes on ' + database + '.alumnosexamenfinal.Examenes_idExamenes = ' + database + '.examenes.idExamenes ' +
+           'where ' + database + '.alumnosexamenfinal.asistencia=1 and JSON_UNQUOTE(' + database + '.alumnosexamenfinal.datosAlumno->"$.id") = '+ idEstudiante + ';' ;
+          coneccionDB.connect(function (err) {
             if (err) throw err;
-            const pdf = require('html-pdf');
-            console.log("Result: " + result);
-            const content = `<h1>Título en el PDF creado con el paquete html-pdf</h1><p>Generando un PDF con un HTML sencillo ` + result + '</p>';
-              pdf.create(content).toFile('./html-pdf.pdf', function (err, res) {
-                if (err) {
-                  console.log(err);
-                } else {
-                  console.log(res);
-                }
-              });
-            });
-        });
-      }
-      catch (e) {
-        console.error(e)
-        res.status(500)
-        res.send(e)
-      }  
-  };
-  
+            console.log("Connected!");
+            coneccionDB.query(query
+              , function (err, rows, fields){
+                if (err) throw err;                 
+                    const pdf = require('html-pdf');
+                    var content = `<h2>Certificado analitico </h2>` +  '</p><h3>Alumno: ' + responseJson.nombre +' '+ responseJson.apellido + '</h3></p>';          
+                      content = content + '<table class="egt" width=500  text-align="left"><tr style="text-align:left"><th>Materia</th><th>Fecha</th><th>Nota</th><th>Forma aprob.</th><th>Acta</th><th>Plan</th></tr>'
+
+                      if (rows.length) {               
+                        rows.forEach(function(row) {
+                            content = content + '<tr text-align="left" style ="font-family:Times New Roman"><td WIDTH="200"><FONT FACE="courier new" size=1>' + row.nombre + '</FONT>' +
+                                                                                                          '</td><td WIDTH="100" ><FONT FACE="courier new" size=1>'+ DATE_FORMATER( row.fecha, "dd-mm-yyyy" ) + '</FONT>' +
+                                                                                                          '</td><td WIDTH="50"><FONT FACE="courier new" size=1>' + row.nota + '</FONT>' +
+                                                                                                          '</td><td WIDTH="50"><FONT FACE="courier new" size=1>'+ row.formaAprobacion + '</FONT>' +
+                                                                                                          '</td><td WIDTH="50"><FONT FACE="courier new" size=1>'+ row.acta + '</FONT>' +
+                                                                                                          '</td><td WIDTH="50"><FONT FACE="courier new" size=1>'+ row.plan +'</FONT></td></tr>'
+                        });
+                      }
+                      content = content + '</table>';
+
+                      pdf.create(content).toFile(__dirname +'./images/' + responseJson.nombre + responseJson.apellido + '.pdf', function (err, res) {                                                                          
+                          if (err) {
+                            throw err;
+                          } else {
+                            console.log("ok");
+                          }
+                        });   
+                      });
+                      res.sendFile(__dirname + '/images/' + responseJson.nombre + responseJson.apellido + '.pdf');                     
+          });
+        }
+        else if (response.statusCode != 200){
+          res.status(response.statusCode);
+          res.send(response.statusCode);
+        }
+      });
+    }
+    catch (e) {
+      console.error(e)
+      res.status(500)
+      res.send(e)
+    }        
+}
 
 //Modificar datos de matricula?
 

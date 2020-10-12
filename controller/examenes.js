@@ -57,13 +57,14 @@ exports.traerExamenesParaInscripcion= (req, res) => {
  exports.inscribirEstudianteExamen = (req, res) => {
   console.log(Date() + ": /inscribirEstudianteExamen");
   try {
+    var request = require('request');
     var idEstudiante = req.query.idEstudiante;
     var idExamen = req.query.idExamen;
     var idCarrera = req.query.idCarrera;
     var idMateria = req.query.idMateria;
      var recordatorio = req.query.recordatorio;
      const coneccionDB = mysql.createConnection(connectionString);
-     var request = require('request');
+    
      request('https://administrador-unla.herokuapp.com/api/estudiantes/1', function (error, response, body) {
        if (!error && response.statusCode == 200) {
          console.log(body) // Print the google web page.
