@@ -36,7 +36,7 @@ CREATE TABLE `alumnoscursada` (
   KEY `Materias_Carreras_idCarreras` (`MateriasCarrerasIdCarreras`),
   CONSTRAINT `alumnoscursada_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`),
   CONSTRAINT `alumnoscursada_ibfk_2` FOREIGN KEY (`MateriasCarrerasIdCarreras`) REFERENCES `materias` (`CarrerasIdCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `alumnosexamenfinal` (
   CONSTRAINT `alumnosexamenfinal_ibfk_1` FOREIGN KEY (`ExamenesidExamenes`) REFERENCES `examenes` (`idExamenes`),
   CONSTRAINT `alumnosexamenfinal_ibfk_2` FOREIGN KEY (`ExamenesMateriasidMaterias`) REFERENCES `examenes` (`MateriasIdMaterias`),
   CONSTRAINT `alumnosexamenfinal_ibfk_3` FOREIGN KEY (`ExamenesMateriasCarrerasidCarreras`) REFERENCES `examenes` (`MateriasCarrerasIdCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `carreras` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `curso` (
   PRIMARY KEY (`idCurso`,`MateriasIdMaterias`),
   KEY `Materias_idMaterias` (`MateriasIdMaterias`),
   CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +168,7 @@ CREATE TABLE `examenes` (
   KEY `Materias_Carreras_idCarreras` (`MateriasCarrerasIdCarreras`),
   CONSTRAINT `examenes_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`),
   CONSTRAINT `examenes_ibfk_2` FOREIGN KEY (`MateriasCarrerasIdCarreras`) REFERENCES `materias` (`CarrerasIdCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +194,7 @@ CREATE TABLE `formaaprobacion` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idFormaAprobacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`idHorario`,`CursoIdCurso`),
   KEY `Curso_idCurso` (`CursoIdCurso`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`CursoIdCurso`) REFERENCES `curso` (`idCurso`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +262,7 @@ CREATE TABLE `materias` (
   CONSTRAINT `formaaprobacion_ibfk_1` FOREIGN KEY (`formaAprobacionIdformaAprobacion`) REFERENCES `formaaprobacion` (`idFormaAprobacion`),
   CONSTRAINT `materias_ibfk_1` FOREIGN KEY (`CarrerasIdCarreras`) REFERENCES `carreras` (`idCarreras`),
   CONSTRAINT `plan_ibfk_1` FOREIGN KEY (`planIdPlan`) REFERENCES `plan` (`idplan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +288,7 @@ CREATE TABLE `plan` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idplan`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,7 +314,6 @@ UNLOCK TABLES;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
