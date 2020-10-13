@@ -37,7 +37,7 @@ module.exports = {
       idMaterias: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        autoIncrement: true,
+        autoIncrement: true, 
         primaryKey: true,
         field: 'idMaterias'
       },
@@ -45,17 +45,7 @@ module.exports = {
         type: Sequelize.STRING(45),
         allowNull: true,
         field: 'nombre'
-      },
-      idCarrera: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        field: 'idCarrera'
-      },
-      materiascol: {
-        type: Sequelize.STRING(45),
-        allowNull: true,
-        field: 'Materiascol'
-      },
+      },		
       inicioInscripcion: {
         type: Sequelize.DATEONLY,
         allowNull: true,
@@ -66,7 +56,7 @@ module.exports = {
         allowNull: true,
         field: 'finInscripcion'
       },
-      carrerasIdCarreras: {
+      CarrerasIdCarreras: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -74,17 +64,37 @@ module.exports = {
           model: 'carreras',
           key: 'idCarreras'
         },
-        field: 'Carreras_idCarreras'
+        field: 'CarrerasIdCarreras'
       },
       createdAt: {
         type: Sequelize.DATEONLY,
         allowNull: true,
         field: 'createdAt'
-      },
-      updatedAt: {
+        },
+        updatedAt: {
         type: Sequelize.DATEONLY,
         allowNull: true,
         field: 'updatedAt'
+        },
+        planIdPlan  : {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'plan',
+          key: 'idplan'
+        },
+        field: 'planIdPlan'
+      },
+      formaAprobacionIdformaAprobacion  : {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'plan',
+          key: 'idplan'
+        },
+        field: 'formaAprobacionIdformaAprobacion'
       }
     })
 

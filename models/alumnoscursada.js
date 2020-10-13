@@ -26,7 +26,7 @@ module.exports = function(sequelize, Sequelize) {
 				model: 'materias',
 				key: 'idMaterias'
 			},
-			field: 'Materias_idMaterias'
+			field: 'materiasIdMaterias'
 		},
 		materiasCarrerasIdCarreras: {
 			type: Sequelize.INTEGER,
@@ -34,16 +34,26 @@ module.exports = function(sequelize, Sequelize) {
 			primaryKey: true,
 			references: {
 				model: 'materias',
-				key: 'Carreras_idCarreras'
+				key: 'CarrerasIdCarreras'
 			},
-			field: 'Materias_Carreras_idCarreras'
+			field: 'MateriasCarrerasIdCarreras '
 		},
 		recordatorio: {
 			type: Sequelize.BOOLEAN,
 			allowNull: true,
 			defaultValue: '0',
 			field: 'recordatorio'
-		}
+		},
+		createdAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'createdAt'
+		  },
+		  updatedAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'updatedAt'
+		  }		
 	}, {
 		tableName: 'alumnoscursada'
 	});

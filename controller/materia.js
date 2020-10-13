@@ -26,9 +26,11 @@ exports.create = (req, res) => {
         nombre: req.body.nombre,    
         inicioInscripcion: req.body.inicioInscripcion,
         finInscripcion: req.body.finInscripcion,
-        Carreras_idCarreras: req.body.Carreras_idCarreras,
+        CarrerasIdCarreras: req.body.CarrerasIdCarreras,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        planIdPlan: req.body.planIdPlan,
+        formaAprobacionIdformaAprobacion: req.body.formaAprobacionIdformaAprobacion
       };
     
       // Save Materia in the database
@@ -49,7 +51,7 @@ exports.findAll = (req, res) => {
   const nombre = req.query.nombre;
   var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
 
-  Materia.findAll({  include: ["carreras"], where: condition })
+  Materia.findAll({  include: ["carreras", "plan", "formaaprobacion"], where: condition })
     .then(data => {
       res.send(data);
     })
@@ -65,7 +67,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Materia.findByPk(id,{ include: ["carreras"]})
+  Materia.findByPk(id,{ include: ["carreras", "plan", "formaaprobacion"]})
     .then(data => {
       res.send(data);
     })

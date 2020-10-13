@@ -24,7 +24,7 @@ module.exports = function(sequelize, Sequelize) {
 			allowNull: true,
 			field: 'finInscripcion'
 		},
-		Carreras_idCarreras: {
+		CarrerasIdCarreras: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
@@ -32,7 +32,37 @@ module.exports = function(sequelize, Sequelize) {
 				model: 'carreras',
 				key: 'idCarreras'
 			},
-			field: 'Carreras_idCarreras'
+			field: 'CarrerasIdCarreras'
+		},
+		createdAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'createdAt'
+		  },
+		  updatedAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'updatedAt'
+		  },
+		  planIdPlan  : {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+			primaryKey: true,
+			references: {
+				model: 'plan',
+				key: 'idplan'
+			},
+			field: 'planIdPlan'
+		},
+		formaAprobacionIdformaAprobacion  : {
+			type: Sequelize.INTEGER,
+			allowNull: false,
+			primaryKey: true,
+			references: {
+				model: 'plan',
+				key: 'idplan'
+			},
+			field: 'formaAprobacionIdformaAprobacion'
 		}
 	}, {
 		tableName: 'materias'

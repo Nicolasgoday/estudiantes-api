@@ -41,8 +41,16 @@ db.comments = require("./materias")(sequelize, Sequelize);
 
 //db.carreras.hasMany(db.materias, { as: "materias" });
 db.materias.belongsTo(db.carreras, {
-  foreignKey: "Carreras_idCarreras",
+  foreignKey: "CarrerasIdCarreras",
   as: "carreras",
+});
+db.materias.belongsTo(db.plan, {
+  foreignKey: "planIdPlan",
+  as: "plan",
+});
+db.materias.belongsTo(db.formaaprobacion, {
+  foreignKey: "formaAprobacionIdformaAprobacion",
+  as: "formaaprobacion",
 });
 
 module.exports = db;
