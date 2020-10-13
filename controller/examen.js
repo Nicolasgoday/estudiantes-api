@@ -31,8 +31,8 @@ exports.create = (req, res) => {
         horarioInicio: req.body.horarioInicio,
         docenteAsignado: req.body.docenteAsignado,
         inicioInscripcion: req.body.inicioInscripcion,
-        Materias_idMaterias: req.body.Materias_idMaterias,
-        Materias_Carreras_idCarreras: req.body.Materias_Carreras_idCarreras,
+        MateriasIdMaterias : req.body.MateriasIdMaterias,
+        acta: req.body.acta,
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -55,7 +55,7 @@ exports.findAll = (req, res) => {
   const fecha = req.query.fecha;
   var condition = fecha ? { fecha: { [Op.like]: `%${fecha}%` } } : null;
 
-  Examen.findAll({ where: condition })
+  Examen.findAll({  include: ["materias"] , where: condition })
     .then(data => {
       res.send(data);
     })
@@ -71,7 +71,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Examen.findByPk(id)
+  Examen.findByPk(id, { include: ["materias"] })
     .then(data => {
       res.send(data);
     })
@@ -102,7 +102,7 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id
+        message: err + " Error updating Examen with id=" + id
       });
     });  
 };

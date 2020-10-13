@@ -98,7 +98,7 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id
+        message: "Error updating materia with id=" + id
       });
     });  
 };
@@ -106,6 +106,7 @@ exports.update = (req, res) => {
 // Delete a Materia with the specified id in the reques
 exports.delete = (req, res) => {
   const id = req.params.id;
+  truncate: false
 
   Materia.destroy({
     where: { idMaterias: id }
@@ -123,7 +124,7 @@ exports.delete = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "No se pudo eliminar Materia con id=" + id
+        message: err +"No se pudo eliminar Materia con id=" + id
       });
     });  
 };
