@@ -34,10 +34,6 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//RELACION MATERIAS Y CARRERAS
-db.tutorials = require("./carreras")(sequelize, Sequelize);
-db.comments = require("./materias")(sequelize, Sequelize);
-
 
 //db.carreras.hasMany(db.materias, { as: "materias" });
 db.materias.belongsTo(db.carreras, {
@@ -52,5 +48,29 @@ db.materias.belongsTo(db.formaaprobacion, {
   foreignKey: "formaAprobacionIdformaAprobacion",
   as: "formaaprobacion",
 });
+
+/*
+db.materias.hasMany(db.alumnoscursada, {
+  foreignKey: "materiasIdMaterias",
+  as: "materia",
+});
+db.carreras.hasMany(db.alumnoscursada, {
+  foreignKey: "CarrerasIdCarreras",
+  as: "carrera",
+});
+
+//db.carreras.hasMany(db.materias, { as: "materias" });
+db.carreras.hasMany(db.materias, {
+  foreignKey: "CarrerasIdCarreras",
+  as: "carreras",
+});
+db.carreras.hasMany(db.materias, {
+  foreignKey: "planIdPlan",
+  as: "plan",
+});
+db.carreras.hasMany(db.materias, {
+  foreignKey: "formaAprobacionIdformaAprobacion",
+  as: "formaaprobacion",
+});*/
 
 module.exports = db;

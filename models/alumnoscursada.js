@@ -28,16 +28,7 @@ module.exports = function(sequelize, Sequelize) {
 			},
 			field: 'materiasIdMaterias'
 		},
-		materiasCarrerasIdCarreras: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-			primaryKey: true,
-			references: {
-				model: 'materias',
-				key: 'CarrerasIdCarreras'
-			},
-			field: 'MateriasCarrerasIdCarreras '
-		},
+	
 		recordatorio: {
 			type: Sequelize.BOOLEAN,
 			allowNull: true,

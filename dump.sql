@@ -27,15 +27,12 @@ CREATE TABLE `alumnoscursada` (
   `datosAlumno` json DEFAULT NULL,
   `notaCursada` int DEFAULT NULL,
   `MateriasIdMaterias` int NOT NULL,
-  `MateriasCarrerasIdCarreras` int NOT NULL,
   `recordatorio` tinyint(1) DEFAULT '0',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`idalumnosCursada`,`MateriasIdMaterias`,`MateriasCarrerasIdCarreras`),
+  PRIMARY KEY (`idalumnosCursada`,`MateriasIdMaterias`),
   KEY `Materias_idMaterias` (`MateriasIdMaterias`),
-  KEY `Materias_Carreras_idCarreras` (`MateriasCarrerasIdCarreras`),
-  CONSTRAINT `alumnoscursada_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`),
-  CONSTRAINT `alumnoscursada_ibfk_2` FOREIGN KEY (`MateriasCarrerasIdCarreras`) REFERENCES `materias` (`CarrerasIdCarreras`)
+  CONSTRAINT `alumnoscursada_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -45,7 +42,7 @@ CREATE TABLE `alumnoscursada` (
 
 LOCK TABLES `alumnoscursada` WRITE;
 /*!40000 ALTER TABLE `alumnoscursada` DISABLE KEYS */;
-INSERT INTO `alumnoscursada` VALUES (1,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,1,'2020-10-03 23:27:24','2020-10-03 23:27:24'),(3,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,1,'2020-10-03 23:56:03','2020-10-03 23:56:03'),(4,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,1,'2020-10-03 23:56:36','2020-10-03 23:56:36'),(5,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,1,'2020-10-04 00:07:35','2020-10-04 00:07:35');
+INSERT INTO `alumnoscursada` VALUES (1,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,'2020-10-03 23:27:24','2020-10-03 23:27:24'),(3,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,'2020-10-03 23:56:03','2020-10-03 23:56:03'),(4,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,'2020-10-03 23:56:36','2020-10-03 23:56:36'),(5,'{\"id\": 1, \"dni\": null, \"email\": \"maximiliano.pizarro.5@gmail.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',NULL,1,1,'2020-10-04 00:07:35','2020-10-04 00:07:35');
 /*!40000 ALTER TABLE `alumnoscursada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,8 +56,6 @@ DROP TABLE IF EXISTS `alumnosexamenfinal`;
 CREATE TABLE `alumnosexamenfinal` (
   `idInscriptosExamen` int NOT NULL AUTO_INCREMENT,
   `ExamenesidExamenes` int NOT NULL,
-  `ExamenesMateriasidMaterias` int NOT NULL,
-  `ExamenesMateriasCarrerasidCarreras` int NOT NULL,
   `datosAlumno` json DEFAULT NULL,
   `nota` int DEFAULT NULL,
   `asistencia` tinyint(1) DEFAULT NULL,
@@ -69,11 +64,7 @@ CREATE TABLE `alumnosexamenfinal` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idInscriptosExamen`),
   KEY `Examenes_idExamenes` (`ExamenesidExamenes`),
-  KEY `Examenes_Materias_idMaterias` (`ExamenesMateriasidMaterias`),
-  KEY `Examenes_Materias_Carreras_idCarreras` (`ExamenesMateriasCarrerasidCarreras`),
-  CONSTRAINT `alumnosexamenfinal_ibfk_1` FOREIGN KEY (`ExamenesidExamenes`) REFERENCES `examenes` (`idExamenes`),
-  CONSTRAINT `alumnosexamenfinal_ibfk_2` FOREIGN KEY (`ExamenesMateriasidMaterias`) REFERENCES `examenes` (`MateriasIdMaterias`),
-  CONSTRAINT `alumnosexamenfinal_ibfk_3` FOREIGN KEY (`ExamenesMateriasCarrerasidCarreras`) REFERENCES `examenes` (`MateriasCarrerasIdCarreras`)
+  CONSTRAINT `alumnosexamenfinal_ibfk_1` FOREIGN KEY (`ExamenesidExamenes`) REFERENCES `examenes` (`idExamenes`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,7 +74,7 @@ CREATE TABLE `alumnosexamenfinal` (
 
 LOCK TABLES `alumnosexamenfinal` WRITE;
 /*!40000 ALTER TABLE `alumnosexamenfinal` DISABLE KEYS */;
-INSERT INTO `alumnosexamenfinal` VALUES (1,1,1,1,'{\"id\": 1, \"dni\": null, \"email\": \"godaycn87@outlook.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',5,1,1,'2020-10-04 01:38:44','2020-10-04 01:38:44'),(2,1,1,1,'{\"id\": 1, \"dni\": null, \"email\": \"godaycn87@outlook.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',10,1,0,'2020-10-04 01:38:44','2020-10-04 01:38:44'),(3,3,1,1,'{}',0,0,1,'2020-10-04 01:38:44','2020-10-04 01:38:44');
+INSERT INTO `alumnosexamenfinal` VALUES (1,1,'{\"id\": 1, \"dni\": null, \"email\": \"godaycn87@outlook.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',5,1,1,'2020-10-04 01:38:44','2020-10-04 01:38:44'),(2,1,'{\"id\": 1, \"dni\": null, \"email\": \"godaycn87@outlook.com\", \"nombre\": \"maximiliano\", \"apellido\": \"pizarro\", \"telefono\": \"1167692039\", \"domicilio\": \"ituzaingo 3168\"}',10,1,0,'2020-10-04 01:38:44','2020-10-04 01:38:44'),(3,3,'{}',0,0,1,'2020-10-04 01:38:44','2020-10-04 01:38:44');
 /*!40000 ALTER TABLE `alumnosexamenfinal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,15 +150,12 @@ CREATE TABLE `examenes` (
   `inicioInscripcion` date DEFAULT NULL,
   `finInscripcion` date DEFAULT NULL,
   `MateriasIdMaterias` int NOT NULL,
-  `MateriasCarrerasIdCarreras` int NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `acta` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idExamenes`,`MateriasIdMaterias`,`MateriasCarrerasIdCarreras`),
+  PRIMARY KEY (`idExamenes`,`MateriasIdMaterias`),
   KEY `Materias_idMaterias` (`MateriasIdMaterias`),
-  KEY `Materias_Carreras_idCarreras` (`MateriasCarrerasIdCarreras`),
-  CONSTRAINT `examenes_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`),
-  CONSTRAINT `examenes_ibfk_2` FOREIGN KEY (`MateriasCarrerasIdCarreras`) REFERENCES `materias` (`CarrerasIdCarreras`)
+  CONSTRAINT `examenes_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -177,7 +165,7 @@ CREATE TABLE `examenes` (
 
 LOCK TABLES `examenes` WRITE;
 /*!40000 ALTER TABLE `examenes` DISABLE KEYS */;
-INSERT INTO `examenes` VALUES (1,'2020-10-04','11:00:00','12:00:00','\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04','2020-10-09',1,1,'2020-10-05 00:00:54','2020-10-05 02:11:32',NULL),(2,'2020-10-04','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,1,'2020-10-05 02:10:14','2020-10-05 02:10:14',NULL),(3,'2020-10-03','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,1,'2020-10-05 02:39:25','2020-10-05 02:39:25',NULL);
+INSERT INTO `examenes` VALUES (1,'2020-10-04','11:00:00','12:00:00','\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04','2020-10-09',1,'2020-10-05 00:00:54','2020-10-05 02:11:32',NULL),(2,'2020-10-04','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,'2020-10-05 02:10:14','2020-10-05 02:10:14',NULL),(3,'2020-10-03','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,'2020-10-05 02:39:25','2020-10-05 02:39:25',NULL);
 /*!40000 ALTER TABLE `examenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,13 +244,13 @@ CREATE TABLE `materias` (
   `planIdPlan` int NOT NULL,
   `formaAprobacionIdformaAprobacion` int NOT NULL,
   PRIMARY KEY (`idMaterias`,`CarrerasIdCarreras`),
-  KEY `Carreras_idCarreras` (`CarrerasIdCarreras`),
+  KEY `materias_ibfk_1` (`CarrerasIdCarreras`) /*!80000 INVISIBLE */,
   KEY `plan_ibfk_1_idx` (`planIdPlan`),
   KEY `formaAprobacion_ibfk_1_idx` (`formaAprobacionIdformaAprobacion`),
   CONSTRAINT `formaaprobacion_ibfk_1` FOREIGN KEY (`formaAprobacionIdformaAprobacion`) REFERENCES `formaaprobacion` (`idFormaAprobacion`),
   CONSTRAINT `materias_ibfk_1` FOREIGN KEY (`CarrerasIdCarreras`) REFERENCES `carreras` (`idCarreras`),
-  CONSTRAINT `plan_ibfk_1` FOREIGN KEY (`planIdPlan`) REFERENCES `plan` (`idplan`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `plan_ibfk_1` FOREIGN KEY (`planIdPlan`) REFERENCES `plan` (`idplan`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +259,7 @@ CREATE TABLE `materias` (
 
 LOCK TABLES `materias` WRITE;
 /*!40000 ALTER TABLE `materias` DISABLE KEYS */;
-INSERT INTO `materias` VALUES (1,'Aspectos legales','2020-04-10','2020-01-10',1,'2020-10-05 00:00:54','2020-10-05 00:37:21',1,1),(2,'Distribuidos',NULL,'2020-01-10',1,'2020-10-05 00:00:54','2020-10-05 02:57:02',2,3),(4,'Ingles',NULL,'2020-01-10',1,'2020-10-05 02:57:53','2020-10-05 02:57:53',2,2),(5,'Ingles','2020-01-10','2020-01-10',1,'2020-10-05 02:59:10','2020-10-05 02:59:10',1,1),(6,'IOT',NULL,'2020-01-10',1,'2020-10-13 03:14:40','2020-10-13 03:14:40',1,2),(7,'Geografia','2020-01-10','2020-01-10',2,'2020-10-13 03:14:40','2020-10-13 03:14:40',2,3);
+INSERT INTO `materias` VALUES (1,'Aspectos legales','2020-04-10','2020-01-10',1,'2020-10-05 00:00:54','2020-10-05 00:37:21',1,1),(4,'Ingles',NULL,'2020-01-10',1,'2020-10-05 02:57:53','2020-10-05 02:57:53',2,2),(8,'Nuevos Escenarios','2020-01-10','2020-01-10',1,'2020-10-13 00:00:00','2020-10-13 00:00:00',2,3),(9,'Ingles 2','2020-01-10','2020-01-10',1,'2020-10-13 00:00:00','2020-10-13 00:00:00',2,3);
 /*!40000 ALTER TABLE `materias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -346,4 +334,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-13 12:39:41
+-- Dump completed on 2020-10-13 18:14:14

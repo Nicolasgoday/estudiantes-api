@@ -16,25 +16,7 @@ module.exports = function(sequelize, Sequelize) {
 				key: 'idExamenes'
 			},
 			field: 'Examenes_idExamenes'
-		},
-		examenesMateriasIdMaterias: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-			references: {
-				model: 'examenes',
-				key: 'Materias_idMaterias'
-			},
-			field: 'Examenes_Materias_idMaterias'
-		},
-		examenesMateriasCarrerasIdCarreras: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-			references: {
-				model: 'examenes',
-				key: 'Materias_Carreras_idCarreras'
-			},
-			field: 'Examenes_Materias_Carreras_idCarreras'
-		},
+		},		
 		datosAlumno: {
 			type: Sequelize.JSON,
 			allowNull: true,
