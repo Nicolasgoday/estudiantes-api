@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
   const nombre = req.query.nombre;
   var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
 
-  Materia.findAll({ where: condition })
+  Materia.findAll({  include: ["carreras"], where: condition })
     .then(data => {
       res.send(data);
     })
@@ -65,7 +65,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Materia.findByPk(id)
+  Materia.findByPk(id,{ include: ["carreras"]})
     .then(data => {
       res.send(data);
     })

@@ -34,4 +34,15 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+//RELACION MATERIAS Y CARRERAS
+db.tutorials = require("./carreras")(sequelize, Sequelize);
+db.comments = require("./materias")(sequelize, Sequelize);
+
+
+//db.carreras.hasMany(db.materias, { as: "materias" });
+db.materias.belongsTo(db.carreras, {
+  foreignKey: "Carreras_idCarreras",
+  as: "carreras",
+});
+
 module.exports = db;
