@@ -36,6 +36,7 @@ db.Sequelize = Sequelize;
 
 
 //db.carreras.hasMany(db.materias, { as: "materias" });
+//Asociaciones para materia
 db.materias.belongsTo(db.carreras, {
   foreignKey: "CarrerasIdCarreras",
   as: "carreras",
@@ -48,7 +49,11 @@ db.materias.belongsTo(db.formaaprobacion, {
   foreignKey: "formaAprobacionIdformaAprobacion",
   as: "formaaprobacion",
 });
-
+//Asociaciones para examen
+db.examenes.belongsTo(db.materias, {
+  foreignKey: "MateriasIdMaterias",
+  as: "materias",
+});
 /*
 db.materias.hasMany(db.alumnoscursada, {
   foreignKey: "materiasIdMaterias",

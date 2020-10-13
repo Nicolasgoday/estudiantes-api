@@ -39,7 +39,7 @@ module.exports = function(sequelize, Sequelize) {
 			allowNull: true,
 			field: 'finInscripcion'
 		},
-		Materias_idMaterias: {
+		MateriasIdMaterias: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
@@ -47,17 +47,22 @@ module.exports = function(sequelize, Sequelize) {
 				model: 'materias',
 				key: 'idMaterias'
 			},
-			field: 'Materias_idMaterias'
+			field: 'MateriasIdMaterias'
 		},
-		Materias_Carreras_idCarreras: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-			primaryKey: true,
-			references: {
-				model: 'materias',
-				key: 'Carreras_idCarreras'
-			},
-			field: 'Materias_Carreras_idCarreras'
+		createdAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'createdAt'
+		  },
+		  updatedAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'updatedAt'
+		  },
+		  acta: {
+			type: Sequelize.STRING(45),
+			allowNull: true,
+			field: 'acta'
 		}
 	}, {
 		tableName: 'examenes'
