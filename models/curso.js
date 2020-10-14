@@ -14,7 +14,7 @@ module.exports = function(sequelize, Sequelize) {
 			allowNull: true,
 			field: 'datosDocente'
 		},
-		materiasIdMaterias: {
+		MateriasIdMaterias: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
 			primaryKey: true,
@@ -22,8 +22,18 @@ module.exports = function(sequelize, Sequelize) {
 				model: 'materias',
 				key: 'idMaterias'
 			},
-			field: 'Materias_idMaterias'
-		}
+			field: 'MateriasIdMaterias'
+		},
+		createdAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'createdAt'
+		  },
+		  updatedAt: {
+			type: Sequelize.DATEONLY,
+			allowNull: true,
+			field: 'updatedAt'
+		  }		 
 	}, {
 		tableName: 'curso'
 	});
