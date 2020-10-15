@@ -33,7 +33,7 @@ CREATE TABLE `alumnoscursada` (
   PRIMARY KEY (`idalumnosCursada`,`MateriasIdMaterias`),
   KEY `Materias_idMaterias` (`MateriasIdMaterias`),
   CONSTRAINT `alumnoscursada_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `alumnosexamenfinal` (
   PRIMARY KEY (`idInscriptosExamen`),
   KEY `Examenes_idExamenes` (`ExamenesidExamenes`),
   CONSTRAINT `alumnosexamenfinal_ibfk_1` FOREIGN KEY (`ExamenesidExamenes`) REFERENCES `examenes` (`idExamenes`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `carreras` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idCarreras`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +121,7 @@ CREATE TABLE `curso` (
   PRIMARY KEY (`idCurso`,`MateriasIdMaterias`),
   KEY `Materias_idMaterias` (`MateriasIdMaterias`),
   CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `examenes` (
   PRIMARY KEY (`idExamenes`,`MateriasIdMaterias`),
   KEY `Materias_idMaterias` (`MateriasIdMaterias`),
   CONSTRAINT `examenes_ibfk_1` FOREIGN KEY (`MateriasIdMaterias`) REFERENCES `materias` (`idMaterias`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +165,7 @@ CREATE TABLE `examenes` (
 
 LOCK TABLES `examenes` WRITE;
 /*!40000 ALTER TABLE `examenes` DISABLE KEYS */;
-INSERT INTO `examenes` VALUES (1,'2020-10-04','11:00:00','12:00:00','\"{\'id\'=1;\'nombre\'=\'JOSE\';\'apellido\'=\'SAND\'}\"','2020-10-04','2020-10-09',4,'2020-10-04 00:00:00','2020-10-13 00:00:00',NULL),(3,'2020-10-03','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,'2020-10-05 02:39:25','2020-10-05 02:39:25',NULL),(4,'2020-10-04','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,'2020-10-13 00:00:00','2020-10-13 00:00:00',NULL);
+INSERT INTO `examenes` VALUES (1,'2020-10-04','11:00:00','12:00:00','\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04','2020-10-09',1,'2020-10-05 00:00:54','2020-10-05 02:11:32',NULL),(2,'2020-10-04','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,'2020-10-05 02:10:14','2020-10-05 02:10:14',NULL),(3,'2020-10-03','10:00:00',NULL,'\"{\'id\'=1;\'nombre\'=\'juan\';\'apellido\'=\'Perez\'}\"','2020-10-04',NULL,1,'2020-10-05 02:39:25','2020-10-05 02:39:25',NULL);
 /*!40000 ALTER TABLE `examenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,12 +177,12 @@ DROP TABLE IF EXISTS `formaaprobacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `formaaprobacion` (
-  `idFormaAprobacion` int NOT NULL AUTO_INCREMENT,
+  `idFormaAprobacion` int NOT NULL,
   `descripcion` varchar(45) NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idFormaAprobacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`idHorario`,`CursoIdCurso`),
   KEY `Curso_idCurso` (`CursoIdCurso`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`CursoIdCurso`) REFERENCES `curso` (`idCurso`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `horario` (
 
 LOCK TABLES `horario` WRITE;
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
-INSERT INTO `horario` VALUES (2,'Jueves','11:00:00','12:00:00',1,'2020-10-05 02:31:04','2020-10-05 02:31:04'),(3,'Miercoles','15:00:00','16:00:00',1,'2020-10-13 00:00:00','2020-10-13 00:00:00');
+INSERT INTO `horario` VALUES (2,'Jueves','11:00:00','12:00:00',1,'2020-10-05 02:31:04','2020-10-05 02:31:04');
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +250,7 @@ CREATE TABLE `materias` (
   CONSTRAINT `formaaprobacion_ibfk_1` FOREIGN KEY (`formaAprobacionIdformaAprobacion`) REFERENCES `formaaprobacion` (`idFormaAprobacion`),
   CONSTRAINT `materias_ibfk_1` FOREIGN KEY (`CarrerasIdCarreras`) REFERENCES `carreras` (`idCarreras`),
   CONSTRAINT `plan_ibfk_1` FOREIGN KEY (`planIdPlan`) REFERENCES `plan` (`idplan`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,12 +271,12 @@ DROP TABLE IF EXISTS `plan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `plan` (
-  `idplan` int NOT NULL AUTO_INCREMENT,
+  `idplan` int NOT NULL,
   `descripcion` varchar(45) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`idplan`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4  ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,6 +302,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -333,4 +334,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-10-13 21:00:12
+-- Dump completed on 2020-10-13 18:14:14

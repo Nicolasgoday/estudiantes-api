@@ -54,6 +54,16 @@ db.examenes.belongsTo(db.materias, {
   foreignKey: "MateriasIdMaterias",
   as: "materias",
 });
+//Asociaciones para horario
+db.horario.belongsTo(db.curso, {
+  foreignKey: "CursoIdCurso",
+  as: "curso",
+});
+//Asociaciones para materia
+db.curso.belongsTo(db.materias, {
+  foreignKey: "MateriasIdMaterias",
+  as: "materia",
+});
 /*
 db.materias.hasMany(db.alumnoscursada, {
   foreignKey: "materiasIdMaterias",

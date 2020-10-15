@@ -33,12 +33,23 @@ exports.traerExamenesParaInscripcion= (req, res) => {
   /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
   mostrar los días, horarios y docentes asignados*/
   console.log(Date() + ": /traerExamenesParaInscripcion");
+  var aPartir = new Date();
+  const DATE_FORMATER = require( 'dateformat' );
+
+
+  //console.log('La fecha actual es',DATE_FORMATER( aPartir, "yyyy-mm-dd" ));
   try {
     const coneccionDB = mysql.createConnection(connectionString);
     coneccionDB.connect(function (err) {
       if (err) throw err;
-      console.log("Connected a web!");
-      coneccionDB.query('select ' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' + database + '.examenes.fecha , ' + database + '.examenes.horarioInicio, JSON_UNQUOTE(' + database + '.examenes.docenteAsignado->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.examenes.docenteAsignado->"$.apellido") as apellidoProfesor from ' + database + '.examenes inner join ' + database + '.materias on ' + database + '.examenes.Materias_idMaterias = ' + database + '.materias.idMaterias inner join ' + database + '.curso on ' + database + '.materias.idMaterias = ' + database + '.curso.Materias_idMaterias  ;'
+      var query = 'select ' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' 
+      + database + '.examenes.fecha , ' + database + '.examenes.horarioInicio, JSON_UNQUOTE(' + database
+      + '.examenes.docenteAsignado->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.examenes.docenteAsignado->"$.apellido") as apellidoProfesor from ' 
+      + database + '.examenes left join ' + database + '.materias on ' + database + '.examenes.MateriasIdMaterias = ' + database + '.materias.idMaterias left join ' 
+      + database + '.curso on ' + database + '.materias.idMaterias = ' + database + '.curso.MateriasIdMaterias ' 
+      +' where  examenes.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and examenes.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '";'
+      console.log(query);
+      coneccionDB.query(query
         , function (err, result) {
           if (err) throw err;
           console.log("Result: " + result);
@@ -58,60 +69,107 @@ exports.traerExamenesParaInscripcion= (req, res) => {
   console.log(Date() + ": /inscribirEstudianteExamen");
   try {
     var request = require('request');
-    var idEstudiante = req.query.idEstudiante;
-    var idExamen = req.query.idExamen;
-    var idCarrera = req.query.idCarrera;
-    var idMateria = req.query.idMateria;
-     var recordatorio = req.query.recordatorio;
-     const coneccionDB = mysql.createConnection(connectionString);
+    var idEstudiante = req.body.idEstudiante;
+    var idExamen = req.body.idExamen;
+    var recordatorio = req.body.recordatorio;
+    const coneccionDB = mysql.createConnection(connectionString);
     
-     request('https://administrador-unla.herokuapp.com/api/estudiantes/1', function (error, response, body) {
+    request('https://administrador-unla.herokuapp.com/api/estudiantes/'+ idEstudiante , function (error, response, body) {
        if (!error && response.statusCode == 200) {
          console.log(body) // Print the google web page.
          var responseJson = JSON.stringify(body);
          coneccionDB.connect(function (err) {
-           if (err) throw err;
-            var toQuery = 'INSERT INTO ' + database + '.`alumnosexamenfinal`(' + database + '.alumnosexamenfinal.`Examenes_idExamenes`,' + database + '.alumnosexamenfinal.`datosAlumno`,' + database +
-              '.alumnosexamenfinal.`Examenes_Materias_idMaterias`,' + database + '.alumnosexamenfinal.`Examenes_Materias_Carreras_idCarreras` , ' +
+          if (err){
+            res.status(500).send({
+              message: "ERROR AL CONECTAR"
+            });
+          }
+          var queryEstaInscripto = 'select count(*) as yaEstaAnotado from alumnosexamenfinal where JSON_UNQUOTE(datosAlumno->"$.id") = '+ idEstudiante +' and ExamenesidExamenes= ' + idExamen + ';';        
+          //console.log(insertarAlumno);
+          coneccionDB.query(queryEstaInscripto, function (err, rows, fields){
+            console.log(rows[0].yaEstaAnotado);
+            if (rows[0].yaEstaAnotado == 0){  //SI ES IGUAL QUE 0 NO HAY UNA INSCRIPCION 
+              //ExamenesidExamenes, datosAlumno, nota, asistencia, recordatorio, createdAt, updatedAt
+              var queryInsertarAlumno = 'INSERT INTO ' + database + '.`alumnosexamenfinal`(' + database + '.alumnosexamenfinal.`ExamenesidExamenes`,' + database + '.alumnosexamenfinal.`datosAlumno`,' +
               database + '.alumnosexamenfinal.`recordatorio`, ' + database + '.alumnosexamenfinal.`createdAt`, ' + database + '.alumnosexamenfinal.`updatedAt`)' +
-              'VALUES(' + idExamen + ',' + responseJson + ',' + idMateria + ',' + idCarrera + ',' + recordatorio + ', NOW() , NOW() ' +
-              ');';
-            console.log(toQuery);
-            coneccionDB.query(toQuery //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
-              , function (err, result) {
-                if (err) throw err;
-                res.status(200)
-                return res.send(result)
+                        'VALUES(' + idExamen + ',' + responseJson + ',' + recordatorio + ', NOW() , NOW() );';
+              coneccionDB.query(queryInsertarAlumno, function (err, result) {
+                    if (err){
+                      res.status(500).send({
+                        message: "ERROR AL INSERTAR"
+                      });
+                    }
+                    res.status(200)
+                    return res.send(result)
+                  });
+            }
+            else{              
+              res.status(406).send({
+                message: "ALUMNO YA ESTA INSCRIPTO"
               });
+              return;
+            }
           });
-        }
-        else {
-          res.status(404)
-          console.log("error") // Print the google web page.
-        }
-      })
-
-    }
-    catch (e) {
-      console.error(e)
-      res.status(500)
-      res.send(e)
-    }  
+        });
+      }
+      else{        
+        res.status(404).send({
+          message: "NO EXISTE ALUMNO"
+        });
+        return;
+      }
+    })
+  }
+  catch (e) {
+    console.log("ERROR");
+    res.status(500).send({      
+      message: "Falla al insertar"
+    });
+    return;
+  }  
 };
 
 //Dar de baja inscripcion a examen
 exports.bajaInscripcionExamen= (req, res) => {
   console.log(Date() + ": /bajaInscripcionExamen");
+  var aPartir = new Date();
+  const DATE_FORMATER = require( 'dateformat' );
+  var idInscripcion = req.body.idInscripcion;
+  
   try {
-    var idInscripcion = req.query.idInscripcion
+    if (!req.body.idInscripcion) {
+      res.status(400).send({
+        message: "El body no puede estar vacio"
+      });
+      return;
+  }
     const coneccionDB = mysql.createConnection(connectionString);
     coneccionDB.connect(function (err) {
-      if (err) throw err;
-      coneccionDB.query('DELETE FROM ' + database + '.`alumnosexamenfinal` WHERE ' + database + '.alumnosexamenfinal.idInscriptosExamen = ' + idInscripcion + ';'
-        , function (err, result) {
-          if (err) throw err;
-          console.log("Result: " + result);
-          return res.send(result)
+        if (err) throw err;
+        var enFechaBaja = 'SELECT count(*) as eliminable FROM inscripciones.alumnosexamenfinal ' +
+        'inner join examenes on alumnosexamenfinal.ExamenesidExamenes = examenes.idExamenes ' +
+        'where idInscriptosExamen= '+idInscripcion + ' and examenes.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and examenes.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" ;'
+        coneccionDB.query(enFechaBaja, function (err, rows, fields){
+            console.log(rows[0].eliminable);
+            if (rows[0].eliminable > 0){  //SI ES MAYOR QUE 0 HAY UNA INSCRIPCION Y ESTA EN FECHA DE PODER DAR DE BAJA
+              var queryDelete = 'DELETE FROM ' + database + '.`alumnosexamenfinal` WHERE ' + database + '.alumnosexamenfinal.idInscriptosExamen = ' + idInscripcion + ';';
+              console.log(queryDelete);
+              coneccionDB.query(queryDelete, function (err, result) {
+                if (err) throw err;
+                //NO ACEPTABLE-FUERA DE FECHA
+                res.status(200).send({
+                  message: "OK"
+                });
+                return;
+              });
+            }
+            else{
+              //NO ACEPTABLE-FUERA DE FECHA
+              res.status(406).send({
+                message: "INSCRIPCION FUERA DE FECHA PARA ELIMINAR O NO EXISTE"
+              });
+              return;
+            }
         });
     });
     }
@@ -126,7 +184,14 @@ exports.enviarNotificacionExamen= (req, res) => {
   console.log(Date() + ": /enviarNotificacionExamen");
   try {
     
-    var aPartir = req.query.aPartir
+    var aPartir = req.body.aPartir
+    if (!req.body.aPartir) {
+      res.status(400).send({
+        message: "Falta fecha de inicio"
+      });
+      return;
+    }
+
     const DATE_FORMATER = require( 'dateformat' );
 
     const coneccionDB = mysql.createConnection(connectionString);
@@ -134,8 +199,8 @@ exports.enviarNotificacionExamen= (req, res) => {
     coneccionDB.connect(function (err) {
       if (err) throw err;
       var q = 'select JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.nombre") as nombreAlumno, JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.apellido") as apellidoAlumno, JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.email") as email, materias.nombre as nombreMateria, fecha as FechaExamen , horarioInicio as horarioExamen ' +    
-      ' from examenes inner join inscripciones.alumnosexamenfinal on idExamenes = Examenes_idExamenes inner join materias on inscripciones.alumnosexamenfinal.Examenes_Materias_idMaterias = materias.idMaterias ' + 
-      'where fecha >=' + aPartir + ' and recordatorio = 1 and  JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.email") is not null;' 
+      ' from examenes inner join inscripciones.alumnosexamenfinal on idExamenes = ExamenesidExamenes inner join materias on examenes.MateriasIdMaterias = materias.idMaterias ' + 
+      'where fecha >=' + aPartir + ' and recordatorio = 1 and  JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.email") is not null;'  
       console.log("query: ", q);
       coneccionDB.query(q,  function (err, rows, fields) {
           if (err) throw err;

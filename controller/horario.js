@@ -7,7 +7,7 @@ idHorario int AI PK
 dia varchar(10) 
 horarioInicio time 
 horarioFin time 
-Curso_idCurso int PK 
+CursoIdCurso int PK 
 createdAt datetime 
 updatedAt datetime
 
@@ -26,7 +26,7 @@ exports.create = (req, res) => {
         dia: req.body.dia,    
         horarioInicio: req.body.horarioInicio,
         horarioFin: req.body.horarioFin,
-        Curso_idCurso: req.body.Curso_idCurso,
+        CursoIdCurso: req.body.CursoIdCurso,
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
   const idHorario = req.query.idHorario;
   var condition = idHorario ? { idHorario: { [Op.like]: `%${idHorario}%` } } : null;
 
-  Horario.findAll({ where: condition })
+  Horario.findAll({  include: ["curso"], where: condition })
     .then(data => {
       res.send(data);
     })
@@ -65,7 +65,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Horario.findByPk(id)
+  Horario.findByPk(id, {  include: ["curso"]})
     .then(data => {
       res.send(data);
     })
