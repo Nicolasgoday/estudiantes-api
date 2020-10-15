@@ -40,12 +40,12 @@ app.get('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
 app.get('/modificarDatosContactoEstudiante',estudiante.modificarDatosContactoEstudiante)
 
 //inscripciones cursada
-app.post('/inscribirEstudianteCursada',inscripciones.inscribirEstudianteCursada) 
+app.post('/inscribirEstudianteCursada',inscripciones.inscribirEstudianteCursada)  
 app.get('/traerMateriasParaInscripcion',inscripciones.traerMateriasParaInscripcion)
 app.delete('/bajaInscripcionMateria',inscripciones.bajaInscripcionMateria)
 //inscripciones examenes
-app.post('/inscribirEstudianteExamen',examenes.inscribirEstudianteExamen)
-app.get('/traerExamenesParaInscripcion',examenes.traerExamenesParaInscripcion)
+app.post('/inscribirEstudianteExamen',examenes.inscribirEstudianteExamen)   //OK
+app.get('/traerExamenesParaInscripcion',examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
 app.delete('/bajaInscripcionExamen',examenes.bajaInscripcionExamen)
 app.get('/enviarNotificacionExamen',examenes.enviarNotificacionExamen)
 
