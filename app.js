@@ -14,6 +14,8 @@ const cursos = require('./controller/curso.js');
 const planes = require('./controller/planes.js');
 const formasaprobacion = require('./controller/formasaprobacion.js');
 
+const autentificacion = require('./controller/utilitarios/autentificacion.js');
+
 
 const swaggerDocument = require('./swagger/swagger.json');
 const swaggerDocumentDev = require('./swagger/swagger-dev.json');
@@ -45,7 +47,7 @@ app.get('/traerMateriasParaInscripcion',inscripciones.traerMateriasParaInscripci
 app.delete('/bajaInscripcionMateria',inscripciones.bajaInscripcionMateria)
 //inscripciones examenes
 app.post('/inscribirEstudianteExamen',examenes.inscribirEstudianteExamen)   //OK
-app.get('/traerExamenesParaInscripcion',examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
+app.get('/traerExamenesParaInscripcion', autentificacion.esRolAdmin, examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
 app.delete('/bajaInscripcionExamen',examenes.bajaInscripcionExamen)
 app.get('/enviarNotificacionExamen',examenes.enviarNotificacionExamen)
 
