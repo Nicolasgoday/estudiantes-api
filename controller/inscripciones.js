@@ -12,94 +12,153 @@ const connectionString = { host: host, port: port, user: user, password: passwor
 
 //traerMaterias para inscripcion
 exports.traerMateriasParaInscripcion= (req, res) => {
-    console.log(Date() + ": /traerMateriasParaInscripcion");
-    try {
+    /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
+  mostrar los días, horarios y docentes asignados*/
+  console.log(Date() + ": /traerMateriasParaInscripcion");
+  var aPartir = new Date();
+  const DATE_FORMATER = require( 'dateformat' );
 
-      const coneccionDB = mysql.createConnection(connectionString);
-      coneccionDB.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected a web!");
-        coneccionDB.query('select ' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' + database + '.horario.dia , ' + database + '.horario.horarioInicio, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.apellido") as apellidoProfesor from ' + database + '.materias inner join curso on ' + database + '.materias.idMaterias = ' + database + '.curso.Materias_idMaterias  inner join ' + database + '.horario on ' + database + '.horario.Curso_idCurso = ' + database + '.curso.idCurso;'
-          , function (err, result) {
-            if (err) throw err;
-            console.log("Result: " + result);
+  try {
+    const coneccionDB = mysql.createConnection(connectionString);
+    coneccionDB.connect(function (err) {
+      if (err) throw err;
+      //idMaterias, nombre, inicioInscripcion, finInscripcion, CarrerasIdCarreras, createdAt, updatedAt, planIdPlan, formaAprobacionIdformaAprobacion
+      var query = 'select ' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' + database + '.horario.dia , ' + database
+                  + '.horario.horarioInicio, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.apellido") as apellidoProfesor from ' 
+                  + database + '.materias inner join curso on ' + database + '.materias.idMaterias = ' 
+                  + database + '.curso.MateriasIdMaterias  inner join ' + database + '.horario on ' + database + '.horario.CursoIdCurso = ' + database + '.curso.idCurso '
+                  +' where  materias.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and materias.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '";';
+      console.log(query);
+      coneccionDB.query(query
+        , function (err, result) {
+          if (err) throw err;
+          console.log("Result: " + result);
+          return res.send(result)
+        });
+   });
+   }
+   catch (e) {
+     console.error(e)
+     res.status(500)
+     res.send(e)
+   }
+ };
 
-            return res.send(result)
-          });
+//Inscribirser a una materia
+exports.inscribirEstudianteCursada= (req, res) => {
+  console.log(Date() + ": /inscribirEstudianteCursada");
+  try {
+    var idEstudiante = req.body.idEstudiante
+    var idMateria = req.body.idMateria
+    var recordatorio = req.body.recordatorio
+
+    const coneccionDB = mysql.createConnection(connectionString);
+    var request = require('request');
+    
+    request('https://administrador-unla.herokuapp.com/api/estudiantes/'+ idEstudiante , function (error, response, body) {
+      
+      if (!error && response.statusCode == 200) {
+        console.log(body) // Print the google web page.
+        var responseJson = JSON.stringify(body);
+        coneccionDB.connect(function (err) {
+         if (err){
+           res.status(500).send({
+             message: "ERROR AL CONECTAR"
+           });
+         }
+         var queryEstaInscripto = 'select count(*) as yaEstaAnotado from alumnoscursada where JSON_UNQUOTE(datosAlumno->"$.id") = '+ idEstudiante +' and MateriasIdMaterias= ' + idMateria + ';';        
+         //console.log(insertarAlumno);
+         coneccionDB.query(queryEstaInscripto, function (err, rows, fields){
+           console.log(rows[0].yaEstaAnotado);
+           if (rows[0].yaEstaAnotado == 0){  //SI ES IGUAL QUE 0 NO HAY UNA INSCRIPCION 
+             //ExamenesidExamenes, datosAlumno, nota, asistencia, recordatorio, createdAt, updatedAt
+             var queryInsertarAlumno = 'INSERT INTO ' + database + '.`alumnoscursada`(' + database + '.alumnoscursada.`datosAlumno`,' + database +
+             '.alumnoscursada.`MateriasIdMaterias`,' + database + '.alumnoscursada.`recordatorio`, ' + database + '.alumnoscursada.`createdAt`, ' + database + '.alumnoscursada.`updatedAt`)' +
+           'VALUES(' + responseJson + ',' + idMateria + ',' + recordatorio + ', NOW() , NOW() );';
+             coneccionDB.query(queryInsertarAlumno, function (err, result) {
+                   if (err){
+                     res.status(500).send({
+                       message: "ERROR AL INSERTAR"
+                     });
+                   }
+                   res.status(200)
+                   return res.send(result)
+                 });
+           }
+           else{              
+             res.status(406).send({
+               message: "ALUMNO YA ESTA INSCRIPTO"
+             });
+             return;
+           }
+         });
+       });
+     }
+     else{        
+       res.status(404).send({
+         message: "NO EXISTE ALUMNO"
+       });
+       return;
+     }
+   })
+ }
+ catch (e) {
+   console.log("ERROR");
+   res.status(500).send({      
+     message: "Falla al insertar"
+   });
+   return;
+ }  
+};
+
+//darse de baja a una materia
+exports.bajaInscripcionMateria= (req, res) => {
+  console.log(Date() + ": /bajaInscripcionMateria");
+  var aPartir = new Date();
+  const DATE_FORMATER = require( 'dateformat' );
+  var idInscripcion = req.body.idInscripcion;
+  
+  try {
+    if (!req.body.idInscripcion) {
+      res.status(400).send({
+        message: "El body no puede estar vacio"
       });
+      return;
+  }
+    const coneccionDB = mysql.createConnection(connectionString);
+    coneccionDB.connect(function (err) {
+        if (err) throw err;
+        var enFechaBaja = 'SELECT count(*) as eliminable FROM inscripciones.alumnoscursada ' +
+        'inner join materias on alumnoscursada.MateriasIdMaterias = materias.idMaterias ' +
+        'where idalumnosCursada= '+ idInscripcion + ' and materias.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and materias.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" ;'
+        coneccionDB.query(enFechaBaja, function (err, rows, fields){
+            console.log(rows[0].eliminable);
+            if (rows[0].eliminable > 0){  //SI ES MAYOR QUE 0 HAY UNA INSCRIPCION Y ESTA EN FECHA DE PODER DAR DE BAJA
+              var queryDelete = 'DELETE FROM ' + database + '.`alumnoscursada` WHERE ' + database + '.alumnoscursada.idalumnosCursada = ' + idInscripcion + ';';
+              console.log(queryDelete);
+              coneccionDB.query(queryDelete, function (err, result) {
+                if (err) throw err;
+                //NO ACEPTABLE-FUERA DE FECHA
+                res.status(200).send({
+                  message: "OK"
+                });
+                return;
+              });
+            }
+            else{
+              //NO ACEPTABLE-FUERA DE FECHA
+              res.status(406).send({
+                message: "INSCRIPCION FUERA DE FECHA PARA ELIMINAR O NO EXISTE"
+              });
+              return;
+            }
+        });
+    });
     }
     catch (e) {
       console.error(e)
       res.status(500)
       res.send(e)
     }
-  };
-
-//Inscribirser a una materia
-exports.inscribirEstudianteCursada= (req, res) => {
-  console.log(Date() + ": /inscribirEstudianteCursada");
-  try {
-    var idEstudiante = req.query.idEstudiante
-    var idCarrera = req.query.idCarrera
-    var idMateria = req.query.idMateria
-    var recordatorio = req.query.recordatorio
-    const coneccionDB = mysql.createConnection(connectionString);
-    var request = require('request');
-    request('https://administrador-unla.herokuapp.com/api/estudiantes/1', function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-          console.log(body) // Print the google web page.
-         var responseJson = JSON.stringify(body);
-         coneccionDB.connect(function (err) {
-           if (err) throw err;
-           var toQuery = 'INSERT INTO ' + database + '.`alumnoscursada`(' + database + '.alumnoscursada.`datosAlumno`,' + database +
-             '.alumnoscursada.`Materias_idMaterias`,' + database + '.alumnoscursada.`Materias_Carreras_idCarreras` , ' +
-           database + '.alumnoscursada.`recordatorio`, ' + database + '.alumnoscursada.`createdAt`, ' + database + '.alumnoscursada.`updatedAt`)' +
-           'VALUES(' + responseJson + ',' + idMateria + ',' + idCarrera + ',' + recordatorio + ', NOW() , NOW() ' +
-           ');';
-         //console.log(toQuery);
-         coneccionDB.query(toQuery //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
-            , function (err, result) {
-              if (err) throw err;
-              res.status(200)
-             return res.send(result)
-           });
-       });
-     }
-     else {
-       res.status(404)
-       console.log("error") // Print the google web page.
-     }
-   })
- }
-  catch (e) {
-    console.error(e)
-    res.status(500)
-    res.send(e)
   }
-};  
-
-
-//darse de baja a una materia
-exports.bajaInscripcionMateria= (req, res) => {
-  console.log(Date() + ": /bajaInscripcionMateria");
-  try {
-    var idInscripcion = req.query.idInscripcion
-    const coneccionDB = mysql.createConnection(connectionString);
-    coneccionDB.connect(function (err) {
-      if (err) throw err;
-      coneccionDB.query('DELETE FROM ' + database + '.`alumnoscursada` WHERE ' + database + '.alumnoscursada.idalumnosCursada = ' + idInscripcion + ';'
-        , function (err, result) {
-          if (err) throw err;
-          console.log("Result: " + result);
-          return res.send(result)
-        });
-    });
-  }
-  catch (e) {
-    console.error(e)
-    res.status(500)
-    res.send(e)
-  }
-};
- 
 

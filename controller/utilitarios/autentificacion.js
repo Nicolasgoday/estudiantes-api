@@ -67,6 +67,11 @@ exports.autentificar = (req,res,next,role) => {
   var token = req.headers.authorization.split(" ")[1];
   var payload = jwt.decode(token, TOKEN_SECRET, 'HS512');
   
+
+  console.log(payload.exp);
+  console.log(moment().unix());
+
+
   if(payload.exp <= moment().unix()) {
      return res
         .status(401)
