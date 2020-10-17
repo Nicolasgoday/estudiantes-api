@@ -29,8 +29,10 @@ exports.create = (req, res) => {
       const examen = {
         fecha: req.body.fecha,    
         horarioInicio: req.body.horarioInicio,
+        horarioFin: req.body.horarioFin,
         docenteAsignado: req.body.docenteAsignado,
         inicioInscripcion: req.body.inicioInscripcion,
+        finInscripcion: req.body.finInscripcion,
         MateriasIdMaterias : req.body.MateriasIdMaterias,
         acta: req.body.acta,
         createdAt: new Date(),
