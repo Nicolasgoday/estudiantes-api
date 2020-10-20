@@ -23,7 +23,7 @@ exports.traerMateriasParaInscripcion= (req, res) => {
     coneccionDB.connect(function (err) {
       if (err) throw err;
       //idMaterias, nombre, inicioInscripcion, finInscripcion, CarrerasIdCarreras, createdAt, updatedAt, planIdPlan, formaAprobacionIdformaAprobacion
-      var query = 'select ' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' + database + '.horario.dia , ' + database
+      var query = 'select ' + database + '.materias.idMaterias as idMaterias,' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' + database + '.horario.dia , ' + database
                   + '.horario.horarioInicio, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.apellido") as apellidoProfesor from ' 
                   + database + '.materias inner join curso on ' + database + '.materias.idMaterias = ' 
                   + database + '.curso.MateriasIdMaterias  inner join ' + database + '.horario on ' + database + '.horario.CursoIdCurso = ' + database + '.curso.idCurso '
@@ -33,6 +33,8 @@ exports.traerMateriasParaInscripcion= (req, res) => {
         , function (err, result) {
           if (err) throw err;
           console.log("Result: " + result);
+          coneccionDB.destroy();
+          res.status(200)
           return res.send(result)
         });
    });
@@ -54,7 +56,23 @@ exports.inscribirEstudianteCursada= (req, res) => {
 
     const coneccionDB = mysql.createConnection(connectionString);
     var request = require('request');
+/* OPCION B
+    request({
+      url: 'https://administrador-unla.herokuapp.com/api/estudiantes/1',
+      headers: {
+         'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfRVNUVURJQU5URSxST0xFX1VTRVIsUk9MRV9QUk9GRVNPUiIsImV4cCI6MTYwMzIzNTc5MH0.NcGuBfVrIdvaApS5DCRCDunwuiXv_rNz7eaw-XtygrptQ6FUUI2MX4vXYQjL6gcOMFRMsVDAuZd5M4CK2eekqQ'
+      },
+      rejectUnauthorized: false
+    }, function(err, res) {
+          if(err) {
+            console.error(err);
+          } else {
+            console.log(res.body);
+          }
     
+    });
+
+  */ 
     request('https://administrador-unla.herokuapp.com/api/estudiantes/'+ idEstudiante , function (error, response, body) {
       
       if (!error && response.statusCode == 200) {
@@ -77,15 +95,17 @@ exports.inscribirEstudianteCursada= (req, res) => {
            'VALUES(' + responseJson + ',' + idMateria + ',' + recordatorio + ', NOW() , NOW() );';
              coneccionDB.query(queryInsertarAlumno, function (err, result) {
                    if (err){
-                     res.status(500).send({
-                       message: "ERROR AL INSERTAR"
+                      res.status(500).send({
+                      message: "ERROR AL INSERTAR"
                      });
                    }
+                   coneccionDB.destroy();
                    res.status(200)
                    return res.send(result)
                  });
            }
            else{              
+             coneccionDB.destroy();
              res.status(406).send({
                message: "ALUMNO YA ESTA INSCRIPTO"
              });
@@ -96,11 +116,11 @@ exports.inscribirEstudianteCursada= (req, res) => {
      }
      else{        
        res.status(404).send({
-         message: "NO EXISTE ALUMNO"
+         message: error + response + "NO EXISTE ALUMNO"
        });
        return;
      }
-   })
+   }).auth(null, null, true, 'Bearer ' +'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX1VTRVIsUk9MRV9FU1RVRElBTlRFIiwiZXhwIjoxNjAzMjM1NzkwfQ.DUrYVM4Ea1Wed2AATCSkSJPsM6ucgZt7BIbcgzSfSvMGSu_1voCRdd1afWtBv5tanM3ULa3SLVHBtj_pKyOynQ');
  }
  catch (e) {
    console.log("ERROR");
@@ -138,7 +158,7 @@ exports.bajaInscripcionMateria= (req, res) => {
               console.log(queryDelete);
               coneccionDB.query(queryDelete, function (err, result) {
                 if (err) throw err;
-                //NO ACEPTABLE-FUERA DE FECHA
+                coneccionDB.destroy();
                 res.status(200).send({
                   message: "OK"
                 });

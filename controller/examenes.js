@@ -42,7 +42,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
     const coneccionDB = mysql.createConnection(connectionString);
     coneccionDB.connect(function (err) {
       if (err) throw err;
-      var query = 'select ' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' 
+      var query = 'select ' + database + '.examenes.idExamenes ,'  + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' 
       + database + '.examenes.fecha , ' + database + '.examenes.horarioInicio, JSON_UNQUOTE(' + database
       + '.examenes.docenteAsignado->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.examenes.docenteAsignado->"$.apellido") as apellidoProfesor from ' 
       + database + '.examenes left join ' + database + '.materias on ' + database + '.examenes.MateriasIdMaterias = ' + database + '.materias.idMaterias left join ' 
@@ -52,6 +52,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
       coneccionDB.query(query
         , function (err, result) {
           if (err) throw err;
+          coneccionDB.destroy();
           console.log("Result: " + result);
           return res.send(result)
         });
@@ -99,6 +100,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
                         message: "ERROR AL INSERTAR"
                       });
                     }
+                    coneccionDB.destroy();
                     res.status(200)
                     return res.send(result)
                   });
@@ -156,7 +158,7 @@ exports.bajaInscripcionExamen= (req, res) => {
               console.log(queryDelete);
               coneccionDB.query(queryDelete, function (err, result) {
                 if (err) throw err;
-                //NO ACEPTABLE-FUERA DE FECHA
+                coneccionDB.destroy();
                 res.status(200).send({
                   message: "OK"
                 });
@@ -241,6 +243,8 @@ exports.enviarNotificacionExamen= (req, res) => {
           } else {
             console.log('There were no results.');
           }
+          coneccionDB.destroy();
+          res.status(200);
           return res.send(rows)
         });
     });

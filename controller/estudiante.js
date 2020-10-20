@@ -31,6 +31,7 @@ exports.traerAnalitico= (req, res) => {
           , function (err, result) {
             if (err) throw err;
             console.log("Result: " + result);
+            coneccionDB.destroy();
             res.status(200)
             return res.send(result)
           });
@@ -89,6 +90,8 @@ exports.crearAnaliticoPDF= (req, res) => {
                           }
                         });   
                       });
+                      coneccionDB.destroy();
+                      res.status(200);
                       res.sendFile(__dirname + '/images/' + responseJson.nombre + responseJson.apellido + '.pdf');                     
           });
         }
@@ -155,6 +158,8 @@ exports.traerEstudiante= (req, res) => {
         , function (err, result) {        
           if (err) throw err;
           console.log("Result: " + result);
+          coneccionDB.destroy();
+          res.status(200);
           return res.send(result)
         });
       });

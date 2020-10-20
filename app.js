@@ -36,67 +36,67 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocumentDev));
 app.use(bodyParser.json());
 app.use(cors());
 //estudiante
-app.get('/traerEstudiante',estudiante.traerEstudiante)
-app.get('/traerAnalitico',estudiante.traerAnalitico)
-app.get('/crearAnaliticoPDF',estudiante.crearAnaliticoPDF)
-app.get('/modificarDatosContactoEstudiante',estudiante.modificarDatosContactoEstudiante)
+app.get('/traerEstudiante',autentificacion.esRolEstudiante, estudiante.traerEstudiante)
+app.get('/traerAnalitico',autentificacion.esRolEstudiante, estudiante.traerAnalitico)
+app.get('/crearAnaliticoPDF',autentificacion.esRolEstudiante, estudiante.crearAnaliticoPDF)
+app.get('/modificarDatosContactoEstudiante',autentificacion.esRolEstudiante,estudiante.modificarDatosContactoEstudiante)
 
 //inscripciones cursada
-app.post('/inscribirEstudianteCursada',inscripciones.inscribirEstudianteCursada)  
-app.get('/traerMateriasParaInscripcion',inscripciones.traerMateriasParaInscripcion)
-app.delete('/bajaInscripcionMateria',inscripciones.bajaInscripcionMateria)
+app.post('/inscribirEstudianteCursada',autentificacion.esRolEstudiante,inscripciones.inscribirEstudianteCursada)  
+app.get('/traerMateriasParaInscripcion',autentificacion.esRolEstudiante,inscripciones.traerMateriasParaInscripcion)
+app.delete('/bajaInscripcionMateria',autentificacion.esRolEstudiante,inscripciones.bajaInscripcionMateria)
 //inscripciones examenes
-app.post('/inscribirEstudianteExamen',examenes.inscribirEstudianteExamen)   //OK
-app.get('/traerExamenesParaInscripcion', autentificacion.esRolAdmin, examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
-app.delete('/bajaInscripcionExamen',examenes.bajaInscripcionExamen)
-app.get('/enviarNotificacionExamen',examenes.enviarNotificacionExamen)
+app.post('/inscribirEstudianteExamen', autentificacion.esRolEstudiante, examenes.inscribirEstudianteExamen)   //OK
+app.get('/traerExamenesParaInscripcion', autentificacion.esRolEstudiante, examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
+app.delete('/bajaInscripcionExamen',autentificacion.esRolEstudiante, examenes.bajaInscripcionExamen)
+app.get('/enviarNotificacionExamen', autentificacion.esRolAdmin, examenes.enviarNotificacionExamen)
 
 
 // ABM Carreras
-app.post("/carreras", carrera.create);
-app.get("/carreras", carrera.findAll);
-app.get("/carreras/:id", carrera.findOne);
-app.put("/carreras/:id", carrera.update);
-app.delete("/carreras/:id", carrera.delete);
+app.post("/carreras",autentificacion.esRolAdmin, carrera.create);
+app.get("/carreras", autentificacion.esRolAdmin, carrera.findAll);
+app.get("/carreras/:id", autentificacion.esRolAdmin, carrera.findOne);
+app.put("/carreras/:id", autentificacion.esRolAdmin, carrera.update);
+app.delete("/carreras/:id", autentificacion.esRolAdmin, carrera.delete);
 
 // ABM Materias
-app.post("/materias", materia.create);
-app.get("/materias", materia.findAll);
-app.get("/materias/:id", materia.findOne);
-app.put("/materias/:id", materia.update);
-app.delete("/materias/:id", materia.delete);
+app.post("/materias", autentificacion.esRolAdmin, materia.create);
+app.get("/materias", autentificacion.esRolAdmin, materia.findAll);
+app.get("/materias/:id", autentificacion.esRolAdmin, materia.findOne);
+app.put("/materias/:id", autentificacion.esRolAdmin, materia.update);
+app.delete("/materias/:id", autentificacion.esRolAdmin, materia.delete);
 
 // ABM examen
-app.post("/examenes", examen.create);
-app.get("/examenes", examen.findAll);
-app.get("/examenes/:id", examen.findOne);
-app.put("/examenes/:id", examen.update);
-app.delete("/examenes/:id", examen.delete);
+app.post("/examenes",  autentificacion.esRolAdmin, examen.create);
+app.get("/examenes", autentificacion.esRolAdmin,  examen.findAll);
+app.get("/examenes/:id", autentificacion.esRolAdmin,  examen.findOne);
+app.put("/examenes/:id", autentificacion.esRolAdmin,  examen.update);
+app.delete("/examenes/:id", autentificacion.esRolAdmin,  examen.delete);
 
 // ABM horario
-app.post("/horarios", horario.create);
-app.get("/horarios", horario.findAll);
-app.get("/horarios/:id", horario.findOne);
-app.put("/horarios/:id", horario.update);
-app.delete("/horarios/:id", horario.delete);
+app.post("/horarios", autentificacion.esRolAdmin,  horario.create);
+app.get("/horarios", autentificacion.esRolAdmin,  horario.findAll);
+app.get("/horarios/:id", autentificacion.esRolAdmin,  horario.findOne);
+app.put("/horarios/:id", autentificacion.esRolAdmin,  horario.update);
+app.delete("/horarios/:id", autentificacion.esRolAdmin,  horario.delete);
 // ABM cursos
-app.post("/cursos", cursos.create);
-app.get("/cursos", cursos.findAll);
-app.get("/cursos/:id", cursos.findOne);
-app.put("/cursos/:id", cursos.update);
-app.delete("/cursos/:id", cursos.delete);
+app.post("/cursos", autentificacion.esRolAdmin,  cursos.create);
+app.get("/cursos",  autentificacion.esRolAdmin, cursos.findAll);
+app.get("/cursos/:id", autentificacion.esRolAdmin,  cursos.findOne);
+app.put("/cursos/:id", autentificacion.esRolAdmin,  cursos.update);
+app.delete("/cursos/:id", autentificacion.esRolAdmin,  cursos.delete);
 // ABM planes
-app.post("/planes", planes.create);
-app.get("/planes", planes.findAll);
-app.get("/planes/:id", planes.findOne);
-app.put("/planes/:id", planes.update);
-app.delete("/planes/:id", planes.delete);
+app.post("/planes", autentificacion.esRolAdmin,  planes.create);
+app.get("/planes", autentificacion.esRolAdmin,  planes.findAll);
+app.get("/planes/:id", autentificacion.esRolAdmin,  planes.findOne);
+app.put("/planes/:id", autentificacion.esRolAdmin,  planes.update);
+app.delete("/planes/:id", autentificacion.esRolAdmin,  planes.delete);
 // ABM formasaprobacion
-app.post("/formasaprobacion", formasaprobacion.create);
-app.get("/formasaprobacion", formasaprobacion.findAll);
-app.get("/formasaprobacion/:id", formasaprobacion.findOne);
-app.put("/formasaprobacion/:id", formasaprobacion.update);
-app.delete("/formasaprobacion/:id", formasaprobacion.delete);
+app.post("/formasaprobacion", autentificacion.esRolAdmin,  formasaprobacion.create);
+app.get("/formasaprobacion", autentificacion.esRolAdmin,  formasaprobacion.findAll);
+app.get("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.findOne);
+app.put("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.update);
+app.delete("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.delete);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
