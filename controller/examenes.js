@@ -75,7 +75,16 @@ exports.traerExamenesParaInscripcion= (req, res) => {
     var recordatorio = req.body.recordatorio;
     const coneccionDB = mysql.createConnection(connectionString);
     
-    request('https://administrador-unla.herokuapp.com/api/estudiantes/'+ idEstudiante , function (error, response, body) {
+    request({
+      url: 'https://administrador-unla.herokuapp.com/api/estudiantes/' + idEstudiante,
+      method: 'GET',
+      headers: {
+        'Authorization': req.headers.authorization,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      rejectUnauthorized: false
+    }, function (error, response, body) {
        if (!error && response.statusCode == 200) {
          console.log(body) // Print the google web page.
          var responseJson = JSON.stringify(body);
@@ -88,6 +97,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
           var queryEstaInscripto = 'select count(*) as yaEstaAnotado from alumnosexamenfinal where JSON_UNQUOTE(datosAlumno->"$.id") = '+ idEstudiante +' and ExamenesidExamenes= ' + idExamen + ';';        
           //console.log(insertarAlumno);
           coneccionDB.query(queryEstaInscripto, function (err, rows, fields){
+
             console.log(rows[0].yaEstaAnotado);
             if (rows[0].yaEstaAnotado == 0){  //SI ES IGUAL QUE 0 NO HAY UNA INSCRIPCION 
               //ExamenesidExamenes, datosAlumno, nota, asistencia, recordatorio, createdAt, updatedAt
@@ -116,7 +126,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
       }
       else{        
         res.status(404).send({
-          message: "NO EXISTE ALUMNO"
+          message: err + body + response + "NO EXISTE ALUMNO"
         });
         return;
       }

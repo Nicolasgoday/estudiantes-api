@@ -81,7 +81,7 @@ exports.autentificar = (req,res,next,role) => {
   req.user = payload.sub;
   console.log(payload);
 
-  if (!(payload.auth).includes(role)) {
+  if (!(payload.auth).includes(role) && !(payload.auth).includes("ROLE_ADMIN")) {
     return res
     .status(401)
     .send({message: "ROL NO AUTORIZADO"});

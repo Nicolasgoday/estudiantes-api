@@ -22,7 +22,7 @@ const connectionString = { host: host, port: port, user: user, password: passwor
 exports.traerAnalitico= (req, res) => {
     console.log(Date() + ": /traerAnalitico");
     try {
-      var idEstudiante = req.query.idEstudiante
+      var idEstudiante = req.body.idEstudiante
       const coneccionDB = mysql.createConnection(connectionString);
       coneccionDB.connect(function (err) {
         if (err) throw err;
@@ -49,22 +49,36 @@ exports.crearAnaliticoPDF= (req, res) => {
     console.log(Date() + ": /crearAnaliticoPDF");
     try {
       var request = require('request'); 
-      var idEstudiante = req.query.idEstudiante
-      request('https://administrador-unla.herokuapp.com/api/estudiantes/'+ idEstudiante , function (error, response, body) {
+      var idEstudiante = req.body.idEstudiante
+      const coneccionDB = mysql.createConnection(connectionString);
+
+      request({
+        url: 'https://administrador-unla.herokuapp.com/api/estudiantes/' + idEstudiante,
+        method: 'GET',
+        headers: {
+          'Authorization': req.headers.authorization,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        rejectUnauthorized: false
+      }, function (error, response, body) {
         console.log(response.statusCode + "ERRROR  "+error);
         if (!error && response.statusCode == 200) { 
           console.log(body) // Print the google web page.
           var responseJson = JSON.parse(body);
-          const coneccionDB = mysql.createConnection(connectionString);
-          const query = 'SELECT ' + database + '.materias.nombre, ' + database + '.examenes.fecha, ' + database + '.alumnosexamenfinal.nota, "formaAprobacion" as formaAprobacion, "Acta"  as acta, "plan" as plan FROM ' + database + '.alumnosexamenfinal ' +
-          'inner join ' + database + '.materias on ' + database + '.alumnosexamenfinal.Examenes_Materias_idMaterias = ' + database + '.materias.idMaterias ' +
-          'inner join ' + database + '.examenes on ' + database + '.alumnosexamenfinal.Examenes_idExamenes = ' + database + '.examenes.idExamenes ' +
+          
+          const query = 'SELECT ' + database + '.materias.nombre, ' + database + '.examenes.fecha, ' + database + '.alumnosexamenfinal.nota, "formaAprobacion" as formaAprobacion, "Acta"  as acta, "plan" as plan FROM ' + database + '.alumnosexamenfinal ' +        
+          'inner join ' + database + '.examenes on ' + database + '.alumnosexamenfinal.ExamenesidExamenes = ' + database + '.examenes.idExamenes ' +
+          'inner join ' + database + '.materias on ' + database + '.examenes.MateriasIdMaterias = ' + database + '.materias.idMaterias ' +
            'where ' + database + '.alumnosexamenfinal.asistencia=1 and JSON_UNQUOTE(' + database + '.alumnosexamenfinal.datosAlumno->"$.id") = '+ idEstudiante + ';' ;
           coneccionDB.connect(function (err) {
-            if (err) throw err;
+            if (err){
+             res.status(500).send({
+                message: "ERROR AL CONECTAR"
+              });
+            }
             console.log("Connected!");
-            coneccionDB.query(query
-              , function (err, rows, fields){
+            coneccionDB.query(query, function (err, rows, fields){
                 if (err) throw err;                 
                     const pdf = require('html-pdf');
                     var content = `<h2>Certificado analitico </h2>` +  '</p><h3>Alumno: ' + responseJson.nombre +' '+ responseJson.apellido + '</h3></p>';          
@@ -116,15 +130,24 @@ exports.modificarDatosContactoEstudiante= (req, res) => {
     console.log(Date() + ": /modificarDatosContactoEstudiante");
     try {
 
-      var idEstudiante = req.query.idEstudiante;
-      var domicilio = req.query.domicilio;
-      var email = req.query.email;
-      var telefono = req.query.telefono;
+      var idEstudiante = req.body.idEstudiante;
+      var domicilio = req.body.domicilio;
+      var email = req.body.email;
+      var telefono = req.body.telefono;
 
       const coneccionDB = mysql.createConnection(connectionString);
 
       var request = require('request');
-      request('https://administrador-unla.herokuapp.com/api/estudiantes/1', function (error, response, body) {
+      request({
+        url: 'https://administrador-unla.herokuapp.com/api/estudiantes/' + idEstudiante,
+        method: 'GET',
+        headers: {
+          'Authorization': req.headers.authorization,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        rejectUnauthorized: false
+      }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           console.log(body) // Print the google web page.
           var responseJson = JSON.stringify(body);

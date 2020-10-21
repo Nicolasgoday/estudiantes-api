@@ -56,24 +56,19 @@ exports.inscribirEstudianteCursada= (req, res) => {
 
     const coneccionDB = mysql.createConnection(connectionString);
     var request = require('request');
-/* OPCION B
+    
+    var token = req.headers.authorization.split(" ")[1];
+
     request({
-      url: 'https://administrador-unla.herokuapp.com/api/estudiantes/1',
+      url: 'https://administrador-unla.herokuapp.com/api/estudiantes/' + idEstudiante,
+      method: 'GET',
       headers: {
-         'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfRVNUVURJQU5URSxST0xFX1VTRVIsUk9MRV9QUk9GRVNPUiIsImV4cCI6MTYwMzIzNTc5MH0.NcGuBfVrIdvaApS5DCRCDunwuiXv_rNz7eaw-XtygrptQ6FUUI2MX4vXYQjL6gcOMFRMsVDAuZd5M4CK2eekqQ'
+        'Authorization': req.headers.authorization,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       rejectUnauthorized: false
-    }, function(err, res) {
-          if(err) {
-            console.error(err);
-          } else {
-            console.log(res.body);
-          }
-    
-    });
-
-  */ 
-    request('https://administrador-unla.herokuapp.com/api/estudiantes/'+ idEstudiante , function (error, response, body) {
+    }, function (error, response, body) {
       
       if (!error && response.statusCode == 200) {
         console.log(body) // Print the google web page.
@@ -116,11 +111,11 @@ exports.inscribirEstudianteCursada= (req, res) => {
      }
      else{        
        res.status(404).send({
-         message: error + response + "NO EXISTE ALUMNO"
+         message: "NO EXISTE ALUMNO"
        });
        return;
      }
-   }).auth(null, null, true, 'Bearer ' +'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX1VTRVIsUk9MRV9FU1RVRElBTlRFIiwiZXhwIjoxNjAzMjM1NzkwfQ.DUrYVM4Ea1Wed2AATCSkSJPsM6ucgZt7BIbcgzSfSvMGSu_1voCRdd1afWtBv5tanM3ULa3SLVHBtj_pKyOynQ');
+   });
  }
  catch (e) {
    console.log("ERROR");
