@@ -51,7 +51,7 @@ exports.inscribirEstudianteCursada= (req, res) => {
   console.log(Date() + ": /inscribirEstudianteCursada");
   try {
     var idEstudiante = req.body.idEstudiante
-    var idMateria = req.body.idMateria
+    var idMateria = req.body.idMaterias
     var recordatorio = req.body.recordatorio
 
     const coneccionDB = mysql.createConnection(connectionString);
