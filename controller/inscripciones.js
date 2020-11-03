@@ -188,9 +188,9 @@ var aPartir = new Date();
 const DATE_FORMATER = require( 'dateformat' );
 
 try {
-  if (!req.body.idEstudiante) {
+  if (!req.params.idEstudiante) {
     res.status(400).send({
-      message: "El body no puede estar vacio"
+      message: "El idEstudiante no puede estar vacio"
     });
     return;
 }
