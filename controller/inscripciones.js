@@ -143,7 +143,7 @@ exports.bajaInscripcionMateria= (req, res) => {
     const coneccionDB = mysql.createConnection(connectionString);
     coneccionDB.connect(function (err) {
         if (err) throw err;
-        var enFechaBaja = 'SELECT count(*) as eliminable FROM inscripciones.alumnoscursada ' +
+        var enFechaBaja = 'SELECT count(*) as eliminable FROM alumnoscursada ' +
         'inner join materias on alumnoscursada.MateriasIdMaterias = materias.idMaterias ' +
         'where idalumnosCursada= '+ idInscripcion + ' and materias.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and materias.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" ;'
         coneccionDB.query(enFechaBaja, function (err, rows, fields){

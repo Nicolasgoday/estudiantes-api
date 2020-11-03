@@ -158,7 +158,7 @@ exports.bajaInscripcionExamen= (req, res) => {
     const coneccionDB = mysql.createConnection(connectionString);
     coneccionDB.connect(function (err) {
         if (err) throw err;
-        var enFechaBaja = 'SELECT count(*) as eliminable FROM inscripciones.alumnosexamenfinal ' +
+        var enFechaBaja = 'SELECT count(*) as eliminable FROM alumnosexamenfinal ' +
         'inner join examenes on alumnosexamenfinal.ExamenesidExamenes = examenes.idExamenes ' +
         'where idInscriptosExamen= '+idInscripcion + ' and examenes.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and examenes.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" ;'
         coneccionDB.query(enFechaBaja, function (err, rows, fields){
@@ -211,7 +211,7 @@ exports.enviarNotificacionExamen= (req, res) => {
     coneccionDB.connect(function (err) {
       if (err) throw err;
       var q = 'select JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.nombre") as nombreAlumno, JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.apellido") as apellidoAlumno, JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.email") as email, materias.nombre as nombreMateria, fecha as FechaExamen , horarioInicio as horarioExamen ' +    
-      ' from examenes inner join inscripciones.alumnosexamenfinal on idExamenes = ExamenesidExamenes inner join materias on examenes.MateriasIdMaterias = materias.idMaterias ' + 
+      ' from examenes inner join alumnosexamenfinal on idExamenes = ExamenesidExamenes inner join materias on examenes.MateriasIdMaterias = materias.idMaterias ' + 
       'where fecha >=' + aPartir + ' and recordatorio = 1 and  JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.email") is not null;'  
       console.log("query: ", q);
       coneccionDB.query(q,  function (err, rows, fields) {
