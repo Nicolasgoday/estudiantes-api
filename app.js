@@ -44,7 +44,7 @@ app.get('/modificarDatosContactoEstudiante',autentificacion.esRolEstudiante,estu
 //inscripciones cursada
 app.post('/inscribirEstudianteCursada',autentificacion.esRolEstudiante,inscripciones.inscribirEstudianteCursada)  
 app.get('/traerMateriasParaInscripcion',autentificacion.esRolEstudiante,inscripciones.traerMateriasParaInscripcion)
-app.delete('/bajaInscripcionMateria',autentificacion.esRolEstudiante,inscripciones.bajaInscripcionMateria)
+app.delete('/bajaInscripcionMateria/:idalumnosCursada',autentificacion.esRolEstudiante,inscripciones.bajaInscripcionMateria)
 //6 meses de antiguedad y 
 app.get('/traerInscripcionesEstudianteCursada/:idEstudiante',autentificacion.esRolEstudiante,inscripciones.traerInscripcionesEstudianteCursada)  
 //inscripciones examenes
