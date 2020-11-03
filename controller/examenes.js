@@ -71,7 +71,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
   try {
     var request = require('request');
     var idEstudiante = req.body.idEstudiante;
-    var idExamen = req.body.idExamen;
+    var idExamen = req.body.idExamenes;
     var recordatorio = req.body.recordatorio;
     const coneccionDB = mysql.createConnection(connectionString);
     
