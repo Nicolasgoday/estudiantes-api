@@ -50,7 +50,7 @@ app.get('/traerInscripcionesEstudianteCursada/:idEstudiante',autentificacion.esR
 //inscripciones examenes
 app.post('/inscribirEstudianteExamen', autentificacion.esRolEstudiante, examenes.inscribirEstudianteExamen)   //OK
 app.get('/traerExamenesParaInscripcion', autentificacion.esRolEstudiante, examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
-app.delete('/bajaInscripcionExamen',autentificacion.esRolEstudiante, examenes.bajaInscripcionExamen)
+app.delete('/bajaInscripcionExamen/:idInscriptosExamen',autentificacion.esRolEstudiante, examenes.bajaInscripcionExamen)
 app.get('/enviarNotificacionExamen', autentificacion.esRolAdmin, examenes.enviarNotificacionExamen)
 app.get('/traerInscripcionesEstudianteExamen/:idEstudiante', autentificacion.esRolEstudiante, examenes.traerInscripcionesEstudianteExamen)  
 

@@ -146,10 +146,10 @@ exports.bajaInscripcionExamen= (req, res) => {
   console.log(Date() + ": /bajaInscripcionExamen");
   var aPartir = new Date();
   const DATE_FORMATER = require( 'dateformat' );
-  var idInscripcion = req.body.idInscriptosExamen;
+  const idInscripcion = req.params.idInscriptosExamen;
   
   try {
-    if (!req.body.idInscriptosExamen) {
+    if (!req.params.idInscriptosExamen) {
       res.status(400).send({
         message: "El body no puede estar vacio"
       });
