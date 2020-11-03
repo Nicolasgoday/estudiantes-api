@@ -181,7 +181,7 @@ exports.traerInscripcionesEstudianteCursada= (req, res) => {
   console.log(Date() + ": /traerInscripcionesEstudianteCursada");
   /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
 mostrar los días, horarios y docentes asignados*/
-var idEstudiante = req.body.idEstudiante;  
+const idEstudiante = req.params.idEstudiante; 
 
   
 var aPartir = new Date();
