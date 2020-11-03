@@ -45,11 +45,14 @@ app.get('/modificarDatosContactoEstudiante',autentificacion.esRolEstudiante,estu
 app.post('/inscribirEstudianteCursada',autentificacion.esRolEstudiante,inscripciones.inscribirEstudianteCursada)  
 app.get('/traerMateriasParaInscripcion',autentificacion.esRolEstudiante,inscripciones.traerMateriasParaInscripcion)
 app.delete('/bajaInscripcionMateria',autentificacion.esRolEstudiante,inscripciones.bajaInscripcionMateria)
+//6 meses de antiguedad y 
+app.get('/traerInscripcionesEstudianteCursada',autentificacion.esRolEstudiante,inscripciones.traerInscripcionesEstudianteCursada)  
 //inscripciones examenes
 app.post('/inscribirEstudianteExamen', autentificacion.esRolEstudiante, examenes.inscribirEstudianteExamen)   //OK
 app.get('/traerExamenesParaInscripcion', autentificacion.esRolEstudiante, examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
 app.delete('/bajaInscripcionExamen',autentificacion.esRolEstudiante, examenes.bajaInscripcionExamen)
 app.get('/enviarNotificacionExamen', autentificacion.esRolAdmin, examenes.enviarNotificacionExamen)
+app.get('/traerInscripcionesEstudianteExamen', autentificacion.esRolEstudiante, examenes.traerInscripcionesEstudianteExamen)  
 
 
 // ABM Carreras

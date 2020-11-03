@@ -1,6 +1,6 @@
 
 var util = require('util');
-var mysql = require('mysql2');
+var mysql = require('mysql2')
 var http = require('http');
 const host = process.env['NODE_ESTUDIANTE_HOST'];
 const database = process.env['NODE_ESTUDIANTE_DB'];
@@ -176,4 +176,52 @@ exports.bajaInscripcionMateria= (req, res) => {
       res.send(e)
     }
   }
+//Traer materias en q se inscribio para examen, la trae hasta que se vence la fecha de ventana de inscripcion
+exports.traerInscripcionesEstudianteCursada= (req, res) => {
+  console.log(Date() + ": /traerInscripcionesEstudianteCursada");
+  /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
+mostrar los días, horarios y docentes asignados*/
+var idEstudiante = req.body.idEstudiante;  
+
+  
+var aPartir = new Date();
+const DATE_FORMATER = require( 'dateformat' );
+
+try {
+  if (!req.body.idEstudiante) {
+    res.status(400).send({
+      message: "El body no puede estar vacio"
+    });
+    return;
+}
+  const coneccionDB = mysql.createConnection(connectionString);
+  coneccionDB.connect(function (err) {
+    if (err) throw err;
+    //SELECT idalumnosCursada,  idMaterias, nombre, inicioInscripcion, finInscripcion
+  //FROM inscripciones.alumnoscursada inner join materias on materias.idMaterias = alumnoscursada.MateriasIdMaterias 
+//where  materias.finInscripcion < NOW() and JSON_UNQUOTE(datosAlumno->"$.id") = 1;
+var query = 'select ' + database + '.alumnoscursada.idalumnosCursada,' + database + '.materias.idMaterias, ' 
+                + database + '.materias.nombre , ' + database + '.materias.inicioInscripcion, '
+                + database + '.materias.finInscripcion FROM ' + database + '.alumnoscursada ' 
+                + 'inner join materias on ' + database + '.materias.idMaterias = ' 
+                + database + '.alumnoscursada.MateriasIdMaterias'
+                +' where  materias.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and JSON_UNQUOTE(' + database + '.alumnoscursada.datosAlumno->"$.id") = '+ idEstudiante + ';';      
+
+                console.log(query);
+    coneccionDB.query(query
+      , function (err, result) {
+        if (err) throw err;
+        console.log("Result: " + result);
+        coneccionDB.destroy();
+        res.status(200)
+        return res.send(result)
+      });
+ });
+ }
+ catch (e) {
+   console.error(e)
+   res.status(500)
+   res.send(e)
+  }
+}
 

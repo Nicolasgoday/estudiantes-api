@@ -266,6 +266,54 @@ exports.enviarNotificacionExamen= (req, res) => {
     }
   }
 
-
+  exports.traerInscripcionesEstudianteExamen= (req, res) => {
+    console.log(Date() + ": /traerInscripcionesEstudianteExamen");
+    /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
+  mostrar los días, horarios y docentes asignados*/
+  var idEstudiante = req.body.idEstudiante;  
+  
+    
+  var aPartir = new Date();
+  const DATE_FORMATER = require( 'dateformat' );
+  
+  try {
+    if (!req.body.idEstudiante) {
+      res.status(400).send({
+        message: "El body no puede estar vacio"
+      });
+      return;
+  }
+    const coneccionDB = mysql.createConnection(connectionString);
+    coneccionDB.connect(function (err) {
+      if (err) throw err;
+    /*
+	SELECT idInscriptosExamen, materias.idMaterias, nombre, examenes.inicioInscripcion, examenes.finInscripcion
+  FROM alumnosexamenfinal inner join examenes on examenes.idExamenes = alumnosexamenfinal.ExamenesidExamenes 
+  inner join materias on examenes.MateriasIdMaterias = materias.idMaterias
+where  examenes.finInscripcion < NOW() and JSON_UNQUOTE(datosAlumno->"$.id") = 1;*/
+  var query = 'select ' + database + '.alumnosexamenfinal.idInscriptosExamen,' + database + '.materias.idMaterias, ' 
+                  + database + '.materias.nombre , ' + database + '.examenes.inicioInscripcion, '
+                  + database + '.examenes.finInscripcion FROM ' + database + '.alumnosexamenfinal ' 
+                  + 'inner join examenes on ' + database + '.examenes.idExamenes = ' + database + '.alumnosexamenfinal.ExamenesidExamenes ' 
+                  + 'inner join materias on ' + database + '.examenes.MateriasIdMaterias = ' + database + '.materias.idMaterias ' 
+                  +' where  examenes.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and JSON_UNQUOTE(' + database + '.alumnosexamenfinal.datosAlumno->"$.id") = '+ idEstudiante + ';';      
+  
+                  console.log(query);
+      coneccionDB.query(query
+        , function (err, result) {
+          if (err) throw err;
+          console.log("Result: " + result);
+          coneccionDB.destroy();
+          res.status(200)
+          return res.send(result)
+        });
+   });
+   }
+   catch (e) {
+     console.error(e)
+     res.status(500)
+     res.send(e)
+    }
+  }
 
 
