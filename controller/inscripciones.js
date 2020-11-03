@@ -131,10 +131,10 @@ exports.bajaInscripcionMateria= (req, res) => {
   console.log(Date() + ": /bajaInscripcionMateria");
   var aPartir = new Date();
   const DATE_FORMATER = require( 'dateformat' );
-  var idInscripcion = req.body.idInscripcion;
+  var idInscripcion = req.params.idalumnosCursada;
   
   try {
-    if (!req.body.idInscripcion) {
+    if (!req.params.idalumnosCursada) {
       res.status(400).send({
         message: "El body no puede estar vacio"
       });
@@ -181,16 +181,16 @@ exports.traerInscripcionesEstudianteCursada= (req, res) => {
   console.log(Date() + ": /traerInscripcionesEstudianteCursada");
   /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
 mostrar los días, horarios y docentes asignados*/
-var idEstudiante = req.body.idEstudiante;  
+const idEstudiante = req.params.idEstudiante; 
 
   
 var aPartir = new Date();
 const DATE_FORMATER = require( 'dateformat' );
 
 try {
-  if (!req.body.idEstudiante) {
+  if (!req.params.idEstudiante) {
     res.status(400).send({
-      message: "El body no puede estar vacio"
+      message: "El idEstudiante no puede estar vacio"
     });
     return;
 }
