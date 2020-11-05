@@ -13,6 +13,7 @@ const horario = require('./controller/horario.js');
 const cursos = require('./controller/curso.js');
 const planes = require('./controller/planes.js');
 const formasaprobacion = require('./controller/formasaprobacion.js');
+const calificaciones = require('./controller/calificaciones.js');
 
 const autentificacion = require('./controller/utilitarios/autentificacion.js');
 
@@ -100,6 +101,8 @@ app.get("/formasaprobacion", autentificacion.esRolAdmin,  formasaprobacion.findA
 app.get("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.findOne);
 app.put("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.update);
 app.delete("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.delete);
+
+app.get('/docentesoap/traerMaterias',calificaciones.traerMaterias);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
