@@ -1,18 +1,85 @@
 const soap = require('soap');
-const url = 'https://docentes-soap-api.herokuapp.com/docentesSoap?wsdl';
+const url = process.env['SERVER_WS_DOCENTES'];
+const isEmpty = require('is-empty');
 
 
 exports.traerMaterias = (req, res) => {
-
-      var args = {arg0: 31};
+    console.log('/docentesoap/traerMaterias');
       var result='';
+      try {
+        if (isEmpty(req.params.id)) {
+          res.status(400).send({
+            message: "El id no puede estar vacio"
+          });
+          return;
+           }
+
+      var args = {arg0: req.params.id};
+
       soap.createClient(url, function(err, client) {
           client.traerMaterias(args, function(err, result) {
-              console.log(result);
-              res.send(result);
+
+            if (isEmpty(result)) {
+                res.status(400).send({
+                  message: "Usted no posee materias"
+                });
+                return;
+             }else{
+
+                console.log(result.return);
+                res.send(result.return);
+
+             }            
+
           });
       }); 
 
+    }
+    catch (e) {
+      console.error(e)
+      res.status(500)
+      res.send(e)
+     }      
      
+};
+
+
+exports.listadoAlumnosPorMateria = (req, res) => {
+    console.log('/docentesoap/listadoAlumnosPorMateria');
+    var result='';
+    try {
+      if (isEmpty(req.body)) {
+        res.status(400).send({
+          message: "El body no puede estar vacio"
+        });
+        return;
+         }
+
+    var args = {arg0: req.body.idDocente,arg1: req.body.idMateria};    
+    soap.createClient(url, function(err, client) {
+        client.listadoAlumnosPorMateria(args, function(err, result) {
+
+          if (isEmpty(result)) {
+              res.status(400).send({
+                message: "No se encontraron alumnos"
+              });
+              return;
+           }else{
+
+              console.log(result.return);
+              res.send(result.return);
+
+           }            
+
+        });
+    }); 
+
+  }
+  catch (e) {
+    console.error(e)
+    res.status(500)
+    res.send(e)
+   }      
+   
 };
 

@@ -102,7 +102,10 @@ app.get("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.f
 app.put("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.update);
 app.delete("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.delete);
 
-app.get('/docentesoap/traerMaterias',calificaciones.traerMaterias);
+
+//RPC Web Service Docente
+app.get('/traerMaterias/:id',calificaciones.traerMaterias);
+app.post('/listadoAlumnosPorMateria',calificaciones.listadoAlumnosPorMateria);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);

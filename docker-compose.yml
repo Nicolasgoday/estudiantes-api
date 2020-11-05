@@ -10,8 +10,9 @@ services:
             - NODE_ESTUDIANTE_USER=plataforma
             - NODE_ESTUDIANTE_PASSWORD=plataforma
             - NODE_ESTUDIANTE_DBPORT=3306
+            - SERVER_WS_DOCENTES=http://localhost:8082/docentesSoap?wsdl
         ports:
-            - "8080:8080"        
+            - "8081:8081"        
     estudiantes-mysql:
      extends:
         file: mysql.yml
