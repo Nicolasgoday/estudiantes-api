@@ -65,9 +65,12 @@ exports.listadoAlumnosPorMateria = (req, res) => {
               });
               return;
            }else{
-
-              console.log(result.return);
-              res.send(result.return);
+              console.log(result.return);                       
+              const lstMateriasAlumnos =result.return;
+              lstMateriasAlumnos.forEach(materias => { 
+                materias.datosAlumno=JSON.parse(materias.datosAlumno); 
+              }); 
+              res.send(lstMateriasAlumnos);
 
            }            
 
