@@ -39,7 +39,7 @@ app.use(cors());
 //estudiante
 app.get('/traerEstudiante',autentificacion.esRolEstudiante, estudiante.traerEstudiante)
 app.get('/traerAnalitico',autentificacion.esRolEstudiante, estudiante.traerAnalitico)
-app.get('/crearAnaliticoPDF',autentificacion.esRolEstudiante, estudiante.crearAnaliticoPDF)
+app.get('/crearAnaliticoPDF/:idEstudiante',autentificacion.esRolEstudiante, estudiante.crearAnaliticoPDF)
 app.get('/modificarDatosContactoEstudiante',autentificacion.esRolEstudiante,estudiante.modificarDatosContactoEstudiante)
 
 //inscripciones cursada

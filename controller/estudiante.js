@@ -49,7 +49,7 @@ exports.crearAnaliticoPDF= (req, res) => {
     console.log(Date() + ": /crearAnaliticoPDF");
     try {
       var request = require('request'); 
-      var idEstudiante = req.body.idEstudiante
+      var idEstudiante = req.params.idEstudiante
       const coneccionDB = mysql.createConnection(connectionString);
 
       request({
