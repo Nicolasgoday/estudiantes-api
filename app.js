@@ -106,6 +106,7 @@ app.delete("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacio
 //RPC Web Service Docente
 app.get('/traerMaterias/:id',calificaciones.traerMaterias);
 app.post('/listadoAlumnosPorMateria',calificaciones.listadoAlumnosPorMateria);
+app.post('/traerAlumnosPorMateriaExamen',calificaciones.traerAlumnosPorMateriaExamen);
 app.post('/cargaNotasFinales',calificaciones.cargaNotasFinales);
 app.post('/cargaNotasCursada',calificaciones.cargaNotasCursada);
 

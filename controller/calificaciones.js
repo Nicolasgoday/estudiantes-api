@@ -86,6 +86,48 @@ exports.listadoAlumnosPorMateria = (req, res) => {
    
 };
 
+exports.traerAlumnosPorMateriaExamen = (req, res) => {
+  console.log('/traerAlumnosPorMateriaExamen');
+  var result='';
+  try {
+    if (isEmpty(req.body)) {
+      res.status(400).send({
+        message: "El body no puede estar vacio"
+      });
+      return;
+       }
+
+  var args = {arg0: req.body.idDocente,arg1: req.body.idMateria};    
+  soap.createClient(url, function(err, client) {
+      client.traerAlumnosPorMateriaExamen(args, function(err, result) {
+
+        if (isEmpty(result)) {
+            res.status(400).send({
+              message: "No se encontraron alumnos"
+            });
+            return;
+         }else{
+            console.log(result.return);                       
+            const lstMateriasAlumnos =result.return;
+            lstMateriasAlumnos.forEach(materias => { 
+              materias.datosAlumno=JSON.parse(materias.datosAlumno); 
+            }); 
+            res.send(lstMateriasAlumnos);
+
+         }            
+
+      });
+  }); 
+
+}
+catch (e) {
+  console.error(e)
+  res.status(500)
+  res.send(e)
+ }      
+ 
+};
+
 
 
 exports.cargaNotasFinales = (req, res) => {
