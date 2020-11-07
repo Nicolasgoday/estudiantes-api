@@ -104,11 +104,11 @@ app.delete("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacio
 
 
 //RPC Web Service Docente
-app.get('/traerMaterias/:id',calificaciones.traerMaterias);
-app.post('/listadoAlumnosPorMateria',calificaciones.listadoAlumnosPorMateria);
-app.post('/traerAlumnosPorMateriaExamen',calificaciones.traerAlumnosPorMateriaExamen);
-app.post('/cargaNotasFinales',calificaciones.cargaNotasFinales);
-app.post('/cargaNotasCursada',calificaciones.cargaNotasCursada);
+app.get('/traerMaterias/:id',autentificacion.esRolProfesor, calificaciones.traerMaterias);
+app.post('/listadoAlumnosPorMateria',autentificacion.esRolProfesor,calificaciones.listadoAlumnosPorMateria);
+app.post('/traerAlumnosPorMateriaExamen',autentificacion.esRolProfesor,calificaciones.traerAlumnosPorMateriaExamen);
+app.post('/cargaNotasFinales',autentificacion.esRolProfesor,calificaciones.cargaNotasFinales);
+app.post('/cargaNotasCursada',autentificacion.esRolProfesor,calificaciones.cargaNotasCursada);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
