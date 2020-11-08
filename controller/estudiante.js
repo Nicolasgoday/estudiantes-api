@@ -22,7 +22,7 @@ const connectionString = { host: host, port: port, user: user, password: passwor
 exports.traerAnalitico= (req, res) => {
     console.log(Date() + ": /traerAnalitico");
     try {
-      var idEstudiante = req.body.idEstudiante
+      var idEstudiante = req.params.idEstudiante
       const coneccionDB = mysql.createConnection(connectionString);
       coneccionDB.connect(function (err) {
         if (err) throw err;
