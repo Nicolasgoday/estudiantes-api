@@ -228,3 +228,149 @@ exports.cargaNotasCursada = (req, res) => {
    
 };
 
+function enviarNotaDe (args, tipoACargar)  {
+  console.log("voy a enviar: " ,args , "es de tipo: ", tipoACargar);
+
+  if (tipoACargar == 'cursada'){
+      soap.createClient(url, function(err, client) {
+          client.cargaNotasCursada(args, function(err, result) {
+            console.log( "envio a cursdas", args);
+            if (isEmpty(result)) {
+                res.status(400).send({
+                  message: "No se pudo completar la operación"
+                });
+                return;
+            }else{
+              message: "cargado"
+            }            
+
+          });
+      });
+    }
+  else if (tipoACargar == 'final') {
+      soap.createClient(url, function(err, client) {
+        client.cargaNotasFinales(args, function(err, result) {
+          console.log( "envio a finales", args);
+          if (isEmpty(result)) {
+              res.status(400).send({
+                message: "No se pudo completar la operación"
+              });
+              return;
+          }else{
+            message: "cargado"
+          }            
+
+        });
+    }); 
+  }
+}
+
+exports.cargaNotasCursadaDesdeArchivo = (req, res) =>  {
+  var multer  = require('multer')();
+  const FormData = require('form-data');
+  const axios = require('axios');
+  const fs = require('fs');
+  const xlsx = require('xlsx');
+  const json = require('json');
+
+  const fileRecievedFromClient = req.file; //File Object sent in 'fileFieldName' field in multipart/form-data
+  console.log(req.file)
+
+  let form = new FormData();
+  form.append('fileFieldName', fileRecievedFromClient.buffer, fileRecievedFromClient.originalname);
+
+  
+  let workbook = xlsx.read(req.file.buffer, {type:"buffer"});
+  console.log(workbook.Strings);
+  var sheet_name_list = workbook.SheetNames;
+  sheet_name_list.forEach(function(y) {
+    var worksheet = workbook.Sheets[y];
+    var headers = {};
+    var data = [];
+    var celdas = 0;
+    for(z in worksheet) {        
+        if(z[0] === '!') continue;
+        //parse out the column, row, and value
+        var tt = 0;
+        for (var i = 0; i < z.length; i++) {
+            if (!isNaN(z[i])) {
+                tt = i;
+                break;
+            }
+        };
+        var col = z.substring(0,tt);
+        var row = parseInt(z.substring(tt));
+        var value = worksheet[z].v;
+        //console.log(value); // QQQQQQQQ
+        //store header names
+        if(row == 1 && value) {
+          var value = value.replace(/ /g, "");
+            headers[col] = value;
+            continue;
+        }
+
+        if(!data[row]) data[row]={};
+        data[row][headers[col]] = value;
+     
+
+        
+    }
+    //drop those first two rows which are empty
+    data.shift();
+    data.shift();
+       
+    var args = {
+      arg0:  req.param('idDocente'),//arg0: req.body.idDocente,
+      arg1:  req.param('idMateria') //arg1: req.body.idMateria, 
+      };  
+      console.log( "args :", req.param('idDocente'));
+      console.log( "args :", req.param('idMateria'));
+
+    var fila=0;  
+    while ( fila <= (data.length-1 )){
+      /*
+      console.log( data[fila].ID ); 
+      console.log( data[fila].Alumno); 
+      console.log( data[fila].NotaCursada); 
+   */     var argN;
+          if ( req.param('tipoACargar') == 'cursada') {
+              argN =  "{\"arg2" + "\":{\"idalumnosCursada\":"+data[fila].ID+",\"notaCursada\":" +
+                              data[fila].NotaCursada+",\"asistencia\":1}}"; 
+          }
+          else {
+            argN =  "{\"arg2" + "\":{\"idInscriptosExamen\":"+data[fila].ID+",\"nota\":" +
+                              data[fila].NotaCursada+",\"asistencia\":1}}"; 
+          }
+
+
+          console.log(argN);
+          const json = argN;
+          const obj = JSON.parse(json);
+              
+          //POSIBLE console.log(JSON.stringify(args)  + JSON.stringify(arg1));
+          //{ idalumnosCursada: 4, materiasIdMaterias: undefined, notaCursada: 3 }
+
+          var under = require('underscore'); // npm install underscore to install        
+
+        var args = under.extend({},args, obj);  
+        //console.log( "sumados ", Object.assign(args, obj) ) ;
+        //console.log( "targer", args ) ;
+        //console.log( "nuevo arg" ) ;
+        enviarNotaDe(args, req.param('tipoACargar'))
+        fila = ++fila ;
+    }        
+});
+
+res.send();
+/*
+axios.post('http://server2url/fileUploadToServer2', form, {
+        headers: {
+            'Content-Type': `multipart/form-data; boundary=${form._boundary}`
+        }
+    }).then((responseFromServer2) => {
+        res.send("SUCCESS")
+    }).catch((err) => {
+        res.send("ERROR")
+    })*/
+    
+};
