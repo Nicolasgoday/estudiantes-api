@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
+var multer  = require('multer')();
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const inscripciones = require('./controller/inscripciones.js');
@@ -109,6 +110,7 @@ app.post('/listadoAlumnosPorMateria',calificaciones.listadoAlumnosPorMateria);
 app.post('/listadoAlumnosPorMateriaExamen',calificaciones.listadoAlumnosPorMateriaExamen);
 app.post('/cargaNotasFinales',calificaciones.cargaNotasFinales);
 app.post('/cargaNotasCursada',calificaciones.cargaNotasCursada);
+app.post('/cargaNotasCursadaDesdeArchivo', multer.single('file'), calificaciones.cargaNotasCursadaDesdeArchivo);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
