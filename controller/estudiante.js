@@ -149,7 +149,7 @@ exports.modificarDatosContactoEstudiante= (req, res) => {
         rejectUnauthorized: false
       }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          console.log(body) // Print the google web page.
+          console.log(body) 
           var responseJson = JSON.stringify(body);
           coneccionDB.connect(function (err) {
             if (err) throw err;
@@ -158,7 +158,7 @@ exports.modificarDatosContactoEstudiante= (req, res) => {
           });
         }
         else {
-          console.log("error") // Print the google web page.
+          console.log("error") 
         }
       })
     }
