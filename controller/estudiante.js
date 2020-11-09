@@ -27,7 +27,7 @@ exports.traerAnalitico= (req, res) => {
       coneccionDB.connect(function (err) {
         if (err) throw err;
         console.log("Connected!");
-        coneccionDB.query('SELECT * FROM ' + database + '.alumnosexamenfinal where ' + database + '.alumnosexamenfinal.asistencia=1 and  JSON_UNQUOTE(' + database + '.alumnosexamenfinal.datosAlumno->"$.id") = ' + idEstudiante + ';' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
+        coneccionDB.query('SELECT idInscriptosExamen,ExamenesidExamenes,datosAlumno,nota,asistencia,recordatorio,materias.nombre   FROM alumnosexamenfinal inner join examenes on examenes.idExamenes=ExamenesidExamenes inner join materias on materias.idMaterias=examenes.MateriasIdMaterias where alumnosexamenfinal.asistencia=1 and  JSON_UNQUOTE( alumnosexamenfinal.datosAlumno->"$.id") = ' + idEstudiante + ';'
           , function (err, result) {
             if (err) throw err;
             console.log("Result: " + result);
