@@ -14,37 +14,71 @@ const connectionString = { host: host, port: port, user: user, password: passwor
 exports.traerMateriasParaInscripcion= (req, res) => {
     /*Consulta de materias/exámenes disponibles para inscripción, los listados deben
   mostrar los días, horarios y docentes asignados*/
+  var request = require('request'); 
   console.log(Date() + ": /traerMateriasParaInscripcion");
   var aPartir = new Date();
   const DATE_FORMATER = require( 'dateformat' );
-
+  const idEstudiante = req.params.idEstudiante;     
+  
   try {
-    const coneccionDB = mysql.createConnection(connectionString);
-    coneccionDB.connect(function (err) {
-      if (err) throw err;
-      //idMaterias, nombre, inicioInscripcion, finInscripcion, CarrerasIdCarreras, createdAt, updatedAt, planIdPlan, formaAprobacionIdformaAprobacion
-      var query = 'select ' + database + '.materias.idMaterias as idMaterias,' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' + database + '.horario.dia , ' + database
-                  + '.horario.horarioInicio, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.apellido") as apellidoProfesor from ' 
-                  + database + '.materias inner join curso on ' + database + '.materias.idMaterias = ' 
-                  + database + '.curso.MateriasIdMaterias  inner join ' + database + '.horario on ' + database + '.horario.CursoIdCurso = ' + database + '.curso.idCurso '
-                  +' where  materias.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and materias.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '";';
-      console.log(query);
-      coneccionDB.query(query
-        , function (err, result) {
-          if (err) throw err;
-          console.log("Result: " + result);
-          coneccionDB.destroy();
-          res.status(200)
-          return res.send(result)
-        });
-   });
-   }
-   catch (e) {
-     console.error(e)
-     res.status(500)
-     res.send(e)
-   }
- };
+    if (!req.params.idEstudiante) {
+      res.status(400).send({
+        message: "El idEstudiante no puede estar vacio"
+      });
+      return;
+  }
+
+  const coneccionDB = mysql.createConnection(connectionString);
+  request({
+        url: 'https://administrador-unla.herokuapp.com/api/estudiantes/' + idEstudiante,
+        method: 'GET',
+        headers: {
+          'Authorization': req.headers.authorization,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+           },
+          rejectUnauthorized: false
+      }, function (error, response, body) {
+      console.log(response.statusCode + "ERRROR  "+error);
+      if (!error && response.statusCode == 200) { 
+        console.log(body) // Print the google web page.
+        var estudianteJson = JSON.parse(body);          //OBTENGO DATOS DE ESTUDIANTE 
+ 
+        const coneccionDB = mysql.createConnection(connectionString);
+        coneccionDB.connect(function (err) {
+                if (err) throw err;      
+                var query = 'select ' + database + '.materias.idMaterias as idMaterias,' + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' + database + '.horario.dia , ' + database
+                          + '.horario.horarioInicio, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.curso.datosDocente->"$.apellido") as apellidoProfesor from ' 
+                          + database + '.materias inner join curso on ' + database + '.materias.idMaterias = ' 
+                          + database + '.curso.MateriasIdMaterias  inner join ' + database + '.horario on ' + database + '.horario.CursoIdCurso = ' + database + '.curso.idCurso '
+                          +' where  materias.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and materias.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" )
+                          + '" and materias.CarrerasIdCarreras= ' + estudianteJson.idCarreras 
+                          + ';'
+
+                            
+                console.log(query);
+                coneccionDB.query(query, function (err, result) {
+                            if (err) throw err;
+                            coneccionDB.destroy();
+                            console.log("Result: " + result);
+                            return res.send(result)
+                });
+          });
+      }
+      else if (response.statusCode != 200){
+        res.status(response.statusCode);
+        res.send(response.statusCode);
+      }
+    });
+  }  
+  catch (e) {
+    console.log("ERROR");
+    res.status(500).send({      
+      message: "Falla al insertar"
+    });
+    return;
+  }  
+};
 
 //Inscribirser a una materia
 exports.inscribirEstudianteCursada= (req, res) => {
