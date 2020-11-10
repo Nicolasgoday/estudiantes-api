@@ -43,13 +43,13 @@ app.get('/modificarDatosContactoEstudiante',autentificacion.esRolEstudiante,estu
 
 //inscripciones cursada
 app.post('/inscribirEstudianteCursada',autentificacion.esRolEstudiante,inscripciones.inscribirEstudianteCursada)  
-app.get('/traerMateriasParaInscripcion',autentificacion.esRolEstudiante,inscripciones.traerMateriasParaInscripcion)
+app.get('/traerMateriasParaInscripcion/:idEstudiante',autentificacion.esRolEstudiante,inscripciones.traerMateriasParaInscripcion)
 app.delete('/bajaInscripcionMateria/:idalumnosCursada',autentificacion.esRolEstudiante,inscripciones.bajaInscripcionMateria)
 //6 meses de antiguedad y 
 app.get('/traerInscripcionesEstudianteCursada/:idEstudiante',autentificacion.esRolEstudiante,inscripciones.traerInscripcionesEstudianteCursada)  
 //inscripciones examenes
 app.post('/inscribirEstudianteExamen', autentificacion.esRolEstudiante, examenes.inscribirEstudianteExamen)   //OK
-app.get('/traerExamenesParaInscripcion', autentificacion.esRolEstudiante, examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
+app.get('/traerExamenesParaInscripcion/:idEstudiante', autentificacion.esRolEstudiante, examenes.traerExamenesParaInscripcion)  //OK - traer entre fechas 
 app.delete('/bajaInscripcionExamen/:idInscriptosExamen',autentificacion.esRolEstudiante, examenes.bajaInscripcionExamen)
 app.get('/enviarNotificacionExamen', autentificacion.esRolAdmin, examenes.enviarNotificacionExamen)
 app.get('/traerInscripcionesEstudianteExamen/:idEstudiante', autentificacion.esRolEstudiante, examenes.traerInscripcionesEstudianteExamen)  
