@@ -23,10 +23,7 @@ const api_key_smtp = process.env['MAILGUN_API_KEY'];
 
 var mg = require('nodemailer-mailgun-transport');
 
-
-
 const connectionString = { host: host, port: port, user: user, password: password, database: database };
-
 
 //traer lista de examenes para inscripcion
 exports.traerExamenesParaInscripcion= (req, res) => {
@@ -92,7 +89,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
   catch (e) {
     console.log("ERROR");
     res.status(500).send({      
-      message: "Falla al insertar"
+      message: "ERROR"
     });
     return;
   }  
@@ -168,7 +165,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
   catch (e) {
     console.log("ERROR");
     res.status(500).send({      
-      message: "Falla al insertar"
+      message: "Error al insertar"
     });
     return;
   }  

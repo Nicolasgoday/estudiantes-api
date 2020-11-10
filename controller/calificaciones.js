@@ -20,7 +20,7 @@ exports.traerMaterias = (req, res) => {
           client.traerMaterias(args, function(err, result) {
 
             if (isEmpty(result)) {
-                res.status(400).send({
+                res.status(300).send({
                   message: "Usted no posee materias"
                 });
                 return;
@@ -43,7 +43,6 @@ exports.traerMaterias = (req, res) => {
      
 };
 
-
 exports.listadoAlumnosPorMateria = (req, res) => {
     console.log('/listadoAlumnosPorMateria');
     var result='';
@@ -60,7 +59,7 @@ exports.listadoAlumnosPorMateria = (req, res) => {
         client.listadoAlumnosPorMateria(args, function(err, result) {
 
           if (isEmpty(result)) {
-              res.status(400).send({
+              res.status(300).send({
                 message: "No se encontraron alumnos"
               });
               return;
@@ -102,7 +101,7 @@ exports.traerAlumnosPorMateriaExamen = (req, res) => {
       client.traerAlumnosPorMateriaExamen(args, function(err, result) {
 
         if (isEmpty(result)) {
-            res.status(400).send({
+            res.status(300).send({
               message: "No se encontraron alumnos"
             });
             return;
@@ -127,8 +126,6 @@ catch (e) {
  }      
  
 };
-
-
 
 exports.cargaNotasFinales = (req, res) => {
     console.log('/cargaNotasFinales');
@@ -156,7 +153,7 @@ exports.cargaNotasFinales = (req, res) => {
         client.cargaNotasFinales(args, function(err, result) {
 
           if (isEmpty(result)) {
-              res.status(400).send({
+              res.status(401).send({
                 message: "No se pudo completar la operación"
               });
               return;
@@ -178,7 +175,6 @@ exports.cargaNotasFinales = (req, res) => {
    }      
    
 };
-
 
 exports.cargaNotasCursada = (req, res) => {
     console.log('/cargaNotasCursada');
@@ -205,7 +201,7 @@ exports.cargaNotasCursada = (req, res) => {
         client.cargaNotasCursada(args, function(err, result) {
 
           if (isEmpty(result)) {
-              res.status(400).send({
+              res.status(401).send({
                 message: "No se pudo completar la operación"
               });
               return;

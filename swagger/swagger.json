@@ -1,619 +1,1723 @@
-{
-  "swagger": "2.0",
-  "info": {
-    "version": "0.0.1",
-    "title": "Estudiantes api"
-  },
-  "host": "estudiante-app.herokuapp.com",
-  "basePath": "/",
-  "schemes": [
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
-  "paths": {
-    "/traerEstudiante": {
-      "x-swagger-router-controller": "estudiante",
-      "get": {
-        "description": "Returns 'Hello' to the caller",
-        "operationId": "traerEstudiante",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/HelloWorldResponse"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/modificarDatosContactoEstudiante": {
-      "x-swagger-router-controller": "estudiante",
-      "get": {
-        "description": "Returns 'Hello' to the caller",
-        "operationId": "inscribirEstudianteCursada",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/HelloWorldResponse"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/traerAnalitico": {
-      "x-swagger-router-controller": "estudiante",
-      "get": {
-        "description": "Devuelve certificado analitico de estudiante solicitado",
-        "operationId": "traerAnalitico",
-        "parameters": [
-          {
-            "name": "idEstudiante",
-            "in": "query",
-            "description": "Id del estudiante a buscar el analitico",
-            "required": true,
-            "type": "integer"
-          }
-        ],     
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/traerAnalitico"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/Unauthorized"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/Forbidden"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Not_Found"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/inscribirEstudianteCursada": {
-      "x-swagger-router-controller": "estudiante",
-      "post": {
-        "description": "Inscribe estudiante a materia indicada",
-        "operationId": "inscribirEstudianteCursada",
-        "parameters": [
-          {
-            "name": "idEstudiante",
-            "in": "query",
-            "description": "Id del estudiante a buscar el analitico",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "idMateria",
-            "in": "query",
-            "description": "Id de la materia a insertar",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "idCarrera",
-            "in": "query",
-            "description": "Id de la carrera a insertar",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "recordatorio",
-            "in": "query",
-            "description": "Indicador si requiere aviso recordatorio(1 si / 0 no)",
-            "required": true,
-            "type": "integer"
-          }          
-        ],     
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inscribirEstudianteCursada"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/Unauthorized"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/Forbidden"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Not_Found"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/inscribirEstudianteExamen": {
-      "x-swagger-router-controller": "estudiante",
-      "post": {
-        "description": "Inscribe estudiante a examen indicado",
-        "operationId": "inscribirEstudianteExamen",
-        "parameters": [
-          {
-            "name": "idEstudiante",
-            "in": "query",
-            "description": "Id del estudiante a buscar el analitico",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "idMateria",
-            "in": "query",
-            "description": "Id de la materia a insertar",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "idCarrera",
-            "in": "query",
-            "description": "Id de la carrera a insertar",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "idExamen",
-            "in": "query",
-            "description": "Id del examen a anotarse",
-            "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "recordatorio",
-            "in": "query",
-            "description": "Indicador si requiere aviso recordatorio(1 si / 0 no)",
-            "required": true,
-            "type": "integer"
-          }          
-        ],     
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inscribirEstudianteCursada"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/Unauthorized"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/Forbidden"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Not_Found"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/traerMateriasParaInscripcion": {
-      "x-swagger-router-controller": "estudiante",
-      "get": {
-        "description": "Retorna las materias disponibles para la inscripcion",
-        "operationId": "traerMateriasParaInscripcion",    
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/traerMateriasParaInscripcion"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/Unauthorized"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/Forbidden"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Not_Found"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/traerExamenesParaInscripcion": {
-      "x-swagger-router-controller": "estudiante",
-      "get": {
-        "description": "Retorna examenes para inscripcion disponibles",
-        "operationId": "traerExamenesParaInscripcion",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/traerExamenesParaInscripcion"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/bajaInscripcionMateria": {
-      "x-swagger-router-controller": "estudiante",
-      "delete": {
-        "description": "elimina una inscripcion a una materia",
-        "operationId": "bajaInscripcionMateria",
-        "parameters": [
-          {
-            "name": "idInscripcion",
-            "in": "query",
-            "description": "Id de inscripcion a eliminar",
-            "required": true,
-            "type": "integer"
-          }
-        ],     
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/bajaInscripcionMateria"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/Unauthorized"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/Forbidden"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Not_Found"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/bajaInscripcionExamen": {
-      "x-swagger-router-controller": "estudiante",
-      "delete": {
-        "description": "Returns 'Hello' to the caller",
-        "operationId": "bajaInscripcionExamen",
-        "parameters": [
-          {
-            "name": "idInscripcion",
-            "in": "query",
-            "description": "Id de inscripcion a eliminar",
-            "required": true,
-            "type": "integer"
-          }
-        ],     
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/bajaInscripcionExamen"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/Unauthorized"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/Forbidden"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/Not_Found"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/crearAnaliticoPDF": {
-      "x-swagger-router-controller": "estudiante",
-      "get": {
-        "description": "Returns 'Hello' to the caller",
-        "operationId": "crearAnaliticoPDF",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/HelloWorldResponse"
-            }
-          },
-          "default": {
-            "description": "Error",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/swagger": {
-      "x-swagger-pipe": "swagger_raw"
-    }
-  },
-  "definitions": {
-    "HelloWorldResponse": {
-      "required": [
-        "message"
-      ],
-      "properties": {
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "Forbidden": {
-      "required": [
-        "Forbidden"
-      ],
-      "properties": {
-        "Forbidden": {
-          "type": "string"
-        }
-      }
-    },
-    "Unauthorized": {
-      "required": [
-        "Unauthorized"
-      ],
-      "properties": {
-        "Unauthorized": {
-          "type": "string"
-        }
-      }
-    },
-    "Not_Found": {
-      "required": [
-        "Not Found"
-      ],
-      "properties": {
-        "Not_Found": {
-          "type": "string"
-        }
-      }
-    },
-    "ErrorResponse": {
-      "required": [
-        "message"
-      ],
-      "properties": {
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "traerAnalitico": {
-      "required":[
-        "idInscriptosExamen",
-        "Examenes_idExamenes",
-        "Examenes_Materias_idMaterias",
-        "Examenes_Materias_Carreras_idCarreras",
-        "datosAlumno", 
-        "nota",
-        "asistencia",
-        "recordatorio"
-      ],
-      "properties": {
-        "idInscriptosExamen": {
-          "type": "string"
-        },
-        "Examenes_idExamenes": {
-          "type": "integer"
-        },
-        "Examenes_Materias_idMaterias": {
-          "type": "integer"
-        },
-        "Examenes_Materias_Carreras_idCarreras": {
-          "type": "integer"
-        },
-        "datosAlumno": {
-          "type": "application/json:"
-        },
-        "nota": {
-          "type": "integer"
-        },
-        "asistencia": {
-          "type": "boolean"
-        },
-        "recordatorio": {
-          "type": "boolean"
-        }
-      }
-    },
-    "traerMateriasParaInscripcion": {
-      "required":[
-        "materia",
-        "curso",
-        "dia",
-        "horarioInicio",
-        "nombreProfesor", 
-        "apellidoProfesor"        
-      ],
-      "properties": {
-        "materia": {
-          "type": "string"
-        },
-        "curso": {
-          "type": "integer"
-        },
-        "dia": {
-          "type": "string"
-        },
-        "horarioInicio": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "nombreProfesor": {
-          "type": "string"
-        },
-        "apellidoProfesor": {
-          "type": "string"
-        }
-      }
-    },
-    "inscribirEstudianteCursada": {
-      "required":[
-        "OK"
-      ],
-      "properties": {
-        "OK": {
-          "type": "string"
-        }
-      }
-    },
-    "traerExamenesParaInscripcion": {
-      "required":[
-        "materia",
-        "curso",
-        "fecha",
-        "horarioInicio",
-        "nombreProfesor", 
-        "apellidoProfesor"        
-      ],
-    "properties": {
-        "materia": {
-          "type": "string"
-        },
-        "curso": {
-          "type": "integer"
-        },
-        "fecha": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "horarioInicio": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "nombreProfesor": {
-          "type": "string"
-        },
-        "apellidoProfesor": {
-          "type": "string"
-        }
-      }
-    },
-    "bajaInscripcionMateria": {
-        "required":[
-          "BAJA OK"        
-        ],
-        "properties": {
-          "BAJA OK": {
-            "type": "string"
-          }
-        }
-      },
-      "bajaInscripcionExamen": {
-        "required":[
-          "BAJA OK"        
-        ],
-        "properties": {
-          "BAJA OK": {
-            "type": "string"
-          }
-        }
-      }
-    }
-}
+swagger: "2.0"
+info:
+  description: "API Rest desarrollada en node.js - Modulo estudiantes"
+  version: "1.0.0"
+  title: "API REST ESTUDIANTES"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "godaycn87@outlook.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "estudiante-app.herokuapp.com"
+schemes:
+  - "http"
+  - "https"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+basePath: "/"
+tags:
 
+- name: "estudiante"
+  description: "Acceso estudiante"
+- name: "Calificaciones"
+  description: "RPC Web Service Docente"
+- name: "inscripciones"
+  description: "Inscripciones materias"
+- name: "examenes"
+  description: "Inscripciones examenes"  
+- name: "ABM Carrera"
+  description: "ABM Carrera"
+- name: "ABM Materia"
+  description: "ABM Materia"
+- name: "ABM Examen"
+  description: "ABM examen"
+- name: "ABM Horario"
+  description: "ABM horario"
+- name: "ABM Cursos"
+  description: "ABM Curso"
+- name: "ABM Planes"
+  description: "ABM Planes"
+- name: "ABM Formaaprobacion"
+  description: "ABM formas Aprobacion"
+
+paths:
+  /traerAnalitico/{idEstudiante}:
+    get:
+      tags:
+      - "estudiante"
+      summary: "Traer datos de estudiante"
+      description: ""
+      operationId: "traerAnalitico"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idEstudiante"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+  /crearAnaliticoPDF/{idEstudiante}:
+    get:
+      tags:
+      - "estudiante"
+      summary: "Traer datos de estudiante"
+      description: "Trae analitico como json"
+      operationId: "crearAnaliticoPDF"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idEstudiante"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Error al generar analitico"
+      security:
+        - Bearer: []
+  /modificarDatosContactoEstudiante:
+    get:
+      tags:
+      - "estudiante"
+      summary: "Traer datos de estudiante"
+      description: "Modificar datos permitidos"
+      operationId: "modificarDatosContactoEstudiante"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idEstudiante"
+        in: "body"
+        description: "ID de estudiante"
+        required: true
+        schema:
+            $ref: '#/definitions/ModificarDatosEstudiante'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+  /traerMaterias/{id}:
+    get:
+      tags:
+      - "Calificaciones"
+      summary: "RPC de traerMaterias"
+      description: ""
+      operationId: "traerMaterias"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de docente"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "300":
+          description: "Usted no posee materias"
+        "400":
+          description: "El id no puede estar vacio"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+  /listadoAlumnosPorMateria:
+    post:
+      tags:
+      - "Calificaciones"
+      summary: "RPC de traerMaterias"
+      description: ""
+      operationId: "listadoAlumnosPorMateria"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "listadoAlumnosPorMateria"
+        in: "body"
+        description: "Parametros listado por materia"
+        required: true
+        schema:
+            $ref: '#/definitions/listadoAlumnosPorMateria'
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "300":
+          description: "No se encontraron alumnos"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []
+  /traerAlumnosPorMateriaExamen:
+    post:
+      tags:
+      - "Calificaciones"
+      summary: "RPC de traerAlumnosPorMateriaExamen"
+      description: ""
+      operationId: "traerAlumnosPorMateriaExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "traerAlumnosPorMateriaExamen"
+        in: "body"
+        description: "Parametros listado por materia"
+        required: true
+        schema:
+          $ref: '#/definitions/traerAlumnosPorMateriaExamen'
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "300":
+          description: "No se encontraron alumnos"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []
+  /cargaNotasFinales:
+    post:
+      tags:
+      - "Calificaciones"
+      summary: "RPC de traerAlumnosPorMateriaExamen"
+      description: ""
+      operationId: "cargaNotasFinales"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "notas"
+        in: "body"
+        description: "Parametros listado par nota finales"
+        required: true
+        schema:
+          $ref: '#/definitions/notas'
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "300":
+          description: "No se encontraron alumnos"
+        "401":
+          description: "No se pudo completar la operación"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []        
+  /cargaNotasCursada:
+    post:
+      tags:
+      - "Calificaciones"
+      summary: "RPC de traerAlumnosPorMateriaExamen"
+      description: ""
+      operationId: "cargaNotasCursada"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "notas"
+        in: "body"
+        description: "Parametros listado par nota cursada"
+        required: true
+        schema:
+          $ref: '#/definitions/notas'
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "300":
+          description: "No se encontraron alumnos"
+        "401":
+          description: "No se pudo completar la operación"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []             
+  /cargaNotasCursadaDesdeArchivo:
+    post:
+      tags:
+      - "Calificaciones"
+      summary: "RPC de cargaNotasCursadaDesdeArchivo"
+      description: ""
+      operationId: "cargaNotasCursadaDesdeArchivo"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "notas"
+        in: "body"
+        description: "Parametros listado par nota cursada desde archivo"
+        required: true
+        schema:
+          $ref: '#/definitions/notasArchivo'
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "300":
+          description: "No se encontraron alumnos"
+        "401":
+          description: "No se pudo completar la operación"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []                    
+  /inscribirEstudianteCursada:
+    post:
+      tags:
+      - "inscripciones"
+      summary: "inscribirEstudianteCursada"
+      description: ""
+      operationId: "inscribirEstudianteCursada"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "notas"
+        in: "body"
+        description: "Parametros listado para inscribirEstudianteCursada"
+        required: true
+        schema:
+          $ref: '#/definitions/notasArchivo'
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "300":
+          description: "No se encontraron alumnos"
+        "401":
+          description: "No se pudo completar la operación"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []                            
+  /traerMateriasParaInscripcion/{idEstudiante}:
+    get:
+      tags:
+      - "inscripciones"
+      summary: "traerMateriasParaInscripcion"
+      description: ""
+      operationId: "traerMateriasParaInscripcion"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idEstudiante"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El idEstudiante no puede estar vacio"
+        "500":
+          description: "Falla al insertar"
+      security:
+        - Bearer: []    
+  /bajaInscripcionMateria/{idalumnosCursada}:
+    delete:
+      tags:
+      - "inscripciones"
+      summary: "bajaInscripcionMateria"
+      description: ""
+      operationId: "bajaInscripcionMateria"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idalumnosCursada"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "406":
+          description: "INSCRIPCION FUERA DE FECHA PARA ELIMINAR O NO EXISTE"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []            
+  /traerInscripcionesEstudianteCursada/{idEstudiante}:
+    get:
+      tags:
+      - "inscripciones"
+      summary: "traerInscripcionesEstudianteCursada"
+      description: ""
+      operationId: "traerInscripcionesEstudianteCursada"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idEstudiante"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El idEstudiante no puede estar vacio"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []    
+  /inscribirEstudianteExamen:
+    post:
+      tags:
+      - "examenes"
+      summary: "inscribirEstudianteExamen"
+      description: ""
+      operationId: "inscribirEstudianteExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "notas"
+        in: "body"
+        description: "Parametros listado para inscribirEstudianteExamen"
+        required: true
+        schema:
+          $ref: '#/definitions/inscripcionExamen'
+      responses:
+        "200":
+          description: "OK"
+        "406":
+          description: "No se encontraron alumnos"
+        "404":
+          description: "NO EXISTE ALUMNO"
+        "500":
+          description: "Error al insertar"
+      security:
+        - Bearer: []                            
+  /traerExamenesParaInscripcion/{idEstudiante}:
+    get:
+      tags:
+      - "examenes"
+      summary: "traerExamenesParaInscripcion"
+      description: ""
+      operationId: "traerExamenesParaInscripcion"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idEstudiante"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El idEstudiante no puede estar vacio"
+        "500":
+          description: "ERROR"
+      security:
+        - Bearer: []    
+  /bajaInscripcionExamen/{idInscriptosExamen}:
+    delete:
+      tags:
+      - "examenes"
+      summary: "bajaInscripcionExamen"
+      description: ""
+      operationId: "bajaInscripcionExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idInscriptosExamen"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El body no puede estar vacio"
+        "406":
+          description: "INSCRIPCION FUERA DE FECHA PARA ELIMINAR O NO EXISTE"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []            
+  /traerInscripcionesEstudianteExamen/{idEstudiante}:
+    get:
+      tags:
+      - "examenes"
+      summary: "traerInscripcionesEstudianteExamen"
+      description: ""
+      operationId: "traerInscripcionesEstudianteExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idEstudiante"
+        in: "path"
+        description: "ID de estudiante"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "400":
+          description: "El idEstudiante no puede estar vacio"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []            
+  /enviarNotificacionExamen:
+    get:
+      tags:
+      - "examenes"
+      summary: "enviarNotificacionExamen"
+      description: ""
+      operationId: "enviarNotificacionExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "aPartir"
+        in: "body"
+        description: "Fecha a partir de donde enviar mails"
+        required: true
+        schema:
+          type: "string"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "datos invalido"
+      security:
+        - Bearer: []          
+        
+  /horarios:
+    post:
+      tags:
+      - "ABM Horario"
+      summary: "alta horario"
+      description: ""
+      operationId: "crearHorario"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "horario"
+        in: "body"
+        description: "Parametros horario"
+        required: true
+        schema:
+          $ref: '#/definitions/horario'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Some error occurred while creating the horario."
+      security:
+        - Bearer: []
+    get:
+      tags:
+      - "ABM Horario"
+      summary: "Buscar horarios"
+      description: ""
+      operationId: "buscarHorarios"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idHorario"
+        in: "body"
+        description: "ID de horario"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo encontrar Horario con ese nombre."
+      security:
+        - Bearer: []
+  /horarios/{id}:
+    get:
+      tags:
+      - "ABM Horario"
+      summary: "Traer horario"
+      description: ""
+      operationId: "traerUnHorario"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de horario"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+    put:
+      tags:
+      - "ABM Horario"
+      summary: "Actualizar horarios"
+      description: ""
+      operationId: "actualizarHorario"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de horario"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo actualizar horario con id=${id}.!"
+      security:
+        - Bearer: []
+    delete:
+      tags:
+      - "ABM Horario"
+      summary: "Borrar horario"
+      description: ""
+      operationId: "borrarHorario"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de horario"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Horario eliminada exitosamente!"
+        "500":
+          description: "No se pudo eliminar Horario con id=${id}.!"
+      security:
+        - Bearer: []        
+
+  /carreras:
+    post:
+      tags:
+      - "ABM Carrera"
+      summary: "alta carrera"
+      description: ""
+      operationId: "crearCarrera"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "carrera"
+        in: "body"
+        description: "Parametros carrera"
+        required: true
+        schema:
+          $ref: '#/definitions/carrera'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Some error occurred while creating the carrera."
+      security:
+        - Bearer: []
+    get:
+      tags:
+      - "ABM Carrera"
+      summary: "Buscar carreras"
+      description: ""
+      operationId: "buscarCarreras"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idCarrera"
+        in: "body"
+        description: "ID de carrera"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo encontrar Carrera con ese nombre."
+      security:
+        - Bearer: []
+  /carreras/{id}:
+    get:
+      tags:
+      - "ABM Carrera"
+      summary: "Traer carrera"
+      description: ""
+      operationId: "traerUnaCarrera"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de carrera"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+    put:
+      tags:
+      - "ABM Carrera"
+      summary: "Actualizar carreras"
+      description: ""
+      operationId: "actualizarCarrera"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de carrera"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo actualizar carrera con id=${id}.!"
+      security:
+        - Bearer: []
+    delete:
+      tags:
+      - "ABM Carrera"
+      summary: "Borrar carrera"
+      description: ""
+      operationId: "borrarCarrera"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de carrera"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Carrera eliminada exitosamente!"
+        "500":
+          description: "No se pudo eliminar Carrera con id=${id}.!"
+      security:
+        - Bearer: []        
+  
+  /materias:
+    post:
+      tags:
+      - "ABM Materia"
+      summary: "alta materia"
+      description: ""
+      operationId: "crearMateria"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "materia"
+        in: "body"
+        description: "Parametros materia"
+        required: true
+        schema:
+          $ref: '#/definitions/materia'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Some error occurred while creating the materia."
+      security:
+        - Bearer: []
+    get:
+      tags:
+      - "ABM Materia"
+      summary: "Buscar materias"
+      description: ""
+      operationId: "buscarMaterias"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idMateria"
+        in: "body"
+        description: "ID de materia"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo encontrar Materia con ese nombre."
+      security:
+        - Bearer: []
+  /materias/{id}:
+    get:
+      tags:
+      - "ABM Materia"
+      summary: "Traer materia"
+      description: ""
+      operationId: "traerUnaMateria"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de materia"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+    put:
+      tags:
+      - "ABM Materia"
+      summary: "Actualizar materias"
+      description: ""
+      operationId: "actualizarMateria"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de materia"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo actualizar materia con id=${id}.!"
+      security:
+        - Bearer: []
+    delete:
+      tags:
+      - "ABM Materia"
+      summary: "Borrar materia"
+      description: ""
+      operationId: "borrarMateria"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de materia"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Materia eliminada exitosamente!"
+        "500":
+          description: "No se pudo eliminar Materia con id=${id}.!"
+      security:
+        - Bearer: []        
+
+  /examenes:
+    post:
+      tags:
+      - "ABM Examen"
+      summary: "alta examen"
+      description: ""
+      operationId: "crearExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "examen"
+        in: "body"
+        description: "Parametros examen"
+        required: true
+        schema:
+          $ref: '#/definitions/examen'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Some error occurred while creating the examen."
+      security:
+        - Bearer: []
+    get:
+      tags:
+      - "ABM Examen"
+      summary: "Buscar examenes"
+      description: ""
+      operationId: "buscarExamenes"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idMateria"
+        in: "body"
+        description: "ID de examen"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo encontrar Examen con ese nombre."
+      security:
+        - Bearer: []
+  /examenes/{id}:
+    get:
+      tags:
+      - "ABM Examen"
+      summary: "Traer examen"
+      description: ""
+      operationId: "traerUnExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de examen"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+    put:
+      tags:
+      - "ABM Examen"
+      summary: "Actualizar examenes"
+      description: ""
+      operationId: "actualizarExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de examen"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo actualizar examen con id=${id}.!"
+      security:
+        - Bearer: []
+    delete:
+      tags:
+      - "ABM Examen"
+      summary: "Borrar examen"
+      description: ""
+      operationId: "borrarExamen"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de examen"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Examen eliminada exitosamente!"
+        "500":
+          description: "No se pudo eliminar Examen con id=${id}.!"
+      security:
+        - Bearer: []        
+
+ 
+  /cursos:
+    post:
+      tags:
+      - "ABM Cursos"
+      summary: "alta curso"
+      description: ""
+      operationId: "crearCurso"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "curso"
+        in: "body"
+        description: "Parametros curso"
+        required: true
+        schema:
+          $ref: '#/definitions/curso'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Some error occurred while creating the curso."
+      security:
+        - Bearer: []
+    get:
+      tags:
+      - "ABM Cursos"
+      summary: "Buscar cursos"
+      description: ""
+      operationId: "buscarCursos"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idCurso"
+        in: "body"
+        description: "ID de curso"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo encontrar Curso con ese nombre."
+      security:
+        - Bearer: []
+  /cursos/{id}:
+    get:
+      tags:
+      - "ABM Cursos"
+      summary: "Traer curso"
+      description: ""
+      operationId: "traerUnaCurso"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de curso"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+    put:
+      tags:
+      - "ABM Cursos"
+      summary: "Actualizar cursos"
+      description: ""
+      operationId: "actualizarCurso"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de curso"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo actualizar curso con id=${id}.!"
+      security:
+        - Bearer: []
+    delete:
+      tags:
+      - "ABM Cursos"
+      summary: "Borrar curso"
+      description: ""
+      operationId: "borrarCurso"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de curso"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Curso eliminada exitosamente!"
+        "500":
+          description: "No se pudo eliminar Curso con id=${id}.!"
+      security:
+        - Bearer: []        
+
+  /planes:
+    post:
+      tags:
+      - "ABM Planes"
+      summary: "alta plan"
+      description: ""
+      operationId: "crearPlan"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "plan"
+        in: "body"
+        description: "Parametros plan"
+        required: true
+        schema:
+          $ref: '#/definitions/plan'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Some error occurred while creating the plan."
+      security:
+        - Bearer: []
+    get:
+      tags:
+      - "ABM Planes"
+      summary: "Buscar planes"
+      description: ""
+      operationId: "buscarPlanes"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idPlan"
+        in: "body"
+        description: "ID de plan"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo encontrar Plan con ese nombre."
+      security:
+        - Bearer: []
+  /planes/{id}:
+    get:
+      tags:
+      - "ABM Planes"
+      summary: "Traer plan"
+      description: ""
+      operationId: "traerUnaPlan"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de planes"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+    put:
+      tags:
+      - "ABM Planes"
+      summary: "Actualizar planes"
+      description: ""
+      operationId: "actualizarPlan"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de plan"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo actualizar plan con id=${id}.!"
+      security:
+        - Bearer: []
+    delete:
+      tags:
+      - "ABM Planes"
+      summary: "Borrar plan"
+      description: ""
+      operationId: "borrarPlan"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de plan"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Plan eliminada exitosamente!"
+        "500":
+          description: "No se pudo eliminar Plan con id=${id}.!"
+      security:
+        - Bearer: []        
+
+
+  /formaaprobacions:
+    post:
+      tags:
+      - "ABM Formaaprobacion"
+      summary: "alta formaaprobacion"
+      description: ""
+      operationId: "crearFormaaprobacion"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "formaaprobacion"
+        in: "body"
+        description: "Parametros formaaprobacion"
+        required: true
+        schema:
+          $ref: '#/definitions/formaaprobacion'
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Some error occurred while creating the formaaprobacion."
+      security:
+        - Bearer: []
+    get:
+      tags:
+      - "ABM Formaaprobacion"
+      summary: "Buscar formaaprobacions"
+      description: ""
+      operationId: "buscarFormaaprobacions"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "idFormaaprobacion"
+        in: "body"
+        description: "ID de formaaprobacion"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo encontrar Formaaprobacion con ese nombre."
+      security:
+        - Bearer: []
+  /formaaprobacions/{id}:
+    get:
+      tags:
+      - "ABM Formaaprobacion"
+      summary: "Traer formaaprobacion"
+      description: ""
+      operationId: "traerUnaFormaaprobacion"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de formaaprobacion"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "Id invalido"
+      security:
+        - Bearer: []
+    put:
+      tags:
+      - "ABM Formaaprobacion"
+      summary: "Actualizar formaaprobacions"
+      description: ""
+      operationId: "actualizarFormaaprobacion"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de formaaprobacion"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+        "500":
+          description: "No se pudo actualizar formaaprobacion con id=${id}.!"
+      security:
+        - Bearer: []
+    delete:
+      tags:
+      - "ABM Formaaprobacion"
+      summary: "Borrar formaaprobacion"
+      description: ""
+      operationId: "borrarFormaaprobacion"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID de formaaprobacion"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Formaaprobacion eliminada exitosamente!"
+        "500":
+          description: "No se pudo eliminar Formaaprobacion con id=${id}.!"
+      security:
+        - Bearer: []        
+
+        
+definitions:
+  ModificarDatosEstudiante:
+    type: "object"
+    properties:
+      idEstudiante:
+        type: "integer"
+        format: "int64"
+      domicilio:
+        type: "string"
+        format: "string"
+      email:
+        type: "string"
+        format: "string"
+      telefono:
+        type: "string"
+        format: "string"
+    xml:
+      name: "ModificarDatosEstudiante"      
+      
+  listadoAlumnosPorMateria:
+    type: "object"
+    properties:
+      idDocente:
+        type: "integer"
+        format: "int64"
+      idMateria:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "listadoAlumnosPorMateria"      
+      
+  traerAlumnosPorMateriaExamen:
+    type: "object"
+    properties:
+      idDocente:
+        type: "integer"
+        format: "int64"
+      idMateria:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "traerAlumnosPorMateriaExamen"  
+  notas:
+    type: "object"
+    properties:
+      idDocente:
+        type: "integer"
+        format: "int64"
+      idMateria:
+        type: "integer"
+        format: "int64"
+      asistencia:
+        type: "integer"
+        format: "int64"
+      examenesidExamenes:
+        type: "integer"
+        format: "int64"
+      idInscriptosExamen:
+        type: "integer"
+        format: "int64"
+      nota:
+        type: "integer"
+        format: "int64"
+      recordatorio:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "notas"  
+  notasArchivo:
+    type: "object"
+    properties:
+      idDocente:
+        type: "integer"
+        format: "int64"
+      idMateria:
+        type: "integer"
+        format: "int64"
+      asistencia:
+        type: "integer"
+        format: "int64"
+      examenesidExamenes:
+        type: "integer"
+        format: "int64"
+      idInscriptosExamen:
+        type: "integer"
+        format: "int64"
+      nota:
+        type: "integer"
+        format: "int64"
+      recordatorio:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "notas"  
+  inscripcionExamen:
+    type: "object"
+    properties:
+      idEstudiante:
+        type: "integer"
+        format: "int64"
+      idExamenes:
+        type: "integer"
+        format: "int64"
+      recordatorio:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "inscripcionExamen"  
+  horario:
+    type: "object"
+    properties:
+      dia:
+        type: "string"
+        format: "string"
+      horarioinicio:
+        type: "string"
+        format: "string"
+      horariofin:
+        type: "string"
+        format: "string"
+      CursoIdCurso:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "horario"       
+  carrera:
+    type: "object"
+    properties:
+      nombre:
+        type: "string"
+        format: "string"
+      departamento:
+        type: "string"
+        format: "string"
+    xml:
+      name: "carrera"    
+  materia:
+    type: "object"
+    properties:
+      nombre:
+        type: "string"
+        format: "string"
+      departamento:
+        type: "string"
+        format: "string"
+    xml:
+      name: "materia"       
+  examen:
+    type: "object"
+    properties:
+      fecha:
+        type: "string"
+        format: "string"
+      horarioInicio:
+        type: "string"
+        format: "string"
+      docenteAsignado:
+        type: "string"
+        format: "json"
+      inicioInscripcion:
+        type: "string"
+        format: "fecha corta"
+      finInscripcion:
+        type: "string"
+        format: "fecha corta"
+      MateriasIdMaterias:
+        type: "integer"
+        format: "int64" 
+      acta:
+        type: "integer"
+        format: "int64"  
+    xml:
+      name: "examen"             
+  curso:
+    type: "object"
+    properties:
+      datosDocente:
+        type: "string"
+        format: "json"
+      MateriasIdMaterias:
+        type: "integer"
+        format: "int64" 
+    xml:
+      name: "examen"        
+  plan:
+    type: "object"
+    properties:
+      descripcion:
+        type: "string"
+        format: "json"
+    xml:
+      name: "plan"    
+  formaaprobacion:
+    type: "object"
+    properties:
+      descripcion:
+        type: "string"
+        format: "json"
+    xml:
+      name: "formaaprobacion"          
+      

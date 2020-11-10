@@ -80,7 +80,6 @@ catch (e) {
 }  
 };
 
-
 //Inscribirser a una materia
 exports.inscribirEstudianteCursada= (req, res) => {
   console.log(Date() + ": /inscribirEstudianteCursada");
