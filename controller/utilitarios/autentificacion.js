@@ -16,7 +16,7 @@ exports.esRolAdmin = (req, res, next) => {
 
 exports.esRolProfesor = (req, res, next) => {
   
-  this.autentificar(req,res,next,"ROLE_PROFESORES");
+  this.autentificar(req,res,next,"ROLE_PROFESOR");
   if (res.status == 200) {
       next();
   }

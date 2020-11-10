@@ -22,12 +22,12 @@ const connectionString = { host: host, port: port, user: user, password: passwor
 exports.traerAnalitico= (req, res) => {
     console.log(Date() + ": /traerAnalitico");
     try {
-      var idEstudiante = req.body.idEstudiante
+      var idEstudiante = req.params.idEstudiante
       const coneccionDB = mysql.createConnection(connectionString);
       coneccionDB.connect(function (err) {
         if (err) throw err;
         console.log("Connected!");
-        coneccionDB.query('SELECT * FROM ' + database + '.alumnosexamenfinal where ' + database + '.alumnosexamenfinal.asistencia=1 and  JSON_UNQUOTE(' + database + '.alumnosexamenfinal.datosAlumno->"$.id") = ' + idEstudiante + ';' //HAY Q TRAER ID ESTUDIANTE DE PARAMETRO
+        coneccionDB.query('SELECT idInscriptosExamen,ExamenesidExamenes,datosAlumno,nota,materias.nombre as materia, carreras.nombre as carrera   FROM alumnosexamenfinal inner join examenes on examenes.idExamenes=ExamenesidExamenes inner join materias on materias.idMaterias=examenes.MateriasIdMaterias inner join carreras on carreras.idCarreras=materias.CarrerasIdCarreras where alumnosexamenfinal.asistencia=1 and  JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.id") = ' + idEstudiante + ';'
           , function (err, result) {
             if (err) throw err;
             console.log("Result: " + result);
@@ -49,7 +49,7 @@ exports.crearAnaliticoPDF= (req, res) => {
     console.log(Date() + ": /crearAnaliticoPDF");
     try {
       var request = require('request'); 
-      var idEstudiante = req.body.idEstudiante
+      var idEstudiante = req.params.idEstudiante
       const coneccionDB = mysql.createConnection(connectionString);
 
       request({

@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express')
 const bodyParser = require('body-parser');
+const multer  = require('multer')();
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const inscripciones = require('./controller/inscripciones.js');
@@ -13,6 +14,7 @@ const horario = require('./controller/horario.js');
 const cursos = require('./controller/curso.js');
 const planes = require('./controller/planes.js');
 const formasaprobacion = require('./controller/formasaprobacion.js');
+const calificaciones = require('./controller/calificaciones.js');
 
 const autentificacion = require('./controller/utilitarios/autentificacion.js');
 
@@ -37,8 +39,8 @@ app.use(bodyParser.json());
 app.use(cors());
 //estudiante
 app.get('/traerEstudiante',autentificacion.esRolEstudiante, estudiante.traerEstudiante)
-app.get('/traerAnalitico',autentificacion.esRolEstudiante, estudiante.traerAnalitico)
-app.get('/crearAnaliticoPDF',autentificacion.esRolEstudiante, estudiante.crearAnaliticoPDF)
+app.get('/traerAnalitico/:idEstudiante',autentificacion.esRolEstudiante, estudiante.traerAnalitico)
+app.get('/crearAnaliticoPDF/:idEstudiante',autentificacion.esRolEstudiante, estudiante.crearAnaliticoPDF)
 app.get('/modificarDatosContactoEstudiante',autentificacion.esRolEstudiante,estudiante.modificarDatosContactoEstudiante)
 
 //inscripciones cursada
@@ -100,6 +102,15 @@ app.get("/formasaprobacion", autentificacion.esRolAdmin,  formasaprobacion.findA
 app.get("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.findOne);
 app.put("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.update);
 app.delete("/formasaprobacion/:id", autentificacion.esRolAdmin,  formasaprobacion.delete);
+
+
+//RPC Web Service Docente
+app.get('/traerMaterias/:id',autentificacion.esRolProfesor, calificaciones.traerMaterias);
+app.post('/listadoAlumnosPorMateria',autentificacion.esRolProfesor,calificaciones.listadoAlumnosPorMateria);
+app.post('/traerAlumnosPorMateriaExamen',autentificacion.esRolProfesor,calificaciones.traerAlumnosPorMateriaExamen);
+app.post('/cargaNotasFinales',autentificacion.esRolProfesor,calificaciones.cargaNotasFinales);
+app.post('/cargaNotasCursada',autentificacion.esRolProfesor,calificaciones.cargaNotasCursada);
+app.post('/cargaNotasCursadaDesdeArchivo', multer.single('file'), calificaciones.cargaNotasCursadaDesdeArchivo);
 
 app.listen(port, host);
 console.log(`Running on http://${host}:${port}/`);
