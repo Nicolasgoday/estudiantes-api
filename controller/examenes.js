@@ -65,7 +65,7 @@ exports.traerExamenesParaInscripcion= (req, res) => {
                 var query = 'select ' + database + '.examenes.idExamenes ,'  + database + '.materias.nombre as materia, ' + database + '.curso.idCurso as curso, ' 
                             + database + '.examenes.fecha , ' + database + '.examenes.horarioInicio, JSON_UNQUOTE(' + database
                             + '.examenes.docenteAsignado->"$.nombre") as nombreProfesor, JSON_UNQUOTE(' + database + '.examenes.docenteAsignado->"$.apellido") as apellidoProfesor from ' 
-                            + database + '.examenes left join ' + database + '.materias on ' + database + '.examenes.MateriasIdMaterias = ' + database + '.materias.idMaterias left join ' 
+                            + database + '.examenes inner join ' + database + '.materias on ' + database + '.examenes.MateriasIdMaterias = ' + database + '.materias.idMaterias inner join ' 
                             + database + '.curso on ' + database + '.materias.idMaterias = ' + database + '.curso.MateriasIdMaterias ' 
                             +' where  examenes.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" )  
                             + '" and examenes.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) 

@@ -53,7 +53,9 @@ request({
                         + database + '.curso.MateriasIdMaterias  inner join ' + database + '.horario on ' + database + '.horario.CursoIdCurso = ' + database + '.curso.idCurso '
                         +' where  materias.inicioInscripcion <= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" ) + '" and materias.finInscripcion >= "'+ DATE_FORMATER( aPartir, "yyyy-mm-dd" )
                         + '" and materias.CarrerasIdCarreras= ' + estudianteJson.idCarreras 
-                        + ';'
+                        + ' and materias.idMaterias not in (select MateriasIdMaterias from alumnosexamenfinal inner join examenes on examenes.idExamenes = alumnosexamenfinal.ExamenesidExamenes ' 
+                        + ' where  nota > 4  and  JSON_UNQUOTE(alumnosexamenfinal.datosAlumno->"$.id") = ' + estudianteJson.idMateria; 
+                        + ');'
 
                           
               console.log(query);
